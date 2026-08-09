@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nakhon Luang Thai Kitchen — Homepage Prototype</title>
+  <meta name="description" content="Homepage redesign prototype for Nakhon Luang Thai Kitchen, Colorado Springs. Three divergent variants behind a picker. Client: Magister Digital pilot.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============ Reset + tokens ============ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.5;
+      min-height: 100%;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+    button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+
+    :root {
+      --cream: #F5EEDC;
+      --cream-light: #FBF6EA;
+      --cream-deep: #ECE2C8;
+      --ink: #1A1614;
+      --ink-soft: #4A423D;
+      --ink-mute: #857B72;
+      --amber: #B8541F;
+      --amber-hover: #97441A;
+      --amber-tint: #F5E0D0;
+      --forest: #1F3A2E;
+      --forest-hover: #17281F;
+      --gold: #D4A24C;
+      --line: rgba(26,22,20,0.10);
+      --line-strong: rgba(26,22,20,0.22);
+      --serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --radius-sm: 6px;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 2px rgba(26,22,20,0.06), 0 2px 6px rgba(26,22,20,0.04);
+      --shadow: 0 4px 12px rgba(26,22,20,0.08), 0 12px 32px rgba(26,22,20,0.06);
+      --shadow-lg: 0 8px 24px rgba(26,22,20,0.10), 0 24px 64px rgba(26,22,20,0.10);
+    }
+
+    #stage { min-height: 100vh; }
+
+    /* ============ Picker (verbatim from PICKER.md, positioned top) ============ */
+    .proto-picker {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2147483647;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px;
+      border-radius: 999px;
+      background: rgba(10, 10, 10, 0.82);
+      -webkit-backdrop-filter: blur(12px) saturate(1.4);
+      backdrop-filter: blur(12px) saturate(1.4);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 8px 24px rgba(0, 0, 0, 0.24),
+        0 2px 6px rgba(0, 0, 0, 0.12);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .proto-picker-highlight {
+      position: absolute;
+      top: 4px;
+      left: 0;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      will-change: transform;
+    }
+    .proto-picker[data-ready] .proto-picker-highlight {
+      transition:
+        transform 250ms cubic-bezier(0.23, 1, 0.32, 1),
+        width 250ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .proto-picker[data-ready] .proto-picker-highlight { transition: none; }
+    }
+    .proto-picker-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 28px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.55);
+      font: inherit;
+      cursor: pointer;
+      transition: color 150ms ease-out;
+    }
+    .proto-picker-item:hover { color: rgba(255, 255, 255, 0.85); }
+    .proto-picker-item:active { transform: scale(0.97); }
+    .proto-picker-item:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.4);
+      outline-offset: 2px;
+    }
+    .proto-picker-item[data-active] { color: #fff; }
+    .proto-picker-divider {
+      width: 1px;
+      height: 16px;
+      margin: 0 4px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .proto-picker-replay { padding: 0 10px; font-size: 14px; }
+    .proto-picker[data-position="top"] { bottom: auto; top: 24px; }
+
+    /* ============ Shared: mobile sticky order bar (all variants) ============ */
+    .mobile-order-bar {
+      display: none;
+      position: fixed;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      z-index: 100;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--amber);
+      color: #fff;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(184,84,31,0.28), 0 2px 8px rgba(26,22,20,0.12);
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .mobile-order-bar-strap { display: flex; flex-direction: column; gap: 2px; }
+    .mobile-order-bar-sub {
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0.85;
+      letter-spacing: 0;
+    }
+    .mobile-order-bar-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: grid; place-items: center;
+      font-size: 16px;
+    }
+    @media (max-width: 720px) { .mobile-order-bar { display: flex; } }
+
+    /* ============ Shared button pattern ============ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      transition: transform 150ms ease-out, background 150ms ease-out, box-shadow 150ms ease-out;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--amber);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(184,84,31,0.24);
+    }
+    .btn-primary:hover { background: var(--amber-hover); box-shadow: 0 4px 14px rgba(184,84,31,0.30); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line-strong);
+    }
+    .btn-ghost:hover { background: var(--ink); color: var(--cream-light); border-color: var(--ink); }
+    .btn-forest {
+      background: var(--forest);
+      color: var(--cream-light);
+    }
+    .btn-forest:hover { background: var(--forest-hover); }
+
+    /* ============ Reusable dish SVG-tile styling ============ */
+    .dish-tile {
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      background:
+        radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,0.22), rgba(0,0,0,0) 60%),
+        var(--dish-color, linear-gradient(135deg, #B8541F, #7A2E10));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .dish-tile svg { width: 62%; height: 62%; opacity: 0.92; }
+
+    /* ============ V1 SPLIT HERO ============ */
+    .v1 { background: var(--cream); color: var(--ink); }
+
+    .v1-nav {
+      position: sticky; top: 0; z-index: 40;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 40px;
+      background: rgba(245,238,220,0.88);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .v1-brand { line-height: 1; }
+    .v1-mark {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    .v1-mark-sub {
+      font-size: 10px;
+      letter-spacing: 0.20em;
+      color: var(--ink-mute);
+      margin-top: 4px;
+    }
+    .v1-nav-links {
+      display: flex; align-items: center; gap: 28px;
+      font-size: 14px;
+    }
+    .v1-nav-links > a { color: var(--ink-soft); }
+    .v1-nav-links > a:hover { color: var(--ink); }
+    .v1-nav-order {
+      background: var(--amber); color: #fff !important;
+      padding: 10px 18px; border-radius: 999px;
+      font-weight: 600;
+    }
+    .v1-nav-order:hover { background: var(--amber-hover); }
+    .v1-nav-reserve {
+      border: 1px solid var(--line-strong);
+      padding: 9px 16px; border-radius: 999px;
+    }
+
+    .v1-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 0;
+      min-height: calc(100vh - 68px);
+    }
+
+    .v1-hero-photo {
+      position: relative;
+      background:
+        radial-gradient(90% 60% at 30% 25%, rgba(255,220,150,0.15), transparent 60%),
+        linear-gradient(160deg, #4A2914 0%, #2E1A0C 55%, #1A0F08 100%);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .v1-hero-photo-art {
+      width: 62%; max-width: 460px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,200,120,0.5), rgba(180,80,20,0.9) 45%, rgba(90,30,10,1) 100%);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.4), inset 0 -20px 40px rgba(0,0,0,0.3);
+      display: grid; place-items: center;
+      transform: rotate(-4deg);
+    }
+    .v1-hero-photo-art svg { width: 62%; height: 62%; opacity: 0.85; }
+    .v1-hero-caption {
+      position: absolute;
+      bottom: 32px; left: 40px;
+      color: rgba(255,240,220,0.75);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .v1-hero-caption em {
+      display: block;
+      font-style: normal;
+      font-family: var(--serif);
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: rgba(255,240,220,0.98);
+      text-transform: none;
+      margin-top: 6px;
+    }
+
+    .v1-hero-order {
+      padding: 48px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 22px;
+      background: var(--cream-light);
+      border-left: 1px solid var(--line);
+    }
+    .v1-order-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .v1-order-eyebrow::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 0 0 4px rgba(184,84,31,0.16);
+    }
+    .v1-hero-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(32px, 3.4vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+    }
+    .v1-hero-sub {
+      font-size: 16px;
+      color: var(--ink-soft);
+      max-width: 460px;
+      line-height: 1.55;
+    }
+    .v1-category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .v1-category {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px;
+      padding: 16px 8px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      transition: transform 150ms ease-out, background 150ms ease-out, border-color 150ms ease-out;
+    }
+    .v1-category:hover { transform: translateY(-2px); background: var(--cream-deep); border-color: var(--line-strong); }
+    .v1-category-icon {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      color: var(--amber);
+    }
+    .v1-category-name {
+      font-size: 13px; font-weight: 600; color: var(--ink);
+    }
+    .v1-popular-block {
+      margin-top: 4px;
+      padding: 18px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .v1-popular-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 10px;
+    }
+    .v1-popular-item {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 9px 0;
+      border-bottom: 1px dashed var(--line);
+      transition: color 150ms ease-out;
+    }
+    .v1-popular-item:last-child { border-bottom: 0; }
+    .v1-popular-item:hover { color: var(--amber); }
+    .v1-popular-name { font-family: var(--serif); font-size: 17px; font-weight: 500; }
+    .v1-popular-desc { font-size: 12px; color: var(--ink-mute); }
+
+    .v1-hero-cta {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px;
+      background: var(--amber); color: #fff;
+      border-radius: var(--radius);
+      font-weight: 600; font-size: 17px;
+      letter-spacing: -0.01em;
+      box-shadow: 0 6px 20px rgba(184,84,31,0.22);
+      transition: background 150ms ease-out, transform 150ms ease-out, box-shadow 150ms ease-out;
+    }
+    .v1-hero-cta:hover { background: var(--amber-hover); box-shadow: 0 10px 28px rgba(184,84,31,0.30); transform: translateY(-1px); }
+    .v1-hero-cta-strap { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+    .v1-hero-cta-sub { font-weight: 500; font-size: 12px; opacity: 0.86; letter-spacing: 0; }
+    .v1-hero-cta-arrow {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: grid; place-items: center; font-size: 18px;
+    }
+
+    .v1-hero-meta {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--ink-mute);
+    }
+    .v1-hero-meta-dot { width: 6px; height: 6px; border-radius: 50%; background: #52A25A; box-shadow: 0 0 0 3px rgba(82,162,90,0.16); }
+
+    .v1-story {
+      padding: 100px 40px;
+      background: var(--cream-deep);
+      border-top: 1px solid var(--line);
+    }
+    .v1-story-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+    .v1-story-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 20px;
+    }
+    .v1-story-inner h2 {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .v1-story-inner p {
+      margin-top: 20px;
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+
+    .v1-visit {
+      padding: 60px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 40px;
+      align-items: center;
+      background: var(--cream-light);
+      border-top: 1px solid var(--line);
+    }
+    .v1-visit-block > .v1-visit-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--ink-mute); margin-bottom: 12px;
+    }
+    .v1-visit-block > div:not(.v1-visit-label) { font-family: var(--serif); font-size: 24px; font-weight: 500; line-height: 1.3; }
+    .v1-visit-cta { display: flex; gap: 10px; }
+
+    .v1-footer {
+      padding: 40px; text-align: center;
+      background: var(--ink); color: rgba(245,238,220,0.7);
+      font-size: 14px;
+    }
+    .v1-footer-brand {
+      font-family: var(--serif); font-size: 20px; font-weight: 500;
+      color: var(--cream-light); margin-bottom: 12px;
+    }
+    .v1-footer-meta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .v1-footer-meta a:hover { color: var(--cream-light); }
+
+    @media (max-width: 900px) {
+      .v1-nav { padding: 14px 20px; }
+      .v1-nav-links > a:not(.v1-nav-order):not(.v1-nav-reserve) { display: none; }
+      .v1-hero { grid-template-columns: 1fr; }
+      .v1-hero-photo { min-height: 360px; }
+      .v1-hero-order { padding: 36px 24px; }
+      .v1-visit { grid-template-columns: 1fr; text-align: center; }
+      .v1-visit-cta { justify-content: center; }
+    }
+
+    /* ============ V2 EDITORIAL + DOCK ============ */
+    .v2 { background: #0F0B08; color: #F5EEDC; min-height: 100vh; }
+
+    .v2-nav {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 48px;
+    }
+    .v2-brand {
+      font-family: var(--serif); font-weight: 500;
+      font-size: 20px; letter-spacing: 0.01em;
+      color: var(--cream-light);
+    }
+    .v2-nav-links { display: flex; gap: 28px; font-size: 13px; }
+    .v2-nav-links a {
+      color: rgba(245,238,220,0.7);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 150ms ease-out;
+    }
+    .v2-nav-links a:hover { color: var(--gold); }
+
+    .v2-hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid; place-items: center;
+      background:
+        radial-gradient(60% 45% at 50% 55%, rgba(184,84,31,0.28), transparent 60%),
+        radial-gradient(80% 60% at 50% 100%, rgba(31,58,46,0.4), transparent 70%),
+        linear-gradient(180deg, #1A100A 0%, #0A0605 100%);
+      overflow: hidden;
+    }
+    .v2-hero-dish {
+      position: absolute; left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(78vmin, 720px); aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 40% 30%, rgba(255,210,140,0.35), rgba(184,84,31,0.55) 40%, rgba(60,20,8,0.2) 100%),
+        radial-gradient(circle at 60% 70%, rgba(212,162,76,0.3), transparent 55%);
+      filter: blur(2px);
+      opacity: 0.85;
+      animation: v2FloatIn 1400ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+    .v2-hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 32px;
+      animation: v2FadeUp 1200ms 200ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+    .v2-hero-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .v2-hero-title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(48px, 8vw, 108px);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      color: var(--cream-light);
+      max-width: 12ch;
+      margin: 0 auto;
+    }
+    .v2-hero-title em {
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 400;
+    }
+    .v2-hero-sub {
+      margin-top: 24px;
+      font-size: 15px;
+      color: rgba(245,238,220,0.66);
+      letter-spacing: 0.02em;
+      max-width: 44ch;
+      margin-left: auto; margin-right: auto;
+      line-height: 1.6;
+    }
+    .v2-scroll-cue {
+      position: absolute;
+      bottom: 120px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(245,238,220,0.5);
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      animation: v2Bob 2200ms ease-in-out infinite;
+    }
+    .v2-scroll-cue::after {
+      content: "";
+      width: 1px; height: 32px;
+      background: linear-gradient(180deg, rgba(245,238,220,0.5), transparent);
+    }
+    @keyframes v2FloatIn {
+      from { transform: translate(-50%, -46%) scale(0.94); opacity: 0; }
+      to { transform: translate(-50%, -50%) scale(1); opacity: 0.85; }
+    }
+    @keyframes v2FadeUp {
+      from { transform: translateY(24px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes v2Bob {
+      0%, 100% { transform: translate(-50%, 0); opacity: 0.6; }
+      50% { transform: translate(-50%, 6px); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .v2-hero-dish, .v2-hero-content, .v2-scroll-cue { animation: none; }
+    }
+
+    .v2-story {
+      padding: 140px 32px;
+      max-width: 780px; margin: 0 auto;
+      text-align: center;
+    }
+    .v2-story-label {
+      font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 24px;
+    }
+    .v2-story h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.6vw, 44px); line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--cream-light);
+    }
+    .v2-story p {
+      margin-top: 24px;
+      font-size: 17px;
+      color: rgba(245,238,220,0.72);
+      line-height: 1.7;
+    }
+
+    .v2-dishes {
+      padding: 60px 32px 140px;
+      max-width: 1120px; margin: 0 auto;
+    }
+    .v2-dishes-head { text-align: center; margin-bottom: 60px; }
+    .v2-dishes-head-label {
+      font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .v2-dishes-head h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -0.02em;
+      color: var(--cream-light);
+    }
+    .v2-dish-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+    }
+    .v2-dish {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+    }
+    .v2-dish-visual {
+      width: 100%; aspect-ratio: 1;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin-bottom: 24px;
+      transition: transform 300ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .v2-dish:hover .v2-dish-visual { transform: translateY(-6px) scale(1.02); }
+    .v2-dish-title {
+      font-family: var(--serif); font-size: 24px; font-weight: 500;
+      color: var(--cream-light);
+    }
+    .v2-dish-region {
+      font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); margin-top: 8px;
+    }
+    .v2-dish-desc {
+      font-size: 14px; color: rgba(245,238,220,0.66);
+      line-height: 1.6; margin-top: 12px;
+    }
+
+    .v2-visit {
+      padding: 120px 32px;
+      background: #0A0605;
+      border-top: 1px solid rgba(245,238,220,0.08);
+      text-align: center;
+    }
+    .v2-visit h3 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.02em;
+      color: var(--cream-light);
+      margin-bottom: 40px;
+    }
+    .v2-visit-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 40px; max-width: 780px; margin: 0 auto 40px;
+    }
+    .v2-visit-cell-label {
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .v2-visit-cell-value {
+      font-family: var(--serif); font-size: 20px; color: var(--cream-light);
+      font-weight: 500;
+    }
+    .v2-visit-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 18px 32px; background: var(--amber); color: #fff;
+      border-radius: 999px; font-weight: 600; font-size: 16px;
+      transition: background 150ms ease-out, transform 150ms ease-out;
+    }
+    .v2-visit-cta:hover { background: var(--amber-hover); transform: translateY(-1px); }
+
+    .v2-footer {
+      padding: 32px; text-align: center;
+      color: rgba(245,238,220,0.4); font-size: 13px;
+      border-top: 1px solid rgba(245,238,220,0.08);
+    }
+    .v2-footer a { color: rgba(245,238,220,0.55); }
+    .v2-footer a:hover { color: var(--gold); }
+
+    /* V2 sticky dock */
+    .v2-dock {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%);
+      z-index: 50;
+      display: flex; align-items: center; gap: 16px;
+      padding: 12px 12px 12px 22px;
+      background: rgba(15,11,8,0.92);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      backdrop-filter: blur(20px) saturate(1.4);
+      border: 1px solid rgba(212,162,76,0.30);
+      border-radius: 999px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,162,76,0.06);
+      animation: v2DockIn 800ms 700ms cubic-bezier(0.19, 1, 0.22, 1) both;
+      transition: padding 250ms ease-out, gap 250ms ease-out;
+    }
+    .v2-dock-copy { display: flex; flex-direction: column; gap: 2px; line-height: 1.2; }
+    .v2-dock-eyebrow {
+      font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .v2-dock-line { font-size: 14px; color: var(--cream-light); font-weight: 500; }
+    .v2-dock-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px; background: var(--amber); color: #fff;
+      border-radius: 999px; font-weight: 600; font-size: 14px;
+      letter-spacing: -0.01em;
+      transition: background 150ms ease-out, transform 150ms ease-out;
+    }
+    .v2-dock-cta:hover { background: var(--amber-hover); transform: translateY(-1px); }
+    .v2-dock-cta-arrow { font-size: 16px; }
+    @keyframes v2DockIn {
+      from { transform: translate(-50%, 24px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) { .v2-dock { animation: none; } }
+
+    @media (max-width: 900px) {
+      .v2-nav { padding: 20px 22px; }
+      .v2-nav-links { display: none; }
+      .v2-dish-grid { grid-template-columns: 1fr; gap: 60px; }
+      .v2-visit-grid { grid-template-columns: 1fr; gap: 32px; }
+      .v2-dock { display: none; }
+    }
+
+    /* ============ V3 KITCHEN (order-dominant) ============ */
+    .v3 { background: var(--cream); color: var(--ink); }
+
+    .v3-nav {
+      position: sticky; top: 0; z-index: 40;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 32px;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+    }
+    .v3-brand-block { display: flex; align-items: center; gap: 14px; }
+    .v3-brand-mark {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--forest);
+      display: grid; place-items: center;
+      color: var(--gold);
+      font-family: var(--serif); font-weight: 700; font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+    .v3-brand-name { font-family: var(--serif); font-weight: 500; font-size: 18px; letter-spacing: -0.02em; }
+    .v3-brand-sub { font-size: 11px; color: var(--ink-mute); margin-top: 2px; letter-spacing: 0.06em; }
+    .v3-nav-right { display: flex; align-items: center; gap: 20px; }
+    .v3-nav-open {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--ink-soft);
+    }
+    .v3-open-dot { width: 6px; height: 6px; border-radius: 50%; background: #52A25A; box-shadow: 0 0 0 3px rgba(82,162,90,0.16); }
+    .v3-nav-order {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 12px 22px; background: var(--amber); color: #fff;
+      border-radius: 10px; font-weight: 600; font-size: 15px;
+      transition: background 150ms ease-out, transform 150ms ease-out;
+    }
+    .v3-nav-order:hover { background: var(--amber-hover); transform: translateY(-1px); }
+
+    .v3-hero {
+      padding: 40px 32px 24px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .v3-hero-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 24px; flex-wrap: wrap; }
+    .v3-hero-title {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(30px, 3.6vw, 44px);
+      line-height: 1.05; letter-spacing: -0.025em;
+      max-width: 14ch;
+    }
+    .v3-hero-sub {
+      font-size: 14px; color: var(--ink-soft);
+      max-width: 40ch; line-height: 1.5;
+    }
+    .v3-incentives {
+      display: flex; gap: 20px; flex-wrap: wrap;
+      font-size: 13px; color: var(--ink-soft);
+    }
+    .v3-incentive { display: flex; align-items: center; gap: 8px; }
+    .v3-incentive-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--amber-tint); color: var(--amber);
+      display: grid; place-items: center; font-size: 12px; font-weight: 700;
+    }
+
+    .v3-category-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin: 24px 0 48px;
+    }
+    .v3-category-card {
+      aspect-ratio: 1;
+      border-radius: var(--radius);
+      padding: 16px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: transform 200ms cubic-bezier(0.19, 1, 0.22, 1), box-shadow 200ms ease-out;
+      color: var(--cream-light);
+    }
+    .v3-category-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,22,20,0.14); }
+    .v3-category-name { font-family: var(--serif); font-size: 20px; font-weight: 500; letter-spacing: -0.02em; z-index: 1; }
+    .v3-category-count { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75; z-index: 1; }
+    .v3-category-icon-bg {
+      position: absolute; right: -20px; bottom: -20px;
+      width: 90px; height: 90px;
+      opacity: 0.22;
+    }
+    .v3-category-arrow {
+      position: absolute; top: 14px; right: 14px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      display: grid; place-items: center; font-size: 13px;
+    }
+
+    .v3-cat-1 { background: linear-gradient(135deg, #B8541F 0%, #7A2E10 100%); }
+    .v3-cat-2 { background: linear-gradient(135deg, #1F3A2E 0%, #0D1F16 100%); }
+    .v3-cat-3 { background: linear-gradient(135deg, #D4A24C 0%, #A47D34 100%); color: var(--ink); }
+    .v3-cat-3 .v3-category-count { opacity: 0.7; }
+    .v3-cat-3 .v3-category-arrow { background: rgba(26,22,20,0.20); }
+    .v3-cat-4 { background: linear-gradient(135deg, #6B2E1A 0%, #401A0D 100%); }
+    .v3-cat-5 { background: linear-gradient(135deg, #2E4A3A 0%, #1A2E24 100%); }
+    .v3-cat-6 { background: linear-gradient(135deg, #7A5F32 0%, #4A3820 100%); }
+
+    .v3-popular {
+      max-width: 1200px; margin: 0 auto; padding: 0 32px 60px;
+    }
+    .v3-popular-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+    .v3-popular-title { font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: -0.02em; }
+    .v3-popular-link { font-size: 13px; color: var(--amber); font-weight: 600; }
+    .v3-popular-link:hover { text-decoration: underline; }
+    .v3-popular-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .v3-dish-card {
+      background: var(--cream-light);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 200ms cubic-bezier(0.19, 1, 0.22, 1), box-shadow 200ms ease-out, border-color 200ms ease-out;
+    }
+    .v3-dish-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line-strong); }
+    .v3-dish-visual {
+      aspect-ratio: 4 / 3;
+      display: grid; place-items: center;
+    }
+    .v3-dish-body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .v3-dish-name { font-family: var(--serif); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; }
+    .v3-dish-desc { font-size: 12px; color: var(--ink-mute); line-height: 1.45; min-height: 34px; }
+    .v3-dish-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .v3-dish-price { font-weight: 600; font-size: 14px; }
+    .v3-dish-add {
+      padding: 8px 14px; background: var(--ink); color: var(--cream-light);
+      border-radius: 999px; font-size: 12px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .v3-dish-add:hover { background: var(--amber); }
+
+    .v3-story-strip {
+      background: var(--forest); color: var(--cream-light);
+      padding: 40px 32px;
+    }
+    .v3-story-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: center;
+    }
+    .v3-story-strip-label {
+      font-size: 11px; letter-spacing: 0.20em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px;
+    }
+    .v3-story-strip h3 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: 22px; line-height: 1.35; letter-spacing: -0.01em;
+      color: var(--cream-light); max-width: 60ch;
+    }
+    .v3-story-strip-link {
+      justify-self: end;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px; border: 1px solid rgba(245,238,220,0.28); border-radius: 999px;
+      color: var(--cream-light); font-size: 14px; font-weight: 500;
+      transition: background 150ms ease-out, border-color 150ms ease-out;
+    }
+    .v3-story-strip-link:hover { background: rgba(245,238,220,0.10); border-color: rgba(245,238,220,0.5); }
+
+    .v3-visit {
+      padding: 40px 32px;
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .v3-visit-block { display: flex; align-items: center; gap: 14px; }
+    .v3-visit-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--cream-deep); color: var(--amber);
+      display: grid; place-items: center;
+    }
+    .v3-visit-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
+    .v3-visit-value { font-family: var(--serif); font-size: 17px; font-weight: 500; margin-top: 2px; }
+
+    .v3-footer {
+      background: var(--ink); color: rgba(245,238,220,0.6);
+      padding: 24px 32px; text-align: center; font-size: 13px;
+    }
+    .v3-footer a:hover { color: var(--cream-light); }
+
+    @media (max-width: 1100px) {
+      .v3-category-grid { grid-template-columns: repeat(3, 1fr); }
+      .v3-popular-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .v3-nav { padding: 12px 16px; }
+      .v3-brand-sub { display: none; }
+      .v3-nav-open { display: none; }
+      .v3-hero { padding: 24px 16px 16px; }
+      .v3-category-grid { grid-template-columns: repeat(2, 1fr); }
+      .v3-popular { padding: 0 16px 40px; }
+      .v3-popular-grid { grid-template-columns: 1fr; }
+      .v3-story-strip-inner { grid-template-columns: 1fr; }
+      .v3-story-strip-link { justify-self: start; }
+      .v3-visit { flex-direction: column; align-items: flex-start; padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main id="stage" aria-live="polite"></main>
+
+  <nav class="proto-picker" data-position="top" aria-label="Prototype variants">
+    <span class="proto-picker-highlight" aria-hidden="true"></span>
+    <button class="proto-picker-item" data-active aria-current="true">Split Hero</button>
+    <button class="proto-picker-item">Editorial</button>
+    <button class="proto-picker-item">Kitchen</button>
+    <span class="proto-picker-divider" aria-hidden="true"></span>
+    <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
+  </nav>
+
+  <script>
+    // ============ SVG icons (inline, reused) ============
+    const icons = {
+      bowl: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 28h52c0 14-11.6 26-26 26S6 42 6 28z" fill="currentColor" opacity="0.9"/><path d="M14 22c0-5 8-9 18-9s18 4 18 9" stroke="currentColor" stroke-width="2.5" fill="none" opacity="0.7"/><circle cx="24" cy="18" r="2" fill="currentColor" opacity="0.6"/><circle cx="40" cy="20" r="1.6" fill="currentColor" opacity="0.6"/></svg>`,
+      wok: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 30h56l-6 14c-2 4-6 6-10 6H20c-4 0-8-2-10-6L4 30z" fill="currentColor" opacity="0.9"/><path d="M2 30h60" stroke="currentColor" stroke-width="2" opacity="0.6"/><path d="M22 20c0-4 4-6 8-6 3 0 5 2 5 4" stroke="currentColor" stroke-width="2" fill="none" opacity="0.7"/><path d="M40 16c0-3 3-5 6-5" stroke="currentColor" stroke-width="2" fill="none" opacity="0.7"/></svg>`,
+      noodle: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 34h48c0 12-10 22-24 22S8 46 8 34z" fill="currentColor" opacity="0.9"/><path d="M14 28c4-8 12-12 18-12s14 4 18 12" stroke="currentColor" stroke-width="2" fill="none" opacity="0.7"/><path d="M20 24c2-4 8-6 12-6" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/><path d="M32 22c3-3 8-4 12-3" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.6"/></svg>`,
+      rice: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 32c0-6 10-10 24-10s24 4 24 10-10 10-24 10-24-4-24-10z" fill="currentColor" opacity="0.9"/><ellipse cx="20" cy="26" rx="2" ry="1.2" fill="currentColor" opacity="0.5"/><ellipse cx="28" cy="24" rx="2" ry="1.2" fill="currentColor" opacity="0.5"/><ellipse cx="36" cy="26" rx="2" ry="1.2" fill="currentColor" opacity="0.5"/><ellipse cx="44" cy="24" rx="2" ry="1.2" fill="currentColor" opacity="0.5"/></svg>`,
+      leaf: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 52C12 30 30 12 52 12c0 22-18 40-40 40z" fill="currentColor" opacity="0.9"/><path d="M12 52C22 42 34 34 48 28" stroke="currentColor" stroke-width="1.5" opacity="0.5" fill="none"/></svg>`,
+      cup: `<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 20h32v22c0 4-3 8-8 8H22c-5 0-8-4-8-8V20z" fill="currentColor" opacity="0.9"/><path d="M46 24h6c3 0 6 3 6 6s-3 6-6 6h-6" stroke="currentColor" stroke-width="2" fill="none" opacity="0.7"/><path d="M22 12c0 3 2 5 4 5s4-2 4-5" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6"/><path d="M32 12c0 3 2 5 4 5s4-2 4-5" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6"/></svg>`,
+      arrow: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+      plus: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+      clock: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`,
+      pin: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-8 8-14a8 8 0 10-16 0c0 6 8 14 8 14z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="2"/></svg>`,
+    };
+
+    // ============ Variant 1 — SPLIT HERO ============
+    function variantSplitHero() {
+      return `
+        <div class="v1">
+          <nav class="v1-nav">
+            <div class="v1-brand">
+              <div class="v1-mark">Nakhon Luang</div>
+              <div class="v1-mark-sub">THAI KITCHEN · CO SPRINGS</div>
+            </div>
+            <div class="v1-nav-links">
+              <a href="#menu">Menu</a>
+              <a href="#story">Story</a>
+              <a href="#visit">Visit</a>
+              <a href="#reserve" class="v1-nav-reserve">Reserve</a>
+              <a href="/order" class="v1-nav-order">Order Online →</a>
+            </div>
+          </nav>
+
+          <section class="v1-hero">
+            <div class="v1-hero-photo">
+              <div class="v1-hero-photo-art" style="color:#4A2914">${icons.bowl}</div>
+              <div class="v1-hero-caption">
+                Featured
+                <em>Khao Soi Gai — Northern Thai coconut curry</em>
+              </div>
+            </div>
+            <div class="v1-hero-order">
+              <span class="v1-order-eyebrow">Order for pickup or delivery</span>
+              <h1 class="v1-hero-title">Real Thai cooking, in your hands in about 20 minutes.</h1>
+              <p class="v1-hero-sub">Chef-owned kitchen in Rockrimmon. Skip the phone. Skip the line. Every order is made to order and ready when you walk in.</p>
+
+              <div class="v1-category-grid">
+                <a href="/order#curries" class="v1-category">
+                  <span class="v1-category-icon">${icons.bowl}</span>
+                  <span class="v1-category-name">Curries</span>
+                </a>
+                <a href="/order#stir-fry" class="v1-category">
+                  <span class="v1-category-icon">${icons.wok}</span>
+                  <span class="v1-category-name">Stir-Fry</span>
+                </a>
+                <a href="/order#noodles" class="v1-category">
+                  <span class="v1-category-icon">${icons.noodle}</span>
+                  <span class="v1-category-name">Noodles</span>
+                </a>
+              </div>
+
+              <div class="v1-popular-block">
+                <div class="v1-popular-label">Popular right now</div>
+                <a href="/order#khao-soi" class="v1-popular-item">
+                  <div>
+                    <div class="v1-popular-name">Khao Soi Gai</div>
+                    <div class="v1-popular-desc">Chiang Mai coconut curry, crispy noodles, chicken</div>
+                  </div>
+                  <div class="v1-popular-name">$16</div>
+                </a>
+                <a href="/order#pad-kra-pao" class="v1-popular-item">
+                  <div>
+                    <div class="v1-popular-name">Pad Kra Pao</div>
+                    <div class="v1-popular-desc">Holy basil stir-fry with fried egg over jasmine rice</div>
+                  </div>
+                  <div class="v1-popular-name">$14</div>
+                </a>
+                <a href="/order#drunken-noodles" class="v1-popular-item">
+                  <div>
+                    <div class="v1-popular-name">Drunken Noodles</div>
+                    <div class="v1-popular-desc">Wide rice noodles, crispy duck, Thai basil, chili</div>
+                  </div>
+                  <div class="v1-popular-name">$18</div>
+                </a>
+              </div>
+
+              <a href="/order" class="v1-hero-cta">
+                <span class="v1-hero-cta-strap">
+                  <span>Order Online</span>
+                  <span class="v1-hero-cta-sub">Ready in ~20 min · No wait · No phone tag</span>
+                </span>
+                <span class="v1-hero-cta-arrow">→</span>
+              </a>
+
+              <div class="v1-hero-meta">
+                <span class="v1-hero-meta-dot"></span>
+                Open now until 8:30pm · Rockrimmon, Colorado Springs
+              </div>
+            </div>
+          </section>
+
+          <section class="v1-story" id="story">
+            <div class="v1-story-inner">
+              <div class="v1-story-label">Our kitchen</div>
+              <h2>Regional Thai cooking — Bangkok, Isan, the North, the South, and Lao.</h2>
+              <p>Family-run since day one. Every curry paste is pounded fresh. Jasmine rice is measured, never scooped. If you've had Thai food that tasted like the same takeout menu everywhere, this isn't that.</p>
+            </div>
+          </section>
+
+          <section class="v1-visit" id="visit">
+            <div class="v1-visit-block">
+              <div class="v1-visit-label">Hours</div>
+              <div>11:00am – 8:30pm</div>
+              <div>Open daily · lunch &amp; dinner</div>
+            </div>
+            <div class="v1-visit-block">
+              <div class="v1-visit-label">Where</div>
+              <div>Rockrimmon</div>
+              <div>Colorado Springs, CO</div>
+            </div>
+            <div class="v1-visit-cta">
+              <a href="/order" class="btn btn-primary">Order Online</a>
+              <a href="#reserve" class="btn btn-ghost">Reserve a table</a>
+            </div>
+          </section>
+
+          <footer class="v1-footer">
+            <div class="v1-footer-brand">Nakhon Luang Thai Kitchen</div>
+            <div class="v1-footer-meta">
+              <span>Rockrimmon, Colorado Springs, CO</span>
+              <span>·</span>
+              <a href="tel:+17195315175">(719) 531-5175</a>
+              <span>·</span>
+              <a href="https://instagram.com/eatnltk">@eatnltk</a>
+            </div>
+          </footer>
+
+          <a href="/order" class="mobile-order-bar" aria-label="Order Online">
+            <span class="mobile-order-bar-strap">
+              <span>Order Online</span>
+              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+            </span>
+            <span class="mobile-order-bar-icon">→</span>
+          </a>
+        </div>
+      `;
+    }
+
+    // ============ Variant 2 — EDITORIAL + DOCK ============
+    function variantEditorial() {
+      return `
+        <div class="v2">
+          <nav class="v2-nav">
+            <div class="v2-brand">Nakhon Luang · Thai Kitchen</div>
+            <div class="v2-nav-links">
+              <a href="#story">Story</a>
+              <a href="#dishes">Dishes</a>
+              <a href="#visit">Visit</a>
+              <a href="#reserve">Reserve</a>
+            </div>
+          </nav>
+
+          <section class="v2-hero">
+            <div class="v2-hero-dish" aria-hidden="true"></div>
+            <div class="v2-hero-content">
+              <div class="v2-hero-eyebrow">Authentic Thai · Colorado Springs</div>
+              <h1 class="v2-hero-title">Food our family <em>grew up on.</em></h1>
+              <p class="v2-hero-sub">Regional cooking from Bangkok, Isan, the North, the South, and Lao. Made fresh, made properly, made to order.</p>
+            </div>
+            <div class="v2-scroll-cue">Scroll</div>
+          </section>
+
+          <section class="v2-story" id="story">
+            <div class="v2-story-label">Our philosophy</div>
+            <h2>Curry pastes pounded in the morning. Rice measured by the cup. Fish sauce nobody in Colorado has heard of.</h2>
+            <p>A tiny chef-owned kitchen in Rockrimmon. We opened because the Thai food we grew up eating didn't exist in Colorado Springs. Now it does.</p>
+          </section>
+
+          <section class="v2-dishes" id="dishes">
+            <div class="v2-dishes-head">
+              <div class="v2-dishes-head-label">On the menu tonight</div>
+              <h2>Popular dishes</h2>
+            </div>
+            <div class="v2-dish-grid">
+              <div class="v2-dish">
+                <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,210,140,0.55), rgba(184,84,31,0.9) 45%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
+                <div class="v2-dish-title">Khao Soi Gai</div>
+                <div class="v2-dish-region">Northern Thailand</div>
+                <div class="v2-dish-desc">Egg noodles in a coconut curry broth, chicken, pickled mustard greens, and a nest of crispy noodles on top.</div>
+              </div>
+              <div class="v2-dish">
+                <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.35), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
+                <div class="v2-dish-title">Pad Kra Pao</div>
+                <div class="v2-dish-region">Central Thailand</div>
+                <div class="v2-dish-desc">Holy basil stir-fry with pork, birds-eye chili, and a runny fried egg. The dish Thai people eat when nothing else will do.</div>
+              </div>
+              <div class="v2-dish">
+                <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
+                <div class="v2-dish-title">Drunken Noodles</div>
+                <div class="v2-dish-region">Bangkok street</div>
+                <div class="v2-dish-desc">Wide rice noodles, crispy duck, Thai basil, and enough chili to earn the name. A late-night dish, all day.</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="v2-visit" id="visit">
+            <h3>Come find us — or order in.</h3>
+            <div class="v2-visit-grid">
+              <div>
+                <div class="v2-visit-cell-label">Open</div>
+                <div class="v2-visit-cell-value">11am – 8:30pm</div>
+                <div class="v2-visit-cell-label" style="margin-top:6px;color:rgba(212,162,76,0.6);">Every day</div>
+              </div>
+              <div>
+                <div class="v2-visit-cell-label">Where</div>
+                <div class="v2-visit-cell-value">Rockrimmon</div>
+                <div class="v2-visit-cell-label" style="margin-top:6px;color:rgba(212,162,76,0.6);">Colorado Springs</div>
+              </div>
+              <div>
+                <div class="v2-visit-cell-label">Reservations</div>
+                <div class="v2-visit-cell-value">Recommended</div>
+                <div class="v2-visit-cell-label" style="margin-top:6px;color:rgba(212,162,76,0.6);">Fri & Sat 6–8pm</div>
+              </div>
+            </div>
+            <a href="/order" class="v2-visit-cta">Order for pickup or delivery →</a>
+          </section>
+
+          <footer class="v2-footer">
+            <span>Nakhon Luang Thai Kitchen</span> · Rockrimmon, Colorado Springs ·
+            <a href="tel:+17195315175">(719) 531-5175</a> ·
+            <a href="https://instagram.com/eatnltk">@eatnltk</a>
+          </footer>
+
+          <a href="/order" class="v2-dock">
+            <div class="v2-dock-copy">
+              <span class="v2-dock-eyebrow">Skip the line</span>
+              <span class="v2-dock-line">Ready in about 20 minutes</span>
+            </div>
+            <span class="v2-dock-cta">
+              Order Online <span class="v2-dock-cta-arrow">→</span>
+            </span>
+          </a>
+
+          <a href="/order" class="mobile-order-bar" aria-label="Order Online">
+            <span class="mobile-order-bar-strap">
+              <span>Order Online</span>
+              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+            </span>
+            <span class="mobile-order-bar-icon">→</span>
+          </a>
+        </div>
+      `;
+    }
+
+    // ============ Variant 3 — KITCHEN (order-dominant) ============
+    function variantKitchen() {
+      return `
+        <div class="v3">
+          <nav class="v3-nav">
+            <div class="v3-brand-block">
+              <div class="v3-brand-mark">N</div>
+              <div>
+                <div class="v3-brand-name">Nakhon Luang Thai</div>
+                <div class="v3-brand-sub">COLORADO SPRINGS</div>
+              </div>
+            </div>
+            <div class="v3-nav-right">
+              <div class="v3-nav-open">
+                <span class="v3-open-dot"></span>
+                Open now · closes 8:30pm
+              </div>
+              <a href="/order" class="v3-nav-order">
+                Order Online <span>→</span>
+              </a>
+            </div>
+          </nav>
+
+          <section class="v3-hero">
+            <div class="v3-hero-head">
+              <div>
+                <h1 class="v3-hero-title">Pick a category. Order in a minute.</h1>
+                <p class="v3-hero-sub" style="margin-top:12px;">Real regional Thai cooking, made to order, ready when you get here.</p>
+              </div>
+              <div class="v3-incentives">
+                <div class="v3-incentive"><span class="v3-incentive-icon">⚡</span> Skip the line</div>
+                <div class="v3-incentive"><span class="v3-incentive-icon">✓</span> Ready in ~20 min</div>
+                <div class="v3-incentive"><span class="v3-incentive-icon">↺</span> Reorder favorites</div>
+              </div>
+            </div>
+
+            <div class="v3-category-grid">
+              <a href="/order#curries" class="v3-category-card v3-cat-1">
+                <div class="v3-category-icon-bg">${icons.bowl}</div>
+                <div class="v3-category-arrow">→</div>
+                <div>
+                  <div class="v3-category-count">12 dishes</div>
+                </div>
+                <div class="v3-category-name">Curries</div>
+              </a>
+              <a href="/order#stir-fry" class="v3-category-card v3-cat-2">
+                <div class="v3-category-icon-bg">${icons.wok}</div>
+                <div class="v3-category-arrow">→</div>
+                <div>
+                  <div class="v3-category-count">18 dishes</div>
+                </div>
+                <div class="v3-category-name">Stir-Fry</div>
+              </a>
+              <a href="/order#noodles" class="v3-category-card v3-cat-3">
+                <div class="v3-category-icon-bg">${icons.noodle}</div>
+                <div class="v3-category-arrow">→</div>
+                <div>
+                  <div class="v3-category-count">9 dishes</div>
+                </div>
+                <div class="v3-category-name">Noodles</div>
+              </a>
+              <a href="/order#rice" class="v3-category-card v3-cat-4">
+                <div class="v3-category-icon-bg">${icons.rice}</div>
+                <div class="v3-category-arrow">→</div>
+                <div>
+                  <div class="v3-category-count">7 dishes</div>
+                </div>
+                <div class="v3-category-name">Rice Plates</div>
+              </a>
+              <a href="/order#apps" class="v3-category-card v3-cat-5">
+                <div class="v3-category-icon-bg">${icons.leaf}</div>
+                <div class="v3-category-arrow">→</div>
+                <div>
+                  <div class="v3-category-count">14 items</div>
+                </div>
+                <div class="v3-category-name">Appetizers</div>
+              </a>
+              <a href="/order#drinks" class="v3-category-card v3-cat-6">
+                <div class="v3-category-icon-bg">${icons.cup}</div>
+                <div class="v3-category-arrow">→</div>
+                <div>
+                  <div class="v3-category-count">11 drinks</div>
+                </div>
+                <div class="v3-category-name">Drinks</div>
+              </a>
+            </div>
+          </section>
+
+          <section class="v3-popular">
+            <div class="v3-popular-head">
+              <div class="v3-popular-title">Popular right now</div>
+              <a href="/order" class="v3-popular-link">See full menu →</a>
+            </div>
+            <div class="v3-popular-grid">
+              <div class="v3-dish-card">
+                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,200,120,0.5), rgba(184,84,31,0.9) 50%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
+                <div class="v3-dish-body">
+                  <div class="v3-dish-name">Khao Soi Gai</div>
+                  <div class="v3-dish-desc">Chiang Mai coconut curry, egg noodles, chicken, crispy noodle nest</div>
+                  <div class="v3-dish-foot">
+                    <div class="v3-dish-price">$16</div>
+                    <a href="/order#khao-soi" class="v3-dish-add">+ Add</a>
+                  </div>
+                </div>
+              </div>
+              <div class="v3-dish-card">
+                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.4), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
+                <div class="v3-dish-body">
+                  <div class="v3-dish-name">Pad Kra Pao</div>
+                  <div class="v3-dish-desc">Holy basil stir-fry, pork, birds-eye chili, fried egg on rice</div>
+                  <div class="v3-dish-foot">
+                    <div class="v3-dish-price">$14</div>
+                    <a href="/order#pad-kra-pao" class="v3-dish-add">+ Add</a>
+                  </div>
+                </div>
+              </div>
+              <div class="v3-dish-card">
+                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
+                <div class="v3-dish-body">
+                  <div class="v3-dish-name">Drunken Noodles</div>
+                  <div class="v3-dish-desc">Wide rice noodles, crispy duck, Thai basil, chili</div>
+                  <div class="v3-dish-foot">
+                    <div class="v3-dish-price">$18</div>
+                    <a href="/order#drunken-noodles" class="v3-dish-add">+ Add</a>
+                  </div>
+                </div>
+              </div>
+              <div class="v3-dish-card">
+                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,180,120,0.4), rgba(140,50,30,0.9) 50%, rgba(60,20,10,1) 100%); color: #F5EEDC;">${icons.rice}</div>
+                <div class="v3-dish-body">
+                  <div class="v3-dish-name">Massaman Beef</div>
+                  <div class="v3-dish-desc">Southern Thai curry, slow-braised beef, potato, peanut</div>
+                  <div class="v3-dish-foot">
+                    <div class="v3-dish-price">$17</div>
+                    <a href="/order#massaman" class="v3-dish-add">+ Add</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="v3-story-strip" id="story">
+            <div class="v3-story-strip-inner">
+              <div>
+                <div class="v3-story-strip-label">Our kitchen</div>
+                <h3>Chef-owned. Curry pastes pounded fresh. Regional dishes from Bangkok, Isan, Northern and Southern Thailand, and Lao.</h3>
+              </div>
+              <a href="#story" class="v3-story-strip-link">Read our story →</a>
+            </div>
+          </section>
+
+          <section class="v3-visit" id="visit">
+            <div class="v3-visit-block">
+              <div class="v3-visit-icon">${icons.clock}</div>
+              <div>
+                <div class="v3-visit-label">Hours</div>
+                <div class="v3-visit-value">11am – 8:30pm daily</div>
+              </div>
+            </div>
+            <div class="v3-visit-block">
+              <div class="v3-visit-icon">${icons.pin}</div>
+              <div>
+                <div class="v3-visit-label">Location</div>
+                <div class="v3-visit-value">Rockrimmon · Colorado Springs</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <a href="/order" class="btn btn-primary">Order Online</a>
+              <a href="#reserve" class="btn btn-forest">Reserve</a>
+            </div>
+          </section>
+
+          <footer class="v3-footer">
+            Nakhon Luang Thai Kitchen · Rockrimmon, Colorado Springs, CO ·
+            <a href="tel:+17195315175">(719) 531-5175</a> ·
+            <a href="https://instagram.com/eatnltk">@eatnltk</a>
+          </footer>
+
+          <a href="/order" class="mobile-order-bar" aria-label="Order Online">
+            <span class="mobile-order-bar-strap">
+              <span>Order Online</span>
+              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+            </span>
+            <span class="mobile-order-bar-icon">→</span>
+          </a>
+        </div>
+      `;
+    }
+
+    // ============ Wiring (verbatim from PICKER.md reference) ============
+    const variants = [variantSplitHero, variantEditorial, variantKitchen];
+    const stage = document.getElementById('stage');
+    const picker = document.querySelector('.proto-picker');
+    const highlight = picker.querySelector('.proto-picker-highlight');
+    const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
+    const replay = picker.querySelector('.proto-picker-replay');
+    let current = 0;
+
+    function moveHighlight() {
+      const el = items[current];
+      highlight.style.width = el.offsetWidth + 'px';
+      highlight.style.transform = `translateX(${el.offsetLeft}px)`;
+    }
+
+    function mount(i) {
+      stage.innerHTML = '';
+      requestAnimationFrame(() => { stage.innerHTML = variants[i](); window.scrollTo(0, 0); });
+    }
+
+    function setActive(i) {
+      if (i < 0 || i >= variants.length) return;
+      current = i;
+      items.forEach((el, j) => {
+        el.toggleAttribute('data-active', j === i);
+        if (j === i) el.setAttribute('aria-current', 'true');
+        else el.removeAttribute('aria-current');
+      });
+      moveHighlight();
+      const url = new URL(location);
+      url.searchParams.set('v', i + 1);
+      history.replaceState(null, '', url);
+      mount(i);
+    }
+
+    items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
+    replay?.addEventListener('click', () => mount(current));
+    window.addEventListener('resize', moveHighlight);
+
+    document.addEventListener('keydown', (e) => {
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const num = parseInt(e.key, 10);
+      if (num >= 1 && num <= variants.length) setActive(num - 1);
+      else if (e.key === 'ArrowRight') setActive((current + 1) % variants.length);
+      else if (e.key === 'ArrowLeft') setActive((current - 1 + variants.length) % variants.length);
+      else if (e.key === 'r' || e.key === 'R') mount(current);
+    });
+
+    setActive((parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1);
+    requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
+  </script>
+</body>
+</html>
