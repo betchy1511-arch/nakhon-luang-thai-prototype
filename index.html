@@ -651,7 +651,12 @@
       padding: 90px 40px;
       background: var(--cream-light);
       border-top: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
     }
+    .v1-reviews .bg-photo-layer { opacity: 0.12; }
+    .v1-reviews > * { position: relative; z-index: 1; }
     .v1-reviews-inner { max-width: 1080px; margin: 0 auto; }
     .v1-reviews-head { text-align: center; margin-bottom: 40px; }
     .v1-reviews-label {
@@ -669,8 +674,9 @@
     }
     .v1-reviews-head-meta .stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
     .v1-reviews-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
     }
+    @media (max-width: 1100px) { .v1-reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
     .v1-review-card {
       padding: 28px 24px 22px;
       background: var(--cream);
@@ -703,7 +709,12 @@
       padding: 120px 32px;
       background: var(--cream-light);
       border-top: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
     }
+    .v2-reviews .bg-photo-layer { opacity: 0.12; }
+    .v2-reviews > * { position: relative; z-index: 1; }
     .v2-reviews-inner { max-width: 1120px; margin: 0 auto; }
     .v2-reviews-head { text-align: center; margin-bottom: 64px; }
     .v2-reviews-label {
@@ -722,8 +733,9 @@
     }
     .v2-reviews-head-meta .stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
     .v2-reviews-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
     }
+    @media (max-width: 1100px) { .v2-reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
     .v2-review {
       display: flex; flex-direction: column; gap: 18px;
       text-align: center;
@@ -758,10 +770,15 @@
 
     /* ============ V3 Reviews (compact app-style) ============ */
     .v3-reviews {
-      padding: 40px 32px 60px;
+      padding: 60px 32px 60px;
       background: var(--cream-light);
       border-top: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
     }
+    .v3-reviews .bg-photo-layer { opacity: 0.12; }
+    .v3-reviews > * { position: relative; z-index: 1; }
     .v3-reviews-inner { max-width: 1200px; margin: 0 auto; }
     .v3-reviews-head {
       display: flex; justify-content: space-between; align-items: center;
@@ -784,8 +801,9 @@
     .v3-reviews-rating .stars { color: var(--gold); letter-spacing: 2px; }
     .v3-reviews-rating strong { color: var(--brown); font-weight: 700; }
     .v3-reviews-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
     }
+    @media (max-width: 1100px) { .v3-reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
     .v3-review-card {
       padding: 20px 22px 18px;
       background: var(--cream);
@@ -973,9 +991,14 @@
     }
     .v1-nav-order:hover { background: var(--amber-hover); }
     .v1-nav-reserve {
-      border: 1px solid var(--line-strong);
-      padding: 9px 16px; border-radius: 999px;
+      background: var(--gold);
+      color: var(--brown) !important;
+      border: 1px solid var(--gold-hover);
+      padding: 9px 18px; border-radius: 999px;
+      font-weight: 700;
+      transition: background 150ms ease-out;
     }
+    .v1-nav-reserve:hover { background: var(--gold-hover); color: var(--cream-light) !important; }
 
     .v1-hero {
       display: grid;
@@ -986,21 +1009,26 @@
 
     .v1-hero-photo {
       position: relative;
-      background:
-        radial-gradient(90% 60% at 30% 25%, rgba(255,220,150,0.15), transparent 60%),
-        linear-gradient(160deg, #4A2914 0%, #2E1A0C 55%, #1A0F08 100%);
-      display: grid;
-      place-items: center;
+      background: var(--brown-deep);
       overflow: hidden;
     }
     .v1-hero-photo-art {
-      width: 78%; max-width: 520px;
-      aspect-ratio: 4 / 3;
-      border-radius: var(--radius);
-      background: var(--brown-deep);
-      box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       overflow: hidden;
     }
+    .v1-hero-photo-art img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    .v1-hero-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,15,8,0.15) 0%, rgba(26,15,8,0.55) 100%);
+      pointer-events: none;
+    }
+    .v1-hero-caption { z-index: 2; }
     .v1-hero-caption {
       position: absolute;
       bottom: 32px; left: 40px;
@@ -1157,7 +1185,12 @@
       padding: 90px 40px;
       background: var(--cream-light);
       border-top: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
     }
+    .v1-visit .bg-photo-layer { opacity: 0.15; }
+    .v1-visit > * { position: relative; z-index: 1; }
     .v1-visit-inner {
       max-width: 1080px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
@@ -1908,6 +1941,7 @@
           </section>
 
           <section class="v1-reviews" id="reviews">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v1-reviews-inner">
               <div class="v1-reviews-head">
                 <div class="v1-reviews-label">Raves &amp; reviews</div>
@@ -1943,6 +1977,16 @@
                   <p class="v1-review-quote">"Food here delicious. I love their Lao style papaya salad, Nom Tuk pork. Also Pad Ga Prao with ground pork and fried egg. It tastes just like in Thailand. The service and atmosphere is exceptional."</p>
                   <div class="v1-review-attrib"><strong>Suwanna M.</strong><span>Google</span></div>
                 </div>
+                <div class="v1-review-card">
+                  <div class="v1-review-stars">★★★★★</div>
+                  <p class="v1-review-quote">"Found this new Thai restaurant while traveling around Colorado Springs. We chose the Avocado Green Curry and Pad Se-Ew. The curry was excellent and had plenty of vegetables along with the chicken."</p>
+                  <div class="v1-review-attrib"><strong>Chadwick</strong><span>Google</span></div>
+                </div>
+                <div class="v1-review-card">
+                  <div class="v1-review-stars">★★★★★</div>
+                  <p class="v1-review-quote">"Some awesome food, fresh, great flavor. Their spicy Thai Margarita was sooo good. Had the garlic pepper stir-fry with shrimp. Love this place."</p>
+                  <div class="v1-review-attrib"><strong>Tim &amp; Lynda R.</strong><span>Google</span></div>
+                </div>
               </div>
               <p class="v1-review-source-note">All quotes shown verbatim from the 66 Google Business Profile reviews.</p>
               <div class="reviews-see-more-wrap">
@@ -1953,18 +1997,24 @@
             </div>
           </section>
 
-          <section class="v1-reservations" id="reserve">
-            <div class="v1-reservations-inner">
-              <div class="v1-reservations-label">Reserve your table</div>
-              <h2>Reserve your table tonight</h2>
-              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
-              <div class="v1-reservations-cta">
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
+          <section class="v1-reservations" id="reserve" style="text-align: left;">
+            <div class="split-image-section" style="max-width: 1080px;">
+              <div class="split-image">
+                <img src="assets/nl4-philosophy.jpg" alt="Thai table spread with coconut curry soup, sesame chicken with broccoli, and cocktails" width="480" height="360">
+              </div>
+              <div>
+                <div class="v1-reservations-label" style="text-align: left;">Reserve your table</div>
+                <h2 style="text-align: left;">Reserve your table tonight</h2>
+                <p style="text-align: left;">Reservations recommended. Walk-ins welcome. Private events available.</p>
+                <div class="v1-reservations-cta" style="justify-content: flex-start;">
+                  <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
+                </div>
               </div>
             </div>
           </section>
 
           <section class="v1-visit" id="visit">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v1-visit-inner">
               <div class="v1-visit-photo">
                 <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360">
@@ -2126,6 +2176,7 @@
           </section>
 
           <section class="v2-reviews" id="reviews">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v2-reviews-inner">
               <div class="v2-reviews-head">
                 <div class="v2-reviews-label">Raves &amp; reviews</div>
@@ -2163,6 +2214,18 @@
                   <div class="v2-review-stars">★★★★★</div>
                   <p class="v2-review-quote">Food here delicious. I love their Lao style papaya salad, Nom Tuk pork. Also Pad Ga Prao with ground pork and fried egg. It tastes just like in Thailand. The service and atmosphere is exceptional.</p>
                   <div class="v2-review-attrib">Suwanna M. · Google</div>
+                </div>
+                <div class="v2-review">
+                  <div class="v2-review-mark">"</div>
+                  <div class="v2-review-stars">★★★★★</div>
+                  <p class="v2-review-quote">Found this new Thai restaurant while traveling around Colorado Springs. We chose the Avocado Green Curry and Pad Se-Ew. The curry was excellent and had plenty of vegetables along with the chicken.</p>
+                  <div class="v2-review-attrib">Chadwick · Google</div>
+                </div>
+                <div class="v2-review">
+                  <div class="v2-review-mark">"</div>
+                  <div class="v2-review-stars">★★★★★</div>
+                  <p class="v2-review-quote">Some awesome food, fresh, great flavor. Their spicy Thai Margarita was sooo good. Had the garlic pepper stir-fry with shrimp. Love this place.</p>
+                  <div class="v2-review-attrib">Tim &amp; Lynda R. · Google</div>
                 </div>
               </div>
               <p class="v2-reviews-source-note">All quotes shown verbatim from the 66 Google Business Profile reviews.</p>
@@ -2225,13 +2288,18 @@
             </div>
           </section>
 
-          <section class="v2-reservations" id="reserve">
-            <div class="v2-reservations-inner">
-              <div class="v2-reservations-label">Reserve your table</div>
-              <h2>Reserve your table tonight</h2>
-              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
-              <div class="v2-reservations-cta">
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
+          <section class="v2-reservations" id="reserve" style="text-align: left;">
+            <div class="split-image-section" style="max-width: 1080px;">
+              <div>
+                <div class="v2-reservations-label" style="text-align: left;">Reserve your table</div>
+                <h2 style="text-align: left;">Reserve your table tonight</h2>
+                <p style="text-align: left;">Reservations recommended. Walk-ins welcome. Private events available.</p>
+                <div class="v2-reservations-cta" style="justify-content: flex-start;">
+                  <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
+                </div>
+              </div>
+              <div class="split-image">
+                <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360">
               </div>
             </div>
           </section>
@@ -2288,7 +2356,7 @@
               <div>
                 <div style="font-size:11px; font-family:var(--eyebrow); font-weight:700; letter-spacing:0.20em; text-transform:uppercase; color:var(--gold-hover); margin-bottom:14px;">Authentic Thai Cuisine &nbsp;·&nbsp; Colorado Springs, CO</div>
                 <h1 class="v3-hero-title">Pick a category, order in a minute</h1>
-                <p class="v3-hero-sub" style="margin-top:12px;">Real regional Thai cooking, made to order, ready when you get here.</p>
+                <p class="v3-hero-sub" style="margin-top:12px;">Real regional Thai cooking, made to order, ready when you get here</p>
               </div>
               <div class="v3-incentives">
                 <div class="v3-incentive"><span class="v3-incentive-icon">⚡</span> Skip the line</div>
@@ -2393,6 +2461,9 @@
           <section class="v3-content-strip" id="story">
             <div class="v3-content-strip-inner">
               <div class="v3-philosophy-card">
+                <div style="width:100%; aspect-ratio: 16/9; border-radius: var(--radius); overflow: hidden; margin-bottom: 20px;">
+                  <img src="assets/nl4-philosophy.jpg" alt="Thai table spread with coconut curry soup, sesame chicken with broccoli, and cocktails" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;" width="480" height="270">
+                </div>
                 <div class="v3-philosophy-label">Our philosophy</div>
                 <h3>Bold flavors, refined craft</h3>
                 <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition.</p>
@@ -2413,6 +2484,7 @@
           </section>
 
           <section class="v3-reviews" id="reviews">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v3-reviews-inner">
               <div class="v3-reviews-head">
                 <div class="v3-reviews-title-block">
@@ -2453,6 +2525,16 @@
                   <div class="v3-review-stars">★★★★★</div>
                   <p class="v3-review-quote">"Food here delicious. I love their Lao style papaya salad, Nom Tuk pork. Also Pad Ga Prao with ground pork and fried egg. It tastes just like in Thailand. The service and atmosphere is exceptional."</p>
                   <div class="v3-review-attrib">Suwanna M.</div>
+                </div>
+                <div class="v3-review-card">
+                  <div class="v3-review-stars">★★★★★</div>
+                  <p class="v3-review-quote">"Found this new Thai restaurant while traveling around Colorado Springs. We chose the Avocado Green Curry and Pad Se-Ew. The curry was excellent."</p>
+                  <div class="v3-review-attrib">Chadwick</div>
+                </div>
+                <div class="v3-review-card">
+                  <div class="v3-review-stars">★★★★★</div>
+                  <p class="v3-review-quote">"Some awesome food, fresh, great flavor. Their spicy Thai Margarita was sooo good. Had the garlic pepper stir-fry with shrimp. Love this place."</p>
+                  <div class="v3-review-attrib">Tim &amp; Lynda R.</div>
                 </div>
               </div>
               <div class="reviews-see-more-wrap">
