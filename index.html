@@ -1903,11 +1903,11 @@
       .v3-visit { flex-direction: column; align-items: flex-start; padding: 24px 16px; }
     }
 
-    /* ============ MOTION SAMPLE (toggle: [data-motion="on"]) ============ */
+    /* ============ MOTION SAMPLE (toggle: [data-motion]) ============ */
     /* Everything below only fires when the user turns on the Motion chip in the picker. */
 
     /* Reveal-on-scroll: single elements fade + rise into view */
-    [data-motion="on"] .reveal {
+    [data-motion] .reveal {
       opacity: 0;
       transform: translateY(18px);
       transition:
@@ -1915,13 +1915,13 @@
         transform 550ms cubic-bezier(0.19, 1, 0.22, 1);
       will-change: transform, opacity;
     }
-    [data-motion="on"] .reveal.in-view {
+    [data-motion] .reveal.in-view {
       opacity: 1;
       transform: translateY(0);
     }
 
     /* Reveal-with-stagger: children of a grid ripple in */
-    [data-motion="on"] .reveal-stagger > * {
+    [data-motion] .reveal-stagger > * {
       opacity: 0;
       transform: translateY(14px);
       transition:
@@ -1929,19 +1929,19 @@
         transform 550ms cubic-bezier(0.19, 1, 0.22, 1);
       will-change: transform, opacity;
     }
-    [data-motion="on"] .reveal-stagger.in-view > * {
+    [data-motion] .reveal-stagger.in-view > * {
       opacity: 1;
       transform: translateY(0);
     }
-    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(1) { transition-delay: 0ms; }
-    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(2) { transition-delay: 70ms; }
-    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(3) { transition-delay: 140ms; }
-    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(4) { transition-delay: 210ms; }
-    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(5) { transition-delay: 280ms; }
-    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(6) { transition-delay: 350ms; }
+    [data-motion] .reveal-stagger.in-view > *:nth-child(1) { transition-delay: 0ms; }
+    [data-motion] .reveal-stagger.in-view > *:nth-child(2) { transition-delay: 70ms; }
+    [data-motion] .reveal-stagger.in-view > *:nth-child(3) { transition-delay: 140ms; }
+    [data-motion] .reveal-stagger.in-view > *:nth-child(4) { transition-delay: 210ms; }
+    [data-motion] .reveal-stagger.in-view > *:nth-child(5) { transition-delay: 280ms; }
+    [data-motion] .reveal-stagger.in-view > *:nth-child(6) { transition-delay: 350ms; }
 
     /* Mobile order bar: slide up from below (from where it lives) */
-    [data-motion="on"] .mobile-order-bar {
+    [data-motion] .mobile-order-bar {
       animation: mobileBarUp 550ms 320ms cubic-bezier(0.19, 1, 0.22, 1) both;
     }
     @keyframes mobileBarUp {
@@ -1950,20 +1950,20 @@
     }
 
     /* V2 hero: trim overly-long duration when motion sample is on */
-    [data-motion="on"] .v2-hero-content { animation-duration: 700ms; animation-delay: 120ms; }
+    [data-motion] .v2-hero-content { animation-duration: 700ms; animation-delay: 120ms; }
 
     /* Storefront image reveal: scale-in with slight blur */
-    [data-motion="on"] .v1-reservations .split-image {
+    [data-motion] .v1-reservations .split-image {
       overflow: hidden; border-radius: var(--radius);
     }
-    [data-motion="on"] .v1-reservations .split-image img {
+    [data-motion] .v1-reservations .split-image img {
       transform: scale(1.06);
       filter: blur(6px);
       transition:
         transform 900ms cubic-bezier(0.19, 1, 0.22, 1),
         filter 700ms ease-out;
     }
-    [data-motion="on"] .v1-reservations.in-view .split-image img {
+    [data-motion] .v1-reservations.in-view .split-image img {
       transform: scale(1);
       filter: blur(0);
     }
@@ -1980,42 +1980,222 @@
       }
     }
 
-    /* Motion toggle chip in the picker */
-    .proto-picker-motion {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 14px;
-      background: transparent; border: none; cursor: pointer;
-      font: inherit; color: rgba(255,255,255,0.65);
-      font-size: 12px; letter-spacing: 0.04em;
+    /* Motion segmented control in the picker (Off | 1 | 2 | 3) */
+    .proto-picker-motion-group {
+      display: inline-flex; align-items: center; gap: 3px;
+      padding: 3px 6px 3px 10px;
+      background: rgba(255,255,255,0.06);
       border-radius: 999px;
-      transition: color 150ms ease-out, background 150ms ease-out;
     }
-    .proto-picker-motion:hover { color: rgba(255,255,255,0.9); }
-    .proto-picker-motion[data-on] { color: #fff; background: rgba(234,188,83,0.14); }
-    .proto-picker-motion:focus-visible {
-      outline: 2px solid rgba(234,188,83,0.85); outline-offset: 3px;
+    .proto-picker-motion-label {
+      font-family: inherit;
+      font-size: 10px; color: rgba(255,255,255,0.55);
+      letter-spacing: 0.16em; text-transform: uppercase;
+      margin-right: 6px;
     }
-    .proto-picker-motion-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-      transition: background 150ms ease-out, box-shadow 200ms ease-out;
+    .proto-picker-motion-btn {
+      padding: 4px 10px; font-size: 12px; font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      background: transparent; border: none; cursor: pointer;
+      border-radius: 999px; min-width: 22px;
+      transition: background 150ms ease-out, color 150ms ease-out, box-shadow 200ms ease-out;
     }
-    .proto-picker-motion[data-on] .proto-picker-motion-dot {
-      background: #EABC53;
-      box-shadow: 0 0 10px rgba(234,188,83,0.75);
+    .proto-picker-motion-btn:hover { color: #fff; }
+    .proto-picker-motion-btn[data-active] {
+      background: linear-gradient(135deg, #EABC53 0%, #B98A3A 100%);
+      color: #3A2010;
+      box-shadow: 0 0 12px rgba(234,188,83,0.45);
+    }
+    .proto-picker-motion-btn:focus-visible {
+      outline: 2px solid rgba(234,188,83,0.85); outline-offset: 2px;
+    }
+
+    /* ---------- SIGNATURE MOTION LAYER (still gated on :where([data-motion="2"], [data-motion="3"])) ---------- */
+
+    /* Word-mask hero reveal — words rise from behind an overflow mask */
+    :where([data-motion="2"], [data-motion="3"]) .word-mask {
+      display: inline-block; overflow: hidden;
+      vertical-align: bottom;
+      padding: 0.08em 0.02em;
+      line-height: inherit;
+    }
+    :where([data-motion="2"], [data-motion="3"]) .word-mask > .word {
+      display: inline-block;
+      transform: translateY(115%);
+      transition: transform 900ms cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform;
+    }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask > .word {
+      transform: translateY(0);
+    }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(1)  > .word { transition-delay: 60ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(2)  > .word { transition-delay: 140ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(3)  > .word { transition-delay: 220ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(4)  > .word { transition-delay: 300ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(5)  > .word { transition-delay: 380ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(6)  > .word { transition-delay: 460ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(7)  > .word { transition-delay: 540ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(8)  > .word { transition-delay: 620ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(9)  > .word { transition-delay: 700ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(10) > .word { transition-delay: 780ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(11) > .word { transition-delay: 860ms; }
+    :where([data-motion="2"], [data-motion="3"]) .headline-reveal.in-view .word-mask:nth-child(12) > .word { transition-delay: 940ms; }
+
+    /* 3D tilt on dish + category cards (JS drives the transform, CSS eases it) */
+    :where([data-motion="2"], [data-motion="3"]) .tilt-card {
+      transform-style: preserve-3d;
+      transition: transform 450ms cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform;
+    }
+    :where([data-motion="2"], [data-motion="3"]) .tilt-card > * { transform: translateZ(0); }
+
+    /* Magnetic pull on primary CTAs — spring-y bezier for the return trip */
+    :where([data-motion="2"], [data-motion="3"]) .magnetic {
+      transition: transform 450ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+
+    /* Gold shimmer sweep on primary Order CTAs */
+    :where([data-motion="2"], [data-motion="3"]) .v1-hero-cta,
+    :where([data-motion="2"], [data-motion="3"]) .v3-nav-order,
+    :where([data-motion="2"], [data-motion="3"]) .v2-dock-cta {
+      position: relative; overflow: hidden;
+      isolation: isolate;
+    }
+    :where([data-motion="2"], [data-motion="3"]) .v1-hero-cta::after,
+    :where([data-motion="2"], [data-motion="3"]) .v3-nav-order::after,
+    :where([data-motion="2"], [data-motion="3"]) .v2-dock-cta::after {
+      content: '';
+      position: absolute; top: 0; bottom: 0;
+      left: -70%; width: 45%;
+      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.30) 50%, transparent 100%);
+      transform: skewX(-20deg);
+      animation: shimmerSweep 5200ms cubic-bezier(0.4, 0, 0.6, 1) 1600ms infinite;
+      pointer-events: none;
+      z-index: -1;
+    }
+    @keyframes shimmerSweep {
+      0%   { left: -70%; }
+      35%  { left: 130%; }
+      100% { left: 130%; }
+    }
+
+    /* Ken burns on storefront image (V1 reservations) — starts AFTER the blur-in lands */
+    :where([data-motion="2"], [data-motion="3"]) .v1-reservations.in-view .split-image img {
+      animation: kenBurns 16s cubic-bezier(0.4, 0, 0.6, 1) 1100ms infinite alternate;
+    }
+    @keyframes kenBurns {
+      from { transform: scale(1) translateX(0); }
+      to   { transform: scale(1.09) translateX(-2.5%); }
+    }
+
+    /* Counter target — reserve space so digits don't reflow */
+    :where([data-motion="2"], [data-motion="3"]) [data-count-to] { font-variant-numeric: tabular-nums; }
+
+    /* Google source mark — small multicolor G shown beside "Google" attributions */
+    .g-mark {
+      display: inline-block;
+      width: 12px; height: 12px;
+      vertical-align: -1px;
+      margin-right: 5px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234285F4' d='M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z'/%3E%3Cpath fill='%2334A853' d='M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z'/%3E%3Cpath fill='%23FBBC05' d='M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z'/%3E%3Cpath fill='%23EA4335' d='M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .g-mark--sm { width: 11px; height: 11px; margin-right: 4px; }
+
+    /* ---------- CINEMATIC MOTION LAYER (only fires at [data-motion="3"]) ---------- */
+
+    /* Ambient nav-logo breathing */
+    [data-motion="3"] .brand-logo,
+    [data-motion="3"] .v2-brand img {
+      animation: logoBreath 4400ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      transform-origin: center;
+    }
+    @keyframes logoBreath {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.035); }
+    }
+
+    /* Order CTA warm glow pulse */
+    [data-motion="3"] .v1-hero-cta,
+    [data-motion="3"] .v3-nav-order,
+    [data-motion="3"] .v2-dock-cta {
+      animation: orderGlow 3600ms cubic-bezier(0.4, 0, 0.6, 1) 1400ms infinite;
+    }
+    @keyframes orderGlow {
+      0%, 100% { box-shadow: 0 6px 20px rgba(184,84,31,0.28); }
+      50%      { box-shadow: 0 12px 34px rgba(234,188,83,0.55); }
+    }
+
+    /* Extended hero cascade — slower, more theatrical */
+    [data-motion="3"] .headline-reveal.in-view .word-mask > .word { transition-duration: 1100ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(1)  > .word { transition-delay: 180ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(2)  > .word { transition-delay: 300ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(3)  > .word { transition-delay: 420ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(4)  > .word { transition-delay: 540ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(5)  > .word { transition-delay: 660ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(6)  > .word { transition-delay: 780ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(7)  > .word { transition-delay: 900ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(8)  > .word { transition-delay: 1020ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(9)  > .word { transition-delay: 1140ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(10) > .word { transition-delay: 1260ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(11) > .word { transition-delay: 1380ms; }
+    [data-motion="3"] .headline-reveal.in-view .word-mask:nth-child(12) > .word { transition-delay: 1500ms; }
+
+    /* Hero parallax target — JS updates transform on scroll */
+    [data-motion="3"] .parallax-hero {
+      transition: transform 60ms linear;
+      will-change: transform;
+    }
+
+    /* Section-anchor gold accent that pulses gently on view */
+    [data-motion="3"] .in-view .v1-story-two-label,
+    [data-motion="3"] .in-view .v3-philosophy-label,
+    [data-motion="3"] .in-view .v1-reservations-label {
+      animation: labelPulse 2400ms cubic-bezier(0.4, 0, 0.6, 1) 500ms 2;
+    }
+    @keyframes labelPulse {
+      0%, 100% { color: var(--gold-hover, #B98A3A); }
+      50%      { color: #EABC53; text-shadow: 0 0 6px rgba(234,188,83,0.4); }
+    }
+
+    /* Motion-3 override: kill signature animations for reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      [data-motion="3"] .brand-logo,
+      [data-motion="3"] .v2-brand img,
+      [data-motion="3"] .v1-hero-cta,
+      [data-motion="3"] .v3-nav-order,
+      [data-motion="3"] .v2-dock-cta,
+      [data-motion="3"] .parallax-hero,
+      [data-motion="3"] .in-view .v1-story-two-label,
+      [data-motion="3"] .in-view .v3-philosophy-label,
+      [data-motion="3"] .in-view .v1-reservations-label {
+        animation: none !important;
+        transform: none !important;
+      }
     }
 
     /* Reduced motion — respect user preference even when sample is on */
     @media (prefers-reduced-motion: reduce) {
-      [data-motion="on"] .reveal,
-      [data-motion="on"] .reveal-stagger > *,
-      [data-motion="on"] .v1-reservations .split-image img {
+      [data-motion] .reveal,
+      [data-motion] .reveal-stagger > *,
+      [data-motion] .v1-reservations .split-image img,
+      [data-motion] .word-mask > .word,
+      [data-motion] .tilt-card,
+      [data-motion] .magnetic {
         opacity: 1 !important;
         transform: none !important;
         filter: none !important;
         transition: opacity 240ms ease-out !important;
+        animation: none !important;
       }
-      [data-motion="on"] .mobile-order-bar { animation: none !important; }
+      [data-motion] .mobile-order-bar,
+      [data-motion] .v1-hero-cta::after,
+      [data-motion] .v3-nav-order::after,
+      [data-motion] .v2-dock-cta::after {
+        animation: none !important;
+      }
     }
   </style>
 </head>
@@ -2028,10 +2208,13 @@
     <button class="proto-picker-item">Editorial</button>
     <button class="proto-picker-item">Kitchen</button>
     <span class="proto-picker-divider" aria-hidden="true"></span>
-    <button class="proto-picker-motion" aria-label="Toggle motion sample (M)" title="Toggle motion (M)">
-      <span class="proto-picker-motion-dot" aria-hidden="true"></span>
-      <span>Motion</span>
-    </button>
+    <div class="proto-picker-motion-group" role="radiogroup" aria-label="Motion level">
+      <span class="proto-picker-motion-label">Motion</span>
+      <button class="proto-picker-motion-btn" data-mlevel="0" data-active aria-pressed="true">Off</button>
+      <button class="proto-picker-motion-btn" data-mlevel="1" aria-pressed="false">1</button>
+      <button class="proto-picker-motion-btn" data-mlevel="2" aria-pressed="false">2</button>
+      <button class="proto-picker-motion-btn" data-mlevel="3" aria-pressed="false">3</button>
+    </div>
     <span class="proto-picker-divider" aria-hidden="true"></span>
     <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
   </nav>
@@ -2237,34 +2420,34 @@
               <blockquote class="v1-review-featured">
                 <div class="v1-review-featured-stars">★★★★★</div>
                 <p>I came from NYC and discovered this Thai restaurant for the first time. I had no expectations, but it completely exceeded them. The flavors are incredibly authentic, almost identical to what I'm used to back home.</p>
-                <cite><strong>Boontarica J.</strong><span>Google review</span></cite>
+                <cite><strong>Boontarica J.</strong><span><span class="g-mark" aria-hidden="true"></span>Google review</span></cite>
               </blockquote>
 
               <div class="v1-reviews-grid">
                 <div class="v1-review-card">
                   <div class="v1-review-stars">★★★★★</div>
                   <p class="v1-review-quote">"Took my husband out for date night and although the restaurant is a little small, it was a lovely time. For entrees we had the chicken Pad Thai and the duck drunken noodles. Both were absolutely amazing."</p>
-                  <div class="v1-review-attrib"><strong>Amanda H.</strong><span>Google</span></div>
+                  <div class="v1-review-attrib"><strong>Amanda H.</strong><span><span class="g-mark" aria-hidden="true"></span>Google</span></div>
                 </div>
                 <div class="v1-review-card">
                   <div class="v1-review-stars">★★★★★</div>
                   <p class="v1-review-quote">"I love their Lao style papaya salad, Nom Tuk pork. Also Pad Ga Prao with ground pork and fried egg. It tastes just like in Thailand. The service and atmosphere is exceptional."</p>
-                  <div class="v1-review-attrib"><strong>Suwanna M.</strong><span>Google</span></div>
+                  <div class="v1-review-attrib"><strong>Suwanna M.</strong><span><span class="g-mark" aria-hidden="true"></span>Google</span></div>
                 </div>
                 <div class="v1-review-card">
                   <div class="v1-review-stars">★★★★★</div>
                   <p class="v1-review-quote">"Found this new Thai restaurant while traveling around Colorado Springs. We chose the Avocado Green Curry and Pad Se-Ew. The curry was excellent and had plenty of vegetables along with the chicken."</p>
-                  <div class="v1-review-attrib"><strong>Chadwick</strong><span>Google</span></div>
+                  <div class="v1-review-attrib"><strong>Chadwick</strong><span><span class="g-mark" aria-hidden="true"></span>Google</span></div>
                 </div>
                 <div class="v1-review-card">
                   <div class="v1-review-stars">★★★★★</div>
                   <p class="v1-review-quote">"Some awesome food, fresh, great flavor. Their spicy Thai Margarita was sooo good. Had the garlic pepper stir-fry with shrimp. Love this place."</p>
-                  <div class="v1-review-attrib"><strong>Tim &amp; Lynda R.</strong><span>Google</span></div>
+                  <div class="v1-review-attrib"><strong>Tim &amp; Lynda R.</strong><span><span class="g-mark" aria-hidden="true"></span>Google</span></div>
                 </div>
                 <div class="v1-review-card">
                   <div class="v1-review-stars">★★★★★</div>
                   <p class="v1-review-quote">"Amazing Thai food with a personal touch. The food is absolutely great, fresh, flavorful, and clearly made with care."</p>
-                  <div class="v1-review-attrib"><strong>Frankenfood</strong><span>Google</span></div>
+                  <div class="v1-review-attrib"><strong>Frankenfood</strong><span><span class="g-mark" aria-hidden="true"></span>Google</span></div>
                 </div>
               </div>
 
@@ -2475,7 +2658,7 @@
                 <blockquote class="v2-review-hero">
                   <div class="v2-review-hero-mark">"</div>
                   <p>Took my husband out for date night and although the restaurant is a little small, it was a lovely time. For entrees we had the chicken Pad Thai and the duck drunken noodles. Both were absolutely amazing.</p>
-                  <cite>Amanda H., Google review</cite>
+                  <cite><span class="g-mark g-mark--sm" aria-hidden="true"></span>Amanda H., Google review</cite>
                 </blockquote>
 
                 <div class="v2-review-notes">
@@ -2504,7 +2687,7 @@
 
               <div class="reviews-see-more-wrap">
                 <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-see-more">
-                  Read the full archive on Google <span>→</span>
+                  See every review on Google <span>→</span>
                 </a>
               </div>
             </div>
@@ -2772,7 +2955,7 @@
                   <div class="v3-reviews-badge-num">4.6</div>
                   <div class="v3-reviews-badge-stack">
                     <span class="stars">★★★★★</span>
-                    <span class="v3-reviews-badge-count">66 Google reviews · verbatim</span>
+                    <span class="v3-reviews-badge-count"><span class="g-mark g-mark--sm" aria-hidden="true"></span>66 Google reviews · verbatim</span>
                   </div>
                 </div>
                 <div class="v3-reviews-badge-cta">
@@ -2901,10 +3084,11 @@
     const highlight = picker.querySelector('.proto-picker-highlight');
     const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
     const replay = picker.querySelector('.proto-picker-replay');
-    const motionBtn = picker.querySelector('.proto-picker-motion');
+    const motionBtns = [...picker.querySelectorAll('.proto-picker-motion-btn')];
     let current = 0;
     let scrollCueKilled = false;
     let revealObserver = null;
+    let parallaxHandler = null;
 
     function moveHighlight() {
       const el = items[current];
@@ -2934,14 +3118,176 @@
       '.reviews-topic-pills',
     ];
 
+    // ---- Signature motion helpers ----
+    const HEADLINE_SELECTORS = ['.v1-hero-headline', '.v3-hero-title', '.v2-hero-title'];
+    const TILT_SELECTORS     = ['.v1-dish-card', '.v3-dish-card', '.v3-category-card', '.v1-category'];
+    const MAGNETIC_SELECTORS = ['.v1-hero-cta', '.v3-nav-order', '.v2-dock-cta', '.v2-visit-cta'];
+
+    function wrapWordsForReveal() {
+      document.querySelectorAll(HEADLINE_SELECTORS.join(',')).forEach(el => {
+        if (el.dataset.wordsWrapped === '1') return;
+        el.classList.add('headline-reveal');
+        // Walk all text nodes, wrap each word in <span class="word-mask"><span class="word">…</span></span>
+        const nodes = [];
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(node => {
+          if (!node.parentNode) return;
+          const parts = node.nodeValue.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          parts.forEach(part => {
+            if (part === '') return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            const mask = document.createElement('span');
+            mask.className = 'word-mask';
+            const word = document.createElement('span');
+            word.className = 'word';
+            word.textContent = part;
+            mask.appendChild(word);
+            frag.appendChild(mask);
+          });
+          node.parentNode.replaceChild(frag, node);
+        });
+        el.dataset.wordsWrapped = '1';
+      });
+    }
+
+    function setupTilt() {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      document.querySelectorAll(TILT_SELECTORS.join(',')).forEach(card => {
+        if (card.dataset.tiltBound === '1') return;
+        card.classList.add('tilt-card');
+        card.dataset.tiltBound = '1';
+        let raf = 0;
+        card.addEventListener('mousemove', (e) => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width  - 0.5;
+            const y = (e.clientY - r.top)  / r.height - 0.5;
+            const tiltX = -y * 8;
+            const tiltY =  x * 10;
+            card.style.transform =
+              `perspective(900px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
+          });
+        });
+        card.addEventListener('mouseleave', () => {
+          if (raf) cancelAnimationFrame(raf);
+          card.style.transform = '';
+        });
+      });
+    }
+
+    function setupMagnetic() {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      document.querySelectorAll(MAGNETIC_SELECTORS.join(',')).forEach(btn => {
+        if (btn.dataset.magneticBound === '1') return;
+        btn.classList.add('magnetic');
+        btn.dataset.magneticBound = '1';
+        let raf = 0;
+        btn.addEventListener('mousemove', (e) => {
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            const r = btn.getBoundingClientRect();
+            const cx = r.left + r.width / 2;
+            const cy = r.top  + r.height / 2;
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy;
+            btn.style.transform = `translate(${dx * 0.28}px, ${dy * 0.32}px)`;
+          });
+        });
+        btn.addEventListener('mouseleave', () => {
+          if (raf) cancelAnimationFrame(raf);
+          btn.style.transform = '';
+        });
+      });
+    }
+
+    function setupCounters() {
+      // 4.6 rating in V1 head + V3 badge
+      const targets = [];
+      document.querySelectorAll('.v1-reviews-head-meta strong').forEach(el => {
+        if (el.textContent.trim() === '4.6') targets.push(el);
+      });
+      document.querySelectorAll('.v3-reviews-badge-num').forEach(el => {
+        if (el.textContent.trim() === '4.6') targets.push(el);
+      });
+      targets.forEach(el => {
+        if (el.dataset.counterBound === '1') return;
+        el.dataset.counterBound = '1';
+        el.dataset.countTo = '4.6';
+        el.textContent = '0.0';
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            io.unobserve(el);
+            const start = performance.now();
+            const dur = 1500;
+            function tick(now) {
+              const t = Math.min(1, (now - start) / dur);
+              const eased = 1 - Math.pow(1 - t, 3);
+              el.textContent = (4.6 * eased).toFixed(1);
+              if (t < 1) requestAnimationFrame(tick);
+              else el.textContent = '4.6';
+            }
+            requestAnimationFrame(tick);
+          });
+        }, { threshold: 0.55 });
+        io.observe(el);
+      });
+    }
+
+    function currentMotionLevel() {
+      const v = document.documentElement.dataset.motion;
+      const n = parseInt(v, 10);
+      return Number.isFinite(n) && n >= 1 && n <= 3 ? n : 0;
+    }
+
+    function setupParallax() {
+      // Tear down previous listener
+      if (parallaxHandler) { window.removeEventListener('scroll', parallaxHandler); parallaxHandler = null; }
+      if (currentMotionLevel() < 3) return;
+      const targets = document.querySelectorAll('.v1-hero-headline, .v3-hero-title, .v2-hero-title');
+      if (!targets.length) return;
+      targets.forEach(el => el.classList.add('parallax-hero'));
+      let raf = 0;
+      parallaxHandler = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          const y = window.scrollY;
+          const shift = Math.min(80, y * 0.28);
+          const fade = Math.max(0.2, 1 - y / 600);
+          targets.forEach(el => {
+            el.style.transform = `translateY(${-shift}px)`;
+            el.style.opacity = fade.toFixed(3);
+          });
+        });
+      };
+      window.addEventListener('scroll', parallaxHandler, { passive: true });
+      parallaxHandler();
+    }
+
     function setupReveals() {
-      if (document.documentElement.dataset.motion !== 'on') return;
+      const lvl = currentMotionLevel();
+      if (lvl < 1) return;
+      // Level 1+ base: reveals + stagger
       REVEAL_SELECTORS.forEach(sel =>
         document.querySelectorAll(sel).forEach(el => el.classList.add('reveal'))
       );
       STAGGER_SELECTORS.forEach(sel =>
         document.querySelectorAll(sel).forEach(el => el.classList.add('reveal-stagger'))
       );
+      // Level 2+ signature: word-mask, tilt, magnetic, counters
+      if (lvl >= 2) {
+        wrapWordsForReveal();
+        setupTilt();
+        setupMagnetic();
+        setupCounters();
+      }
+      // Level 3 cinematic: parallax scroll linkage
+      setupParallax();
+
       revealObserver?.disconnect();
       revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(e => {
@@ -2951,19 +3297,20 @@
           }
         });
       }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+      document.querySelectorAll('.reveal, .reveal-stagger, .headline-reveal').forEach(el => revealObserver.observe(el));
     }
 
-    function setMotion(on) {
-      if (on) {
-        document.documentElement.dataset.motion = 'on';
-        motionBtn?.setAttribute('data-on', '');
-      } else {
-        delete document.documentElement.dataset.motion;
-        motionBtn?.removeAttribute('data-on');
-      }
+    function setMotion(level) {
+      level = Math.max(0, Math.min(3, parseInt(level, 10) || 0));
+      if (level > 0) document.documentElement.dataset.motion = String(level);
+      else delete document.documentElement.dataset.motion;
+      motionBtns.forEach(b => {
+        const active = parseInt(b.dataset.mlevel, 10) === level;
+        b.toggleAttribute('data-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
       const url = new URL(location);
-      if (on) url.searchParams.set('m', '1');
+      if (level > 0) url.searchParams.set('m', String(level));
       else url.searchParams.delete('m');
       history.replaceState(null, '', url);
     }
@@ -3008,11 +3355,10 @@
 
     items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
     replay?.addEventListener('click', () => mount(current));
-    motionBtn?.addEventListener('click', () => {
-      const on = document.documentElement.dataset.motion !== 'on';
-      setMotion(on);
+    motionBtns.forEach(b => b.addEventListener('click', () => {
+      setMotion(parseInt(b.dataset.mlevel, 10));
       mount(current);
-    });
+    }));
     window.addEventListener('resize', moveHighlight);
 
     document.addEventListener('keydown', (e) => {
@@ -3023,12 +3369,17 @@
       else if (e.key === 'ArrowRight') setActive((current + 1) % variants.length);
       else if (e.key === 'ArrowLeft') setActive((current - 1 + variants.length) % variants.length);
       else if (e.key === 'r' || e.key === 'R') mount(current);
-      else if (e.key === 'm' || e.key === 'M') motionBtn?.click();
+      else if (e.key === 'm' || e.key === 'M') {
+        // Cycle Off -> 1 -> 2 -> 3 -> Off
+        const next = (currentMotionLevel() + 1) % 4;
+        setMotion(next); mount(current);
+      }
     });
 
-    // Initial state from URL
-    const initialMotion = new URLSearchParams(location.search).get('m') === '1';
-    if (initialMotion) setMotion(true);
+    // Initial state from URL — accepts m=1|2|3 (legacy m=on treated as level 1)
+    const rawM = new URLSearchParams(location.search).get('m');
+    const initialLevel = rawM === 'on' ? 1 : Math.max(0, Math.min(3, parseInt(rawM, 10) || 0));
+    if (initialLevel > 0) setMotion(initialLevel);
     setActive((parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1);
     requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
   </script>
