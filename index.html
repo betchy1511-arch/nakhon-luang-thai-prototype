@@ -2084,6 +2084,57 @@
     }
     .g-mark--sm { width: 11px; height: 11px; margin-right: 4px; }
 
+    /* ---------- V2 POPULAR DISHES: CRAV-STYLE FANNED POLAROIDS ---------- */
+    [data-motion] .v2-dish-grid { overflow: visible; padding: 20px 0 40px; }
+    [data-motion] .v2-dish-visual {
+      transform: rotate(22deg) translateY(60px) scale(0.85);
+      opacity: 0;
+      transition:
+        transform 900ms cubic-bezier(0.19, 1, 0.22, 1),
+        opacity 700ms ease-out,
+        box-shadow 300ms ease-out;
+      transform-origin: center;
+      will-change: transform, opacity;
+      box-shadow: 0 12px 28px rgba(79, 45, 29, 0.18);
+    }
+    [data-motion] .v2-dish-grid.in-view .v2-dish:nth-child(1) .v2-dish-visual {
+      transform: rotate(-6deg);
+      opacity: 1;
+      transition-delay: 0ms;
+    }
+    [data-motion] .v2-dish-grid.in-view .v2-dish:nth-child(2) .v2-dish-visual {
+      transform: rotate(2deg);
+      opacity: 1;
+      transition-delay: 160ms;
+    }
+    [data-motion] .v2-dish-grid.in-view .v2-dish:nth-child(3) .v2-dish-visual {
+      transform: rotate(7deg);
+      opacity: 1;
+      transition-delay: 320ms;
+    }
+
+    /* Hover: straighten to 0deg with lift + spring, bring above siblings */
+    @media (hover: hover) and (pointer: fine) {
+      [data-motion] .v2-dish:hover .v2-dish-visual {
+        transform: rotate(0deg) translateY(-10px) scale(1.04);
+        transition:
+          transform 550ms cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 300ms ease-out;
+        box-shadow: 0 24px 46px rgba(79, 45, 29, 0.26);
+      }
+      [data-motion] .v2-dish { position: relative; }
+      [data-motion] .v2-dish:hover { z-index: 5; }
+    }
+
+    /* Reduced motion — flat, no rotation entrance */
+    @media (prefers-reduced-motion: reduce) {
+      [data-motion] .v2-dish-visual {
+        transform: none !important;
+        opacity: 1 !important;
+        transition: opacity 240ms ease-out !important;
+      }
+    }
+
     /* ---------- V3 REVIEWS: POLAROID JOURNEY (Crav-inspired) ---------- */
     /* Give the grid room for tilts and overlays to poke out */
     [data-motion] .v3-reviews-grid { overflow: visible; padding: 32px 8px; row-gap: 44px; }
@@ -3177,6 +3228,8 @@
       '.v1-reviews-head', '.v1-review-featured',
       '.v2-reviews-head', '.v2-reviews-preamble', '.v2-review-hero',
       '.v3-reviews-badge',
+      // V2 Popular Dishes (per Beth's Crav-style ask — 3rd in-scope section for V2)
+      '.v2-dish-grid',
     ];
     const STAGGER_SELECTORS = [
       // Only review grids get stagger — dish grids are out of scope
