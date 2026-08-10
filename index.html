@@ -1486,10 +1486,6 @@
       width: 1px; height: 32px;
       background: linear-gradient(180deg, rgba(245,238,220,0.5), transparent);
     }
-    @keyframes v2FloatIn {
-      from { transform: translate(-50%, -46%) scale(0.94); opacity: 0; }
-      to { transform: translate(-50%, -50%) scale(1); opacity: 0.85; }
-    }
     @keyframes v2FadeUp {
       from { transform: translateY(24px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
@@ -1906,6 +1902,121 @@
       .v3-story-strip-link { justify-self: start; }
       .v3-visit { flex-direction: column; align-items: flex-start; padding: 24px 16px; }
     }
+
+    /* ============ MOTION SAMPLE (toggle: [data-motion="on"]) ============ */
+    /* Everything below only fires when the user turns on the Motion chip in the picker. */
+
+    /* Reveal-on-scroll: single elements fade + rise into view */
+    [data-motion="on"] .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition:
+        opacity 550ms cubic-bezier(0.19, 1, 0.22, 1),
+        transform 550ms cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform, opacity;
+    }
+    [data-motion="on"] .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Reveal-with-stagger: children of a grid ripple in */
+    [data-motion="on"] .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity 550ms cubic-bezier(0.19, 1, 0.22, 1),
+        transform 550ms cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform, opacity;
+    }
+    [data-motion="on"] .reveal-stagger.in-view > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(1) { transition-delay: 0ms; }
+    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(2) { transition-delay: 70ms; }
+    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(3) { transition-delay: 140ms; }
+    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(4) { transition-delay: 210ms; }
+    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(5) { transition-delay: 280ms; }
+    [data-motion="on"] .reveal-stagger.in-view > *:nth-child(6) { transition-delay: 350ms; }
+
+    /* Mobile order bar: slide up from below (from where it lives) */
+    [data-motion="on"] .mobile-order-bar {
+      animation: mobileBarUp 550ms 320ms cubic-bezier(0.19, 1, 0.22, 1) both;
+    }
+    @keyframes mobileBarUp {
+      from { transform: translateY(140%); }
+      to { transform: translateY(0); }
+    }
+
+    /* V2 hero: trim overly-long duration when motion sample is on */
+    [data-motion="on"] .v2-hero-content { animation-duration: 700ms; animation-delay: 120ms; }
+
+    /* Storefront image reveal: scale-in with slight blur */
+    [data-motion="on"] .v1-reservations .split-image {
+      overflow: hidden; border-radius: var(--radius);
+    }
+    [data-motion="on"] .v1-reservations .split-image img {
+      transform: scale(1.06);
+      filter: blur(6px);
+      transition:
+        transform 900ms cubic-bezier(0.19, 1, 0.22, 1),
+        filter 700ms ease-out;
+    }
+    [data-motion="on"] .v1-reservations.in-view .split-image img {
+      transform: scale(1);
+      filter: blur(0);
+    }
+
+    /* Hover-motion GATE (Rule 8 fix — apply always, not just motion=on) */
+    @media (hover: none), (pointer: coarse) {
+      .v1-hero-cta:hover, .v1-dish-card:hover, .v1-category:hover,
+      .v1-review-card:hover, .v2-dish:hover .v2-dish-visual, .v2-dock-cta:hover,
+      .v2-visit-cta:hover, .v3-dish-card:hover, .v3-review-card:hover,
+      .v3-review-snippet:hover, .v3-nav-order:hover, .v3-category-card:hover,
+      .btn:hover {
+        transform: none;
+        box-shadow: initial;
+      }
+    }
+
+    /* Motion toggle chip in the picker */
+    .proto-picker-motion {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      background: transparent; border: none; cursor: pointer;
+      font: inherit; color: rgba(255,255,255,0.65);
+      font-size: 12px; letter-spacing: 0.04em;
+      border-radius: 999px;
+      transition: color 150ms ease-out, background 150ms ease-out;
+    }
+    .proto-picker-motion:hover { color: rgba(255,255,255,0.9); }
+    .proto-picker-motion[data-on] { color: #fff; background: rgba(234,188,83,0.14); }
+    .proto-picker-motion:focus-visible {
+      outline: 2px solid rgba(234,188,83,0.85); outline-offset: 3px;
+    }
+    .proto-picker-motion-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transition: background 150ms ease-out, box-shadow 200ms ease-out;
+    }
+    .proto-picker-motion[data-on] .proto-picker-motion-dot {
+      background: #EABC53;
+      box-shadow: 0 0 10px rgba(234,188,83,0.75);
+    }
+
+    /* Reduced motion — respect user preference even when sample is on */
+    @media (prefers-reduced-motion: reduce) {
+      [data-motion="on"] .reveal,
+      [data-motion="on"] .reveal-stagger > *,
+      [data-motion="on"] .v1-reservations .split-image img {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: opacity 240ms ease-out !important;
+      }
+      [data-motion="on"] .mobile-order-bar { animation: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -1916,6 +2027,11 @@
     <button class="proto-picker-item" data-active aria-current="true">Split Hero</button>
     <button class="proto-picker-item">Editorial</button>
     <button class="proto-picker-item">Kitchen</button>
+    <span class="proto-picker-divider" aria-hidden="true"></span>
+    <button class="proto-picker-motion" aria-label="Toggle motion sample (M)" title="Toggle motion (M)">
+      <span class="proto-picker-motion-dot" aria-hidden="true"></span>
+      <span>Motion</span>
+    </button>
     <span class="proto-picker-divider" aria-hidden="true"></span>
     <button class="proto-picker-item proto-picker-replay" aria-label="Replay animation (R)">↻</button>
   </nav>
@@ -2785,7 +2901,10 @@
     const highlight = picker.querySelector('.proto-picker-highlight');
     const items = [...picker.querySelectorAll('.proto-picker-item:not(.proto-picker-replay)')];
     const replay = picker.querySelector('.proto-picker-replay');
+    const motionBtn = picker.querySelector('.proto-picker-motion');
     let current = 0;
+    let scrollCueKilled = false;
+    let revealObserver = null;
 
     function moveHighlight() {
       const el = items[current];
@@ -2793,9 +2912,83 @@
       highlight.style.transform = `translateX(${el.offsetLeft}px)`;
     }
 
+    // ---- Motion sample wiring ----
+    const REVEAL_SELECTORS = [
+      // V1
+      '.v1-hero-headline', '.v1-hero-sub', '.v1-hero-cta',
+      '.v1-story-two-copy', '.v1-story-two-visual',
+      '.v1-experience-inner', '.v1-reservations',
+      '.v1-visit-inner', '.v1-reviews-head', '.v1-review-featured',
+      // V2
+      '.v2-story-inner', '.v2-visit-inner',
+      '.v2-reviews-head', '.v2-reviews-preamble', '.v2-review-hero',
+      // V3
+      '.v3-hero-title', '.v3-hero-sub', '.v3-hero-ctas',
+      '.v3-content-strip-inner', '.v3-reviews-badge', '.v3-visit-inner',
+      '.v3-reservations',
+    ];
+    const STAGGER_SELECTORS = [
+      '.v1-dishes-grid', '.v1-reviews-grid',
+      '.v2-dish-grid', '.v2-review-notes',
+      '.v3-category-grid', '.v3-popular-grid', '.v3-reviews-grid',
+      '.reviews-topic-pills',
+    ];
+
+    function setupReveals() {
+      if (document.documentElement.dataset.motion !== 'on') return;
+      REVEAL_SELECTORS.forEach(sel =>
+        document.querySelectorAll(sel).forEach(el => el.classList.add('reveal'))
+      );
+      STAGGER_SELECTORS.forEach(sel =>
+        document.querySelectorAll(sel).forEach(el => el.classList.add('reveal-stagger'))
+      );
+      revealObserver?.disconnect();
+      revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in-view');
+            revealObserver.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => revealObserver.observe(el));
+    }
+
+    function setMotion(on) {
+      if (on) {
+        document.documentElement.dataset.motion = 'on';
+        motionBtn?.setAttribute('data-on', '');
+      } else {
+        delete document.documentElement.dataset.motion;
+        motionBtn?.removeAttribute('data-on');
+      }
+      const url = new URL(location);
+      if (on) url.searchParams.set('m', '1');
+      else url.searchParams.delete('m');
+      history.replaceState(null, '', url);
+    }
+
+    // Kill V2 infinite scroll-cue after user's first real scroll
+    window.addEventListener('scroll', () => {
+      if (scrollCueKilled) return;
+      if (window.scrollY < 60) return;
+      scrollCueKilled = true;
+      document.querySelectorAll('.v2-scroll-cue').forEach(el => {
+        el.style.transition = 'opacity 300ms ease-out';
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 320);
+      });
+    }, { passive: true });
+
     function mount(i) {
       stage.innerHTML = '';
-      requestAnimationFrame(() => { stage.innerHTML = variants[i](); window.scrollTo(0, 0); });
+      requestAnimationFrame(() => {
+        stage.innerHTML = variants[i]();
+        window.scrollTo(0, 0);
+        scrollCueKilled = false;
+        // Give the new DOM a paint tick, then tag reveals
+        requestAnimationFrame(() => requestAnimationFrame(setupReveals));
+      });
     }
 
     function setActive(i) {
@@ -2815,6 +3008,11 @@
 
     items.forEach((el, i) => el.addEventListener('click', () => setActive(i)));
     replay?.addEventListener('click', () => mount(current));
+    motionBtn?.addEventListener('click', () => {
+      const on = document.documentElement.dataset.motion !== 'on';
+      setMotion(on);
+      mount(current);
+    });
     window.addEventListener('resize', moveHighlight);
 
     document.addEventListener('keydown', (e) => {
@@ -2825,8 +3023,12 @@
       else if (e.key === 'ArrowRight') setActive((current + 1) % variants.length);
       else if (e.key === 'ArrowLeft') setActive((current - 1 + variants.length) % variants.length);
       else if (e.key === 'r' || e.key === 'R') mount(current);
+      else if (e.key === 'm' || e.key === 'M') motionBtn?.click();
     });
 
+    // Initial state from URL
+    const initialMotion = new URLSearchParams(location.search).get('m') === '1';
+    if (initialMotion) setMotion(true);
     setActive((parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1);
     requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
   </script>
