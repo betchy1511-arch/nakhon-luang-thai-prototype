@@ -2244,7 +2244,7 @@
       pointer-events: none;
       transform: translate(90px, -70px) rotate(60deg) scale(0.5);
     }
-    /* Right-column cards mirror the fly-in direction */
+    /* Left-column cards (nth-child(2n+1)): emoji anchored at bottom-left */
     [data-motion] .v3-reviews-grid .v3-review-snippet:nth-child(2n+1)[data-emoji]::after {
       right: auto; left: -14px;
       transform: translate(-90px, -70px) rotate(-60deg) scale(0.5);
@@ -2278,16 +2278,31 @@
     [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(5)[data-emoji]::after { animation-delay: 800ms; }
     [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(6)[data-emoji]::after { animation-delay: 930ms; }
 
-    /* After fly-in completes, cursor-follow class overrides animation with a transitioned transform */
+    /* After fly-in completes, hold at rest state (no cursor follow — scroll-driven traveler handles motion) */
     [data-motion] .v3-reviews-grid.trail-settled .v3-review-snippet[data-emoji]::after {
       animation: none;
       opacity: 1;
-      transform: translate(var(--emoji-cursor-x, 0px), var(--emoji-cursor-y, 0px)) rotate(14deg) scale(1);
-      transition: transform 320ms cubic-bezier(0.19, 1, 0.22, 1);
+      transform: translate(0, 0) rotate(14deg) scale(1);
     }
     [data-motion] .v3-reviews-grid.trail-settled .v3-review-snippet:nth-child(2n+1)[data-emoji]::after {
-      transform: translate(var(--emoji-cursor-x, 0px), var(--emoji-cursor-y, 0px)) rotate(-16deg) scale(1);
+      transform: translate(0, 0) rotate(-16deg) scale(1);
     }
+
+    /* Scroll-driven traveler: a single emoji that flies along the gold path as user scrolls */
+    [data-motion] .v3-path-traveler {
+      position: absolute;
+      top: 0; left: 0;
+      font-size: 44px;
+      line-height: 1;
+      z-index: 4;
+      pointer-events: none;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+      will-change: transform;
+      margin: -22px 0 0 -22px;
+      opacity: 0;
+      transition: opacity 500ms ease-out;
+    }
+    [data-motion] .v3-reviews-grid.in-view .v3-path-traveler { opacity: 1; }
 
     /* Hover: straighten with lift + bring to front (only for pointer-fine) */
     @media (hover: hover) and (pointer: fine) {
@@ -3485,41 +3500,82 @@
           '</svg>';
         grid.insertAdjacentHTML('afterbegin', svg);
 
-        // Interactive: emojis follow the cursor magnetically once fly-in completes.
-        // Longest fly-in delay is 930ms + 950ms duration = ~1900ms, add breathing room.
+        // Let the per-card fly-in run once, then hold at rest.
         setTimeout(() => grid.classList.add('trail-settled'), 2100);
 
-        let rafId = 0;
-        grid.addEventListener('mousemove', (e) => {
-          if (rafId) cancelAnimationFrame(rafId);
-          rafId = requestAnimationFrame(() => {
-            const mx = e.clientX, my = e.clientY;
-            grid.querySelectorAll('.v3-review-snippet[data-emoji]').forEach(card => {
-              const r = card.getBoundingClientRect();
-              const cx = r.left + r.width / 2;
-              const cy = r.top + r.height / 2;
-              const dx = mx - cx;
-              const dy = my - cy;
-              const dist = Math.hypot(dx, dy);
-              const maxDist = 360;
-              if (dist < maxDist && dist > 0) {
-                const strength = (1 - dist / maxDist) * 26;
-                card.style.setProperty('--emoji-cursor-x', ((dx / dist) * strength).toFixed(1) + 'px');
-                card.style.setProperty('--emoji-cursor-y', ((dy / dist) * strength).toFixed(1) + 'px');
-              } else {
-                card.style.setProperty('--emoji-cursor-x', '0px');
-                card.style.setProperty('--emoji-cursor-y', '0px');
-              }
-            });
-          });
+        // ---- Scroll-driven traveler (like Crav's plane) ----
+        // Inject one emoji element that will ride along the invisible SVG path as user scrolls.
+        const svgEl = grid.querySelector('.v3-reviews-path');
+        const pathEl = grid.querySelector('#v3JourneyPath');
+        if (!svgEl || !pathEl) return;
+
+        // Caravan of travelers: tuk-tuk leads, Thai food follows behind on the road
+        const TRAVELERS = [
+          { emoji: '🛺', tilt: 0,   spin: true  },  // tuk-tuk (rotates to face travel direction)
+          { emoji: '🍛', tilt: 8,   spin: false },  // Thai curry
+          { emoji: '🍤', tilt: -6,  spin: false },  // shrimp
+          { emoji: '🌶️', tilt: 12, spin: false },  // chili
+        ];
+        const SPACING = 0.10; // 10% of path between each traveler
+        const travelers = TRAVELERS.map(t => {
+          const el = document.createElement('span');
+          el.className = 'v3-path-traveler';
+          el.textContent = t.emoji;
+          el.setAttribute('aria-hidden', 'true');
+          el.dataset.tilt = t.tilt;
+          el.dataset.spin = t.spin ? '1' : '0';
+          grid.appendChild(el);
+          return el;
         });
-        grid.addEventListener('mouseleave', () => {
-          if (rafId) cancelAnimationFrame(rafId);
-          grid.querySelectorAll('.v3-review-snippet[data-emoji]').forEach(card => {
-            card.style.setProperty('--emoji-cursor-x', '0px');
-            card.style.setProperty('--emoji-cursor-y', '0px');
+
+        const pathTotalLength = pathEl.getTotalLength();
+        let rafScheduled = false;
+
+        function updateTravelers() {
+          rafScheduled = false;
+          const gridRect = grid.getBoundingClientRect();
+          const svgRect = svgEl.getBoundingClientRect();
+          const viewportH = window.innerHeight;
+          const total = gridRect.height + viewportH;
+          const passed = viewportH - gridRect.top;
+          const leadProgress = Math.max(0, Math.min(1, passed / total));
+
+          const scaleX = svgRect.width / 1200;
+          const scaleY = svgRect.height / 700;
+          const offsetX = svgRect.left - gridRect.left;
+          const offsetY = svgRect.top - gridRect.top;
+          const delta = 1;
+
+          travelers.forEach((el, i) => {
+            const t = leadProgress - i * SPACING;
+            if (t <= 0 || t >= 1) {
+              el.style.opacity = '0';
+              return;
+            }
+            el.style.opacity = '1';
+            const dist = t * pathTotalLength;
+            const pt = pathEl.getPointAtLength(dist);
+            const px = pt.x * scaleX + offsetX;
+            const py = pt.y * scaleY + offsetY;
+
+            let angleDeg = parseFloat(el.dataset.tilt) || 0;
+            if (el.dataset.spin === '1') {
+              const p1 = pathEl.getPointAtLength(Math.max(0, dist - delta));
+              const p2 = pathEl.getPointAtLength(Math.min(pathTotalLength, dist + delta));
+              angleDeg = Math.atan2((p2.y - p1.y) * scaleY, (p2.x - p1.x) * scaleX) * 180 / Math.PI;
+            }
+            el.style.transform = `translate(${px}px, ${py}px) rotate(${angleDeg}deg)`;
           });
-        });
+        }
+
+        function onScrollOrResize() {
+          if (rafScheduled) return;
+          rafScheduled = true;
+          requestAnimationFrame(updateTravelers);
+        }
+        window.addEventListener('scroll', onScrollOrResize, { passive: true });
+        window.addEventListener('resize', onScrollOrResize);
+        setTimeout(updateTravelers, 100);
       });
     }
 
