@@ -1154,14 +1154,19 @@
     }
 
     .v1-visit {
-      padding: 60px 40px;
+      padding: 80px 40px;
       display: grid;
       grid-template-columns: 1fr 1fr auto;
       gap: 40px;
       align-items: center;
       background: var(--cream-light);
       border-top: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
     }
+    .v1-visit .bg-photo-layer { opacity: 0.10; }
+    .v1-visit > * { position: relative; z-index: 1; }
     .v1-visit-block > .v1-visit-label {
       font-size: 11px; font-weight: 600;
       letter-spacing: 0.16em; text-transform: uppercase;
@@ -1379,6 +1384,28 @@
       background: var(--cream-deep);
       border-top: 1px solid var(--line);
       text-align: center;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .v2-visit .bg-photo-layer { opacity: 0.10; }
+    .v2-visit > * { position: relative; z-index: 1; }
+    .v2-visit-cell {
+      display: flex; flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+    }
+    .v2-visit-cell-values {
+      display: flex; flex-direction: column; gap: 2px;
+      min-height: 60px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .v2-visit-cell-sub {
+      font-size: 12px; font-family: var(--eyebrow); font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--ink-mute);
     }
     .v2-visit h3 {
       font-family: var(--serif); font-weight: 400;
@@ -1631,11 +1658,15 @@
     .v3-story-strip-link:hover { background: rgba(245,238,220,0.10); border-color: rgba(245,238,220,0.5); }
 
     .v3-visit {
-      padding: 40px 32px;
+      padding: 60px 32px;
       display: flex; justify-content: space-between; align-items: center;
       max-width: 1200px; margin: 0 auto;
       gap: 24px; flex-wrap: wrap;
+      position: relative;
+      isolation: isolate;
     }
+    .v3-visit .bg-photo-layer { opacity: 0.10; }
+    .v3-visit > * { position: relative; z-index: 1; }
     .v3-visit-block { display: flex; align-items: center; gap: 14px; }
     .v3-visit-icon {
       width: 42px; height: 42px; border-radius: 12px;
@@ -1925,6 +1956,7 @@
           </section>
 
           <section class="v1-visit" id="visit">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl10b-ritual.jpg');"></div>
             <div class="v1-visit-block">
               <div class="v1-visit-label">Hours</div>
               <div>11:00am – 3:30pm</div>
@@ -1933,7 +1965,7 @@
             <div class="v1-visit-block">
               <div class="v1-visit-label">Where</div>
               <div>805 Village Center Drive</div>
-              <div>Colorado Springs, CO 80919</div>
+              <div>Colorado Springs, CO</div>
             </div>
             <div class="v1-visit-cta">
               <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
@@ -2128,23 +2160,30 @@
           </section>
 
           <section class="v2-visit" id="visit">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <h3>Come find us, or order in</h3>
             <div class="v2-visit-grid">
-              <div>
+              <div class="v2-visit-cell">
                 <div class="v2-visit-cell-label">Open</div>
-                <div class="v2-visit-cell-value">11am – 3:30pm</div>
-                <div class="v2-visit-cell-value" style="margin-top:2px;">4:30pm – 8:30pm</div>
-                <div class="v2-visit-cell-label" style="margin-top:6px;color:var(--ink-mute);">Every day</div>
+                <div class="v2-visit-cell-values">
+                  <div class="v2-visit-cell-value">11am – 3:30pm</div>
+                  <div class="v2-visit-cell-value">4:30pm – 8:30pm</div>
+                </div>
+                <div class="v2-visit-cell-sub">Every day</div>
               </div>
-              <div>
+              <div class="v2-visit-cell">
                 <div class="v2-visit-cell-label">Where</div>
-                <div class="v2-visit-cell-value">805 Village Center Dr</div>
-                <div class="v2-visit-cell-label" style="margin-top:6px;color:var(--ink-mute);">Colorado Springs, CO 80919</div>
+                <div class="v2-visit-cell-values">
+                  <div class="v2-visit-cell-value">805 Village Center Dr</div>
+                </div>
+                <div class="v2-visit-cell-sub">Colorado Springs, CO</div>
               </div>
-              <div>
+              <div class="v2-visit-cell">
                 <div class="v2-visit-cell-label">Reservations</div>
-                <div class="v2-visit-cell-value">Recommended</div>
-                <div class="v2-visit-cell-label" style="margin-top:6px;color:var(--ink-mute);">Fri & Sat 6–8pm</div>
+                <div class="v2-visit-cell-values">
+                  <div class="v2-visit-cell-value">Recommended</div>
+                </div>
+                <div class="v2-visit-cell-sub">Fri &amp; Sat 6–8pm</div>
               </div>
             </div>
             <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v2-visit-cta">Order for pickup or delivery →</a>
@@ -2426,6 +2465,7 @@
           </section>
 
           <section class="v3-visit" id="visit">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v3-visit-block">
               <div class="v3-visit-icon">${icons.clock}</div>
               <div>
