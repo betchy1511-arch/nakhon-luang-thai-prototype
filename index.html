@@ -6,16 +6,16 @@
   <title>Nakhon Luang Thai Kitchen · Homepage Prototype</title>
   <meta name="description" content="Homepage redesign prototype for Nakhon Luang Thai Kitchen, Colorado Springs. Three divergent variants behind a picker. Client: Magister Digital pilot.">
   <meta name="robots" content="noindex,nofollow">
-  <link rel="icon" type="image/png" href="assets/nltk-logo-current-site-transparent.png">
+  <link rel="icon" type="image/png" href="assets/nltk-favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&family=Pattaya&display=swap" rel="stylesheet">
   <style>
     /* ============ Reset + tokens ============ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Roboto', system-ui, -apple-system, sans-serif;
       color: var(--ink);
       background: var(--cream);
       -webkit-font-smoothing: antialiased;
@@ -28,28 +28,36 @@
     button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
 
     :root {
-      --cream: #F5EEDC;
-      --cream-light: #FBF6EA;
-      --cream-deep: #ECE2C8;
+      /* Brand palette — pulled from live site custom props (--gold #EABC53, --cream #F0E6C8, --brown/--dark #4F2D1D) */
+      --cream: #F0E6C8;
+      --cream-light: #FDF8EE;
+      --cream-deep: #E0D5B8;
       --ink: #1A1614;
-      --ink-soft: #4A423D;
-      --ink-mute: #857B72;
-      --amber: #B8541F;
-      --amber-hover: #97441A;
-      --amber-tint: #F5E0D0;
-      --forest: #1F3A2E;
-      --forest-hover: #17281F;
-      --gold: #D4A24C;
-      --line: rgba(26,22,20,0.10);
-      --line-strong: rgba(26,22,20,0.22);
-      --serif: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
-      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --ink-soft: #4F2D1D;
+      --ink-mute: #7A6A5A;
+      --brown: #4F2D1D;
+      --brown-hover: #3A2000;
+      --brown-deep: #3D1F06;
+      --amber: #4F2D1D;            /* unified with brown; kept alias for legacy selectors */
+      --amber-hover: #3A2000;
+      --amber-tint: #F0E6C8;
+      --forest: #4F2D1D;           /* forest replaced with brand brown for unified palette */
+      --forest-hover: #3A2000;
+      --gold: #EABC53;
+      --gold-soft: #F2D285;
+      --gold-hover: #C99A38;
+      --line: rgba(79,45,29,0.14);
+      --line-strong: rgba(79,45,29,0.28);
+      --serif: 'Roboto Slab', Georgia, serif;
+      --sans: 'Roboto', system-ui, -apple-system, sans-serif;
+      --eyebrow: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --display: 'Pattaya', cursive;
       --radius-sm: 6px;
       --radius: 12px;
       --radius-lg: 20px;
-      --shadow-sm: 0 1px 2px rgba(26,22,20,0.06), 0 2px 6px rgba(26,22,20,0.04);
-      --shadow: 0 4px 12px rgba(26,22,20,0.08), 0 12px 32px rgba(26,22,20,0.06);
-      --shadow-lg: 0 8px 24px rgba(26,22,20,0.10), 0 24px 64px rgba(26,22,20,0.10);
+      --shadow-sm: 0 1px 2px rgba(79,45,29,0.06), 0 2px 6px rgba(79,45,29,0.04);
+      --shadow: 0 4px 12px rgba(79,45,29,0.08), 0 12px 32px rgba(79,45,29,0.06);
+      --shadow-lg: 0 8px 24px rgba(79,45,29,0.10), 0 24px 64px rgba(79,45,29,0.10);
     }
 
     #stage { min-height: 100vh; }
@@ -262,10 +270,11 @@
       opacity: 0.22;
       filter: blur(3px);
     }
-    .v1-experience-inner,
-    .v2-hero-content {
+    .v1-experience-inner {
       position: relative; z-index: 1;
     }
+    .v2-hero-content { position: relative; z-index: 3; }
+    .v2-scroll-cue { z-index: 3; }
     /* V2 hero dish holds a real photo, not a gradient orb */
     .v2-hero-dish { overflow: hidden; filter: none; }
     .v2-hero-dish img {
@@ -290,10 +299,10 @@
       display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center;
     }
     .v1-philosophy-icon {
-      width: 120px; height: 120px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, rgba(255,200,120,0.45), rgba(184,84,31,0.9) 45%, rgba(90,30,10,1) 100%);
-      display: grid; place-items: center; color: rgba(255,240,220,0.9);
-      box-shadow: 0 12px 30px rgba(60,20,8,0.18);
+      width: 180px; height: 135px; border-radius: var(--radius);
+      background: var(--cream-deep);
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(79,45,29,0.18);
     }
     .v1-philosophy-icon svg { width: 60%; height: 60%; }
     .v1-philosophy-label {
@@ -377,11 +386,10 @@
     }
     .v1-story-two-cta { margin-top: 24px; }
     .v1-story-two-visual {
-      width: 220px; height: 220px; border-radius: 50%;
-      background:
-        radial-gradient(circle at 40% 30%, rgba(255,220,150,0.45), rgba(184,84,31,0.85) 45%, rgba(60,20,8,1) 100%);
-      display: grid; place-items: center; color: rgba(255,240,220,0.92);
-      box-shadow: 0 20px 40px rgba(26,22,20,0.15);
+      width: 320px; height: 240px; border-radius: var(--radius);
+      background: var(--cream-deep);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(79,45,29,0.15);
     }
     .v1-story-two-visual svg { width: 60%; height: 60%; }
 
@@ -634,6 +642,162 @@
       .v3-content-strip-inner { grid-template-columns: 1fr; }
     }
 
+    /* ============ V1 Reviews (cream card grid) ============ */
+    .v1-reviews {
+      padding: 90px 40px;
+      background: var(--cream-light);
+      border-top: 1px solid var(--line);
+    }
+    .v1-reviews-inner { max-width: 1080px; margin: 0 auto; }
+    .v1-reviews-head { text-align: center; margin-bottom: 40px; }
+    .v1-reviews-label {
+      font-size: 11px; font-weight: 700; font-family: var(--eyebrow);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--gold-hover); margin-bottom: 14px;
+    }
+    .v1-reviews-head h2 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.15; letter-spacing: -0.02em;
+    }
+    .v1-reviews-head-meta {
+      margin-top: 10px; font-size: 14px; color: var(--ink-mute);
+    }
+    .v1-reviews-head-meta .stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
+    .v1-reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    }
+    .v1-review-card {
+      padding: 28px 24px 22px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--gold);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .v1-review-stars {
+      color: var(--gold); font-size: 15px; letter-spacing: 2px;
+    }
+    .v1-review-quote {
+      font-family: var(--serif); font-size: 16px; line-height: 1.55;
+      color: var(--ink); font-weight: 500;
+    }
+    .v1-review-attrib {
+      margin-top: auto; padding-top: 4px;
+      font-size: 13px; color: var(--ink-mute);
+      display: flex; justify-content: space-between; align-items: baseline;
+    }
+    .v1-review-attrib strong { color: var(--brown); font-weight: 600; }
+    .v1-review-source-note {
+      text-align: center; margin-top: 24px;
+      font-size: 12px; color: var(--ink-mute);
+    }
+    @media (max-width: 900px) { .v1-reviews-grid { grid-template-columns: 1fr; } }
+
+    /* ============ V2 Reviews (dark, editorial) ============ */
+    .v2-reviews {
+      padding: 120px 32px;
+      background: #0F0B08;
+      border-top: 1px solid rgba(245,238,220,0.08);
+    }
+    .v2-reviews-inner { max-width: 1120px; margin: 0 auto; }
+    .v2-reviews-head { text-align: center; margin-bottom: 64px; }
+    .v2-reviews-label {
+      font-size: 11px; font-family: var(--eyebrow); font-weight: 700;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 22px;
+    }
+    .v2-reviews-head h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.6vw, 42px); line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--cream-light);
+    }
+    .v2-reviews-head-meta {
+      margin-top: 12px; font-size: 14px; color: rgba(245,238,220,0.6);
+    }
+    .v2-reviews-head-meta .stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
+    .v2-reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
+    }
+    .v2-review {
+      display: flex; flex-direction: column; gap: 18px;
+      text-align: center;
+    }
+    .v2-review-mark {
+      font-family: var(--serif); font-size: 64px; line-height: 0.4;
+      color: var(--gold);
+      margin: 0 auto 4px;
+    }
+    .v2-review-stars {
+      color: var(--gold); font-size: 15px; letter-spacing: 3px;
+    }
+    .v2-review-quote {
+      font-family: var(--serif); font-weight: 400;
+      font-size: 18px; line-height: 1.55;
+      color: rgba(245,238,220,0.92);
+    }
+    .v2-review-attrib {
+      font-size: 12px; letter-spacing: 0.20em; text-transform: uppercase;
+      color: var(--gold);
+      font-family: var(--eyebrow); font-weight: 600;
+    }
+    .v2-reviews-source-note {
+      text-align: center; margin-top: 40px;
+      font-size: 12px; color: rgba(245,238,220,0.5);
+    }
+    @media (max-width: 900px) { .v2-reviews-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+    /* ============ V3 Reviews (compact app-style) ============ */
+    .v3-reviews {
+      padding: 40px 32px 60px;
+      background: var(--cream-light);
+      border-top: 1px solid var(--line);
+    }
+    .v3-reviews-inner { max-width: 1200px; margin: 0 auto; }
+    .v3-reviews-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; gap: 20px; flex-wrap: wrap;
+    }
+    .v3-reviews-title-block { display: flex; flex-direction: column; gap: 4px; }
+    .v3-reviews-title { font-family: var(--serif); font-size: 26px; font-weight: 500; letter-spacing: -0.02em; }
+    .v3-reviews-source {
+      font-size: 11px; font-family: var(--eyebrow); font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute);
+    }
+    .v3-reviews-rating {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 10px 16px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 14px; color: var(--ink-soft);
+    }
+    .v3-reviews-rating .stars { color: var(--gold); letter-spacing: 2px; }
+    .v3-reviews-rating strong { color: var(--brown); font-weight: 700; }
+    .v3-reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .v3-review-card {
+      padding: 20px 22px 18px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      display: flex; flex-direction: column; gap: 10px;
+      transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+    }
+    .v3-review-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+    .v3-review-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; }
+    .v3-review-quote {
+      font-size: 14px; line-height: 1.55; color: var(--ink-soft);
+    }
+    .v3-review-attrib {
+      margin-top: auto; padding-top: 8px;
+      font-size: 12px; color: var(--brown);
+      font-weight: 600;
+    }
+    @media (max-width: 1100px) { .v3-reviews-grid { grid-template-columns: 1fr; } }
+
     /* ============ V1 SPLIT HERO ============ */
     .v1 { background: var(--cream); color: var(--ink); }
 
@@ -693,16 +857,13 @@
       overflow: hidden;
     }
     .v1-hero-photo-art {
-      width: 62%; max-width: 460px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255,200,120,0.5), rgba(180,80,20,0.9) 45%, rgba(90,30,10,1) 100%);
-      box-shadow: 0 40px 100px rgba(0,0,0,0.4), inset 0 -20px 40px rgba(0,0,0,0.3);
-      display: grid; place-items: center;
-      transform: rotate(-4deg);
+      width: 78%; max-width: 520px;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      background: var(--brown-deep);
+      box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+      overflow: hidden;
     }
-    .v1-hero-photo-art svg { width: 62%; height: 62%; opacity: 0.85; }
     .v1-hero-caption {
       position: absolute;
       bottom: 32px; left: 40px;
@@ -926,17 +1087,19 @@
         linear-gradient(180deg, #1A100A 0%, #0A0605 100%);
       overflow: hidden;
     }
-    .v2-hero-dish {
-      position: absolute; left: 50%; top: 50%;
-      transform: translate(-50%, -50%);
-      width: min(78vmin, 720px); aspect-ratio: 1;
-      border-radius: 50%;
+    /* V2 hero uses a full-bleed video background instead of a decorative orb */
+    .v2-hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      z-index: 0;
+    }
+    .v2-hero-overlay {
+      position: absolute; inset: 0;
       background:
-        radial-gradient(circle at 40% 30%, rgba(255,210,140,0.35), rgba(184,84,31,0.55) 40%, rgba(60,20,8,0.2) 100%),
-        radial-gradient(circle at 60% 70%, rgba(212,162,76,0.3), transparent 55%);
-      filter: blur(2px);
-      opacity: 0.85;
-      animation: v2FloatIn 1400ms cubic-bezier(0.19, 1, 0.22, 1) both;
+        radial-gradient(60% 45% at 50% 55%, rgba(79,45,29,0.35), transparent 60%),
+        linear-gradient(180deg, rgba(15,11,8,0.65) 0%, rgba(10,6,5,0.85) 100%);
+      z-index: 1;
     }
     .v2-hero-content {
       position: relative; z-index: 2;
@@ -1048,9 +1211,9 @@
       display: flex; flex-direction: column; align-items: center; text-align: center;
     }
     .v2-dish-visual {
-      width: 100%; aspect-ratio: 1;
-      border-radius: 50%;
-      display: grid; place-items: center;
+      width: 100%; aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      overflow: hidden;
       margin-bottom: 24px;
       transition: transform 300ms cubic-bezier(0.19, 1, 0.22, 1);
     }
@@ -1552,6 +1715,34 @@
             </div>
           </section>
 
+          <section class="v1-reviews" id="reviews">
+            <div class="v1-reviews-inner">
+              <div class="v1-reviews-head">
+                <div class="v1-reviews-label">Raves &amp; reviews</div>
+                <h2>What guests are saying.</h2>
+                <div class="v1-reviews-head-meta"><span class="stars">★★★★★</span>4.5 average across 12 reviews</div>
+              </div>
+              <div class="v1-reviews-grid">
+                <div class="v1-review-card">
+                  <div class="v1-review-stars">★★★★★</div>
+                  <p class="v1-review-quote">"I've been to a good 6 or 7 Thai places around town and this is hands down the best I've had."</p>
+                  <div class="v1-review-attrib"><strong>Ben H.</strong><span>Yelp</span></div>
+                </div>
+                <div class="v1-review-card">
+                  <div class="v1-review-stars">★★★★★</div>
+                  <p class="v1-review-quote">"Only in town for one night, so wanted a winner. Lucky we found this spot. Wow, flavors were DELICIOUS."</p>
+                  <div class="v1-review-attrib"><strong>Donna S.</strong><span>Yelp</span></div>
+                </div>
+                <div class="v1-review-card">
+                  <div class="v1-review-stars">★★★★★</div>
+                  <p class="v1-review-quote">"Great food and great service. The Drunken Noodles that my friend ordered were also amazing."</p>
+                  <div class="v1-review-attrib"><strong>Christina B.</strong><span>Yelp</span></div>
+                </div>
+              </div>
+              <p class="v1-review-source-note">Reviews from Yelp, verbatim. See more at yelp.com/biz/nakhon-luang-thai-kitchen-colorado-springs.</p>
+            </div>
+          </section>
+
           <section class="v1-reservations" id="reserve">
             <div class="v1-reservations-inner">
               <div class="v1-reservations-label">Reserve your table</div>
@@ -1567,13 +1758,13 @@
           <section class="v1-visit" id="visit">
             <div class="v1-visit-block">
               <div class="v1-visit-label">Hours</div>
-              <div>11:00am – 8:30pm</div>
-              <div>Open daily · lunch &amp; dinner</div>
+              <div>11:00am – 3:30pm</div>
+              <div>4:30pm – 8:30pm · daily</div>
             </div>
             <div class="v1-visit-block">
               <div class="v1-visit-label">Where</div>
-              <div>Rockrimmon</div>
-              <div>Colorado Springs, CO</div>
+              <div>805 Village Center Drive</div>
+              <div>Colorado Springs, CO 80919</div>
             </div>
             <div class="v1-visit-cta">
               <a href="/order" class="btn btn-primary">Order Online</a>
@@ -1584,7 +1775,7 @@
           <footer class="v1-footer">
             <div class="v1-footer-brand">Nakhon Luang Thai Kitchen</div>
             <div class="v1-footer-meta">
-              <span>Rockrimmon, Colorado Springs, CO</span>
+              <span>805 Village Center Dr · Colorado Springs, CO 80919</span>
               <span>·</span>
               <a href="tel:+17195315175">(719) 531-5175</a>
               <span>·</span>
@@ -1620,9 +1811,10 @@
           </nav>
 
           <section class="v2-hero">
-            <div class="v2-hero-dish" aria-hidden="true">
-              <img src="assets/nl8-dish-khaosoi.jpg" alt="">
-            </div>
+            <video class="v2-hero-video" autoplay muted loop playsinline poster="assets/nl8-dish-khaosoi.jpg" aria-hidden="true">
+              <source src="assets/nl11-hero.mp4" type="video/mp4">
+            </video>
+            <div class="v2-hero-overlay" aria-hidden="true"></div>
             <div class="v2-hero-content">
               <div class="v2-hero-eyebrow">Authentic Thai · Colorado Springs</div>
               <h1 class="v2-hero-title">Food our family <em>grew up on.</em></h1>
@@ -1682,18 +1874,50 @@
             <a href="#reserve" class="v2-experience-cta">Make a reservation →</a>
           </section>
 
+          <section class="v2-reviews" id="reviews">
+            <div class="v2-reviews-inner">
+              <div class="v2-reviews-head">
+                <div class="v2-reviews-label">Raves &amp; reviews</div>
+                <h2>What guests are saying.</h2>
+                <div class="v2-reviews-head-meta"><span class="stars">★★★★★</span>4.5 average across 12 reviews</div>
+              </div>
+              <div class="v2-reviews-grid">
+                <div class="v2-review">
+                  <div class="v2-review-mark">"</div>
+                  <div class="v2-review-stars">★★★★★</div>
+                  <p class="v2-review-quote">I've been to a good 6 or 7 Thai places around town and this is hands down the best I've had.</p>
+                  <div class="v2-review-attrib">Ben H. · Yelp</div>
+                </div>
+                <div class="v2-review">
+                  <div class="v2-review-mark">"</div>
+                  <div class="v2-review-stars">★★★★★</div>
+                  <p class="v2-review-quote">Only in town for one night, so wanted a winner. Lucky we found this spot. Wow, flavors were DELICIOUS.</p>
+                  <div class="v2-review-attrib">Donna S. · Yelp</div>
+                </div>
+                <div class="v2-review">
+                  <div class="v2-review-mark">"</div>
+                  <div class="v2-review-stars">★★★★★</div>
+                  <p class="v2-review-quote">Great food and great service. The Drunken Noodles that my friend ordered were also amazing.</p>
+                  <div class="v2-review-attrib">Christina B. · Yelp</div>
+                </div>
+              </div>
+              <p class="v2-reviews-source-note">Reviews from Yelp, verbatim.</p>
+            </div>
+          </section>
+
           <section class="v2-visit" id="visit">
             <h3>Come find us, or order in.</h3>
             <div class="v2-visit-grid">
               <div>
                 <div class="v2-visit-cell-label">Open</div>
-                <div class="v2-visit-cell-value">11am – 8:30pm</div>
+                <div class="v2-visit-cell-value">11am – 3:30pm</div>
+                <div class="v2-visit-cell-value" style="margin-top:2px;">4:30pm – 8:30pm</div>
                 <div class="v2-visit-cell-label" style="margin-top:6px;color:rgba(212,162,76,0.6);">Every day</div>
               </div>
               <div>
                 <div class="v2-visit-cell-label">Where</div>
-                <div class="v2-visit-cell-value">Rockrimmon</div>
-                <div class="v2-visit-cell-label" style="margin-top:6px;color:rgba(212,162,76,0.6);">Colorado Springs</div>
+                <div class="v2-visit-cell-value">805 Village Center Dr</div>
+                <div class="v2-visit-cell-label" style="margin-top:6px;color:rgba(212,162,76,0.6);">Colorado Springs, CO 80919</div>
               </div>
               <div>
                 <div class="v2-visit-cell-label">Reservations</div>
@@ -1717,7 +1941,7 @@
           </section>
 
           <footer class="v2-footer">
-            <span>Nakhon Luang Thai Kitchen</span> · Rockrimmon, Colorado Springs ·
+            <span>Nakhon Luang Thai Kitchen</span> · 805 Village Center Dr, Colorado Springs, CO 80919 ·
             <a href="tel:+17195315175">(719) 531-5175</a> ·
             <a href="https://instagram.com/eatnltk">@eatnltk</a>
           </footer>
@@ -1909,6 +2133,39 @@
             </div>
           </section>
 
+          <section class="v3-reviews" id="reviews">
+            <div class="v3-reviews-inner">
+              <div class="v3-reviews-head">
+                <div class="v3-reviews-title-block">
+                  <div class="v3-reviews-title">Raves &amp; reviews</div>
+                  <div class="v3-reviews-source">Verbatim from Yelp</div>
+                </div>
+                <div class="v3-reviews-rating">
+                  <span class="stars">★★★★★</span>
+                  <strong>4.5</strong>
+                  <span>across 12 reviews</span>
+                </div>
+              </div>
+              <div class="v3-reviews-grid">
+                <div class="v3-review-card">
+                  <div class="v3-review-stars">★★★★★</div>
+                  <p class="v3-review-quote">"I've been to a good 6 or 7 Thai places around town and this is hands down the best I've had."</p>
+                  <div class="v3-review-attrib">Ben H.</div>
+                </div>
+                <div class="v3-review-card">
+                  <div class="v3-review-stars">★★★★★</div>
+                  <p class="v3-review-quote">"Only in town for one night, so wanted a winner. Lucky we found this spot. Wow, flavors were DELICIOUS."</p>
+                  <div class="v3-review-attrib">Donna S.</div>
+                </div>
+                <div class="v3-review-card">
+                  <div class="v3-review-stars">★★★★★</div>
+                  <p class="v3-review-quote">"Great food and great service. The Drunken Noodles that my friend ordered were also amazing."</p>
+                  <div class="v3-review-attrib">Christina B.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           <section class="v3-reservations" id="reserve">
             <div class="v3-reservations-inner">
               <div class="v3-reservations-label">Reserve your table</div>
@@ -1926,14 +2183,14 @@
               <div class="v3-visit-icon">${icons.clock}</div>
               <div>
                 <div class="v3-visit-label">Hours</div>
-                <div class="v3-visit-value">11am – 8:30pm daily</div>
+                <div class="v3-visit-value">11am – 3:30pm &amp; 4:30pm – 8:30pm</div>
               </div>
             </div>
             <div class="v3-visit-block">
               <div class="v3-visit-icon">${icons.pin}</div>
               <div>
                 <div class="v3-visit-label">Location</div>
-                <div class="v3-visit-value">Rockrimmon · Colorado Springs</div>
+                <div class="v3-visit-value">805 Village Center Dr · Colorado Springs</div>
               </div>
             </div>
             <div style="display:flex;gap:10px;">
@@ -1943,7 +2200,7 @@
           </section>
 
           <footer class="v3-footer">
-            Nakhon Luang Thai Kitchen · Rockrimmon, Colorado Springs, CO ·
+            Nakhon Luang Thai Kitchen · 805 Village Center Dr, Colorado Springs, CO 80919 ·
             <a href="tel:+17195315175">(719) 531-5175</a> ·
             <a href="https://instagram.com/eatnltk">@eatnltk</a>
           </footer>
