@@ -6,6 +6,7 @@
   <title>Nakhon Luang Thai Kitchen · Homepage Prototype</title>
   <meta name="description" content="Homepage redesign prototype for Nakhon Luang Thai Kitchen, Colorado Springs. Three divergent variants behind a picker. Client: Magister Digital pilot.">
   <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="assets/nltk-logo-current-site-transparent.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -207,6 +208,76 @@
       position: relative;
     }
     .dish-tile svg { width: 62%; height: 62%; opacity: 0.92; }
+
+    /* ============ Real-photo helpers (fill container, cover crop) ============ */
+    .photo-fill {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    /* Any visual container that swaps SVG art for a real photo gets these rules */
+    .v1-hero-photo-art,
+    .v1-philosophy-icon,
+    .v1-dish-visual,
+    .v1-story-two-visual,
+    .v2-dish-visual,
+    .v3-dish-visual {
+      overflow: hidden;
+    }
+    .v1-hero-photo-art img,
+    .v1-philosophy-icon img,
+    .v1-dish-visual img,
+    .v1-story-two-visual img,
+    .v2-dish-visual img,
+    .v3-dish-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    /* Nav logo sizing across variants */
+    .brand-logo {
+      display: block; height: 44px; width: auto;
+    }
+    .brand-logo-sm {
+      display: block; height: 36px; width: auto;
+    }
+    /* Section background photo (subtle, dark overlay) */
+    .v1-experience,
+    .v2-hero {
+      position: relative;
+      isolation: isolate;
+    }
+    .bg-photo-layer {
+      position: absolute; inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.18;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .v1-experience .bg-photo-layer {
+      opacity: 0.15;
+    }
+    .v2-hero .bg-photo-layer {
+      opacity: 0.22;
+      filter: blur(3px);
+    }
+    .v1-experience-inner,
+    .v2-hero-content {
+      position: relative; z-index: 1;
+    }
+    /* V2 hero dish holds a real photo, not a gradient orb */
+    .v2-hero-dish { overflow: hidden; filter: none; }
+    .v2-hero-dish img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      opacity: 0.75;
+    }
+    /* V2 dish tiles keep their circular mask */
+    .v2-dish-visual { overflow: hidden; }
+    /* V3 dish tiles: no radius (they use var(--radius) via cards) */
+    .v3-dish-visual { overflow: hidden; }
 
     /* ============ V1 additions: Philosophy, Dishes, Story-2col, Experience, Reservations ============ */
     .v1-philosophy {
@@ -1315,10 +1386,9 @@
       return `
         <div class="v1">
           <nav class="v1-nav">
-            <div class="v1-brand">
-              <div class="v1-mark">Nakhon Luang</div>
-              <div class="v1-mark-sub">THAI KITCHEN · CO SPRINGS</div>
-            </div>
+            <a href="/" class="v1-brand" aria-label="Nakhon Luang Thai Kitchen home" style="text-decoration:none;">
+              <img src="assets/nltk-logo-current-site-transparent.png" alt="Nakhon Luang Thai Kitchen" class="brand-logo" width="180" height="52">
+            </a>
             <div class="v1-nav-links">
               <a href="#menu">Menu</a>
               <a href="#story">Story</a>
@@ -1330,7 +1400,9 @@
 
           <section class="v1-hero">
             <div class="v1-hero-photo">
-              <div class="v1-hero-photo-art" style="color:#4A2914">${icons.bowl}</div>
+              <div class="v1-hero-photo-art">
+                <img src="assets/nl8-dish-khaosoi.jpg" alt="Khao Soi: Northern Thai coconut curry soup with chicken, crispy noodles, lime, cilantro, and pickled red onion" width="460" height="460">
+              </div>
               <div class="v1-hero-caption">
                 Featured
                 <em>Khao Soi Gai · Northern Thai coconut curry</em>
@@ -1398,7 +1470,9 @@
 
           <section class="v1-philosophy" id="philosophy">
             <div class="v1-philosophy-inner">
-              <div class="v1-philosophy-icon">${icons.wok}</div>
+              <div class="v1-philosophy-icon">
+                <img src="assets/nl8-dish-padkrapao.jpg" alt="Pad Kra Pao: Thai holy basil stir-fry served over jasmine rice with a fried egg" loading="lazy" width="120" height="120">
+              </div>
               <div class="v1-philosophy-copy">
                 <div class="v1-philosophy-label">Our philosophy</div>
                 <h2>Bold flavors. Refined craft.</h2>
@@ -1415,21 +1489,27 @@
               </div>
               <div class="v1-dish-grid">
                 <div class="v1-dish-card">
-                  <div class="v1-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,200,120,0.5), rgba(184,84,31,0.9) 50%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
+                  <div class="v1-dish-visual">
+                    <img src="assets/nl8-dish-khaosoi.jpg" alt="Khao Soi coconut curry soup with crispy noodle nest and lime" loading="lazy" width="400" height="300">
+                  </div>
                   <div class="v1-dish-body">
                     <div class="v1-dish-name">Khao Soi</div>
                     <div class="v1-dish-desc">Northern Thai coconut curry soup with egg noodles, braised chicken, crispy noodles, shallots &amp; lime.</div>
                   </div>
                 </div>
                 <div class="v1-dish-card">
-                  <div class="v1-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.4), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
+                  <div class="v1-dish-visual">
+                    <img src="assets/nl8-dish-padkrapao.jpg" alt="Pad Kra Pao holy basil stir-fry with fried egg on jasmine rice" loading="lazy" width="400" height="300">
+                  </div>
                   <div class="v1-dish-body">
                     <div class="v1-dish-name">Pad Kra Pao</div>
                     <div class="v1-dish-desc">Stir-fried Thai holy basil with bell peppers, onions &amp; chili, topped with a fried egg.</div>
                   </div>
                 </div>
                 <div class="v1-dish-card">
-                  <div class="v1-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
+                  <div class="v1-dish-visual">
+                    <img src="assets/nl8b-dish-drunkennoodles.jpg" alt="Drunken Noodles: wide rice noodles with crispy duck, Thai basil, and bell peppers" loading="lazy" width="400" height="300">
+                  </div>
                   <div class="v1-dish-body">
                     <div class="v1-dish-name">Drunken Noodles</div>
                     <div class="v1-dish-desc">Wide rice noodles stir-fried with crispy duck, Thai basil, bell peppers, onions &amp; chili.</div>
@@ -1449,11 +1529,14 @@
                   <a href="#menu" class="btn btn-ghost">View the full menu</a>
                 </div>
               </div>
-              <div class="v1-story-two-visual">${icons.noodle}</div>
+              <div class="v1-story-two-visual">
+                <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" loading="lazy" width="220" height="220">
+              </div>
             </div>
           </section>
 
           <section class="v1-experience" id="experience">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v1-experience-inner">
               <div class="v1-experience-label">Gather. Sip. Savor.</div>
               <h2>An elevated Thai table, without the fuss.</h2>
@@ -1525,7 +1608,9 @@
       return `
         <div class="v2">
           <nav class="v2-nav">
-            <div class="v2-brand">Nakhon Luang · Thai Kitchen</div>
+            <a href="/" class="v2-brand" aria-label="Nakhon Luang Thai Kitchen home" style="text-decoration:none;">
+              <img src="assets/nltk-hero-wordmark-cream.png" alt="Nakhon Luang" style="display:block;height:26px;width:auto;">
+            </a>
             <div class="v2-nav-links">
               <a href="#story">Story</a>
               <a href="#dishes">Dishes</a>
@@ -1535,7 +1620,9 @@
           </nav>
 
           <section class="v2-hero">
-            <div class="v2-hero-dish" aria-hidden="true"></div>
+            <div class="v2-hero-dish" aria-hidden="true">
+              <img src="assets/nl8-dish-khaosoi.jpg" alt="">
+            </div>
             <div class="v2-hero-content">
               <div class="v2-hero-eyebrow">Authentic Thai · Colorado Springs</div>
               <h1 class="v2-hero-title">Food our family <em>grew up on.</em></h1>
@@ -1557,19 +1644,25 @@
             </div>
             <div class="v2-dish-grid">
               <div class="v2-dish">
-                <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,210,140,0.55), rgba(184,84,31,0.9) 45%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
+                <div class="v2-dish-visual">
+                  <img src="assets/nl8-dish-khaosoi.jpg" alt="Khao Soi coconut curry soup" loading="lazy" width="320" height="320">
+                </div>
                 <div class="v2-dish-title">Khao Soi</div>
                 <div class="v2-dish-region">Northern Thailand</div>
                 <div class="v2-dish-desc">Northern Thai coconut curry soup with egg noodles, braised chicken, crispy noodles, shallots &amp; lime.</div>
               </div>
               <div class="v2-dish">
-                <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.35), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
+                <div class="v2-dish-visual">
+                  <img src="assets/nl8-dish-padkrapao.jpg" alt="Pad Kra Pao holy basil stir-fry with fried egg" loading="lazy" width="320" height="320">
+                </div>
                 <div class="v2-dish-title">Pad Kra Pao</div>
                 <div class="v2-dish-region">Central Thailand</div>
                 <div class="v2-dish-desc">Stir-fried Thai holy basil with bell peppers, onions &amp; chili, topped with a fried egg.</div>
               </div>
               <div class="v2-dish">
-                <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
+                <div class="v2-dish-visual">
+                  <img src="assets/nl8b-dish-drunkennoodles.jpg" alt="Drunken Noodles with crispy duck and Thai basil" loading="lazy" width="320" height="320">
+                </div>
                 <div class="v2-dish-title">Drunken Noodles</div>
                 <div class="v2-dish-region">Bangkok street</div>
                 <div class="v2-dish-desc">Wide rice noodles stir-fried with crispy duck, Thai basil, bell peppers, onions &amp; chili.</div>
@@ -1655,13 +1748,10 @@
       return `
         <div class="v3">
           <nav class="v3-nav">
-            <div class="v3-brand-block">
-              <div class="v3-brand-mark">N</div>
-              <div>
-                <div class="v3-brand-name">Nakhon Luang Thai</div>
-                <div class="v3-brand-sub">COLORADO SPRINGS</div>
-              </div>
-            </div>
+            <a href="/" class="v3-brand-block" aria-label="Nakhon Luang Thai Kitchen home" style="text-decoration:none;">
+              <img src="assets/nltk-logo-current-site-transparent.png" alt="Nakhon Luang Thai Kitchen" class="brand-logo" width="180" height="52">
+              <div class="v3-brand-sub" style="align-self:center;">COLORADO SPRINGS</div>
+            </a>
             <div class="v3-nav-right">
               <div class="v3-nav-open">
                 <span class="v3-open-dot"></span>
@@ -1745,7 +1835,9 @@
             </div>
             <div class="v3-popular-grid">
               <div class="v3-dish-card">
-                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,200,120,0.5), rgba(184,84,31,0.9) 50%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
+                <div class="v3-dish-visual">
+                  <img src="assets/nl8-dish-khaosoi.jpg" alt="Khao Soi coconut curry soup with crispy noodles and lime" loading="lazy" width="400" height="300">
+                </div>
                 <div class="v3-dish-body">
                   <div class="v3-dish-name">Khao Soi Gai</div>
                   <div class="v3-dish-desc">Chiang Mai coconut curry, egg noodles, chicken, crispy noodle nest</div>
@@ -1756,7 +1848,9 @@
                 </div>
               </div>
               <div class="v3-dish-card">
-                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.4), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
+                <div class="v3-dish-visual">
+                  <img src="assets/nl8-dish-padkrapao.jpg" alt="Pad Kra Pao holy basil stir-fry with fried egg on jasmine rice" loading="lazy" width="400" height="300">
+                </div>
                 <div class="v3-dish-body">
                   <div class="v3-dish-name">Pad Kra Pao</div>
                   <div class="v3-dish-desc">Holy basil stir-fry, pork, birds-eye chili, fried egg on rice</div>
@@ -1767,7 +1861,9 @@
                 </div>
               </div>
               <div class="v3-dish-card">
-                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
+                <div class="v3-dish-visual">
+                  <img src="assets/nl8b-dish-drunkennoodles.jpg" alt="Drunken Noodles wide rice noodles with crispy duck and Thai basil" loading="lazy" width="400" height="300">
+                </div>
                 <div class="v3-dish-body">
                   <div class="v3-dish-name">Drunken Noodles</div>
                   <div class="v3-dish-desc">Wide rice noodles, crispy duck, Thai basil, chili</div>
