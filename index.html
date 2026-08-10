@@ -3501,10 +3501,10 @@
           const gridRect = grid.getBoundingClientRect();
           const svgRect = svgEl.getBoundingClientRect();
           const viewportH = window.innerHeight;
-          // Compress the caravan into a shorter scroll window so it doesn't crawl:
-          // full path traversed within ~55% of the section's own height, not the whole
-          // section-plus-viewport journey. Feels ~3x snappier.
-          const total = gridRect.height * 0.55;
+          // Caravan traverses the full path across one section-height of scroll —
+          // starts when section top hits viewport bottom, finishes as section fills viewport.
+          // Feels responsive without vanishing before the user notices it.
+          const total = gridRect.height;
           const passed = viewportH - gridRect.top;
           const leadProgress = Math.max(0, Math.min(1, passed / total));
 
@@ -3515,11 +3515,15 @@
           const delta = 1;
 
           travelers.forEach((el, i) => {
-            const t = leadProgress - i * SPACING;
-            if (t <= 0 || t >= 1) {
+            let t = leadProgress - i * SPACING;
+            // Only hide travelers that haven't yet appeared (t < 0).
+            // Once at path end (t >= 1), CLAMP to end and stay visible — never vanish
+            // just because the user finished scrolling.
+            if (t < 0) {
               el.style.opacity = '0';
               return;
             }
+            if (t > 1) t = 1;
             el.style.opacity = '1';
             const dist = t * pathTotalLength;
             const pt = pathEl.getPointAtLength(dist);
