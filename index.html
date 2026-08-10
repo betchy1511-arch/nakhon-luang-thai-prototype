@@ -192,11 +192,12 @@
     }
     .btn-primary:hover { background: var(--amber-hover); box-shadow: 0 4px 14px rgba(184,84,31,0.30); }
     .btn-ghost {
-      background: transparent;
-      color: var(--ink);
-      border: 1px solid var(--line-strong);
+      background: var(--gold);
+      color: var(--brown);
+      border: 1px solid var(--gold-hover);
+      box-shadow: 0 2px 8px rgba(234,188,83,0.35);
     }
-    .btn-ghost:hover { background: var(--ink); color: var(--cream-light); border-color: var(--ink); }
+    .btn-ghost:hover { background: var(--gold-hover); color: var(--brown-deep); border-color: var(--brown); box-shadow: 0 4px 14px rgba(201,154,56,0.4); }
     .btn-forest {
       background: var(--forest);
       color: var(--cream-light);
@@ -1490,9 +1491,9 @@
     .v3-hero-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 24px; flex-wrap: wrap; }
     .v3-hero-title {
       font-family: var(--serif); font-weight: 500;
-      font-size: clamp(30px, 3.6vw, 44px);
-      line-height: 1.05; letter-spacing: -0.025em;
-      max-width: 14ch;
+      font-size: clamp(28px, 3.2vw, 40px);
+      line-height: 1.15; letter-spacing: -0.025em;
+      max-width: none;
     }
     .v3-hero-sub {
       font-size: 14px; color: var(--ink-soft);
@@ -2213,7 +2214,7 @@
           <section class="v3-hero">
             <div class="v3-hero-head">
               <div>
-                <h1 class="v3-hero-title">Pick a category · Order in a minute</h1>
+                <h1 class="v3-hero-title">Pick a category, order in a minute</h1>
                 <p class="v3-hero-sub" style="margin-top:12px;">Real regional Thai cooking, made to order, ready when you get here.</p>
               </div>
               <div class="v3-incentives">
