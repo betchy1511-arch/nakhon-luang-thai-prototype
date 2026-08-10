@@ -2136,16 +2136,27 @@
     }
 
     /* ---------- V3 REVIEWS: POLAROID JOURNEY (Crav-inspired) ---------- */
-    /* Give the grid room for tilts and overlays to poke out; position: relative anchors the SVG path */
+    /* 2-column layout at motion=on so cards have Crav-level breathing room */
     [data-motion] .v3-reviews-grid {
+      grid-template-columns: repeat(2, 1fr);
       overflow: visible;
-      padding: 60px 16px 80px;
-      row-gap: 72px;
+      padding: 90px 60px 110px;
+      column-gap: 160px;
+      row-gap: 130px;
       position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (max-width: 900px) {
+      [data-motion] .v3-reviews-grid {
+        grid-template-columns: 1fr;
+        padding: 60px 20px 80px;
+        column-gap: 0; row-gap: 90px;
+      }
     }
     [data-motion] .v3-review-snippet { position: relative; z-index: 2; overflow: visible; }
 
-    /* SVG cuisine-name path — the "line" is repeating dish names curving through the section */
+    /* SVG journey path — invisible curve; the "line" is repeated 🍜 emojis following it */
     [data-motion] .v3-reviews-path {
       position: absolute;
       top: 0; left: 0;
@@ -2155,22 +2166,18 @@
       opacity: 0;
       transition: opacity 1400ms cubic-bezier(0.4, 0, 0.6, 1) 200ms;
     }
-    [data-motion] .v3-reviews-grid.in-view .v3-reviews-path { opacity: 0.8; }
+    [data-motion] .v3-reviews-grid.in-view .v3-reviews-path { opacity: 1; }
     [data-motion] .v3-reviews-path path.v3-journey-guide {
       fill: none;
       stroke: none;
     }
     [data-motion] .v3-reviews-path text {
-      font-family: var(--serif, "Fraunces", Georgia), serif;
-      font-size: 26px;
-      font-weight: 700;
-      font-style: italic;
-      fill: #B98A3A;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      font-size: 34px;
+      letter-spacing: 0.15em;
+      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.18));
     }
     @media (max-width: 900px) {
-      [data-motion] .v3-reviews-path text { font-size: 18px; }
+      [data-motion] .v3-reviews-path text { font-size: 24px; letter-spacing: 0.08em; }
     }
 
     /* Resting tilt per card — asymmetric so the row reads as scattered polaroids */
@@ -3448,11 +3455,19 @@
       document.querySelectorAll('.v3-reviews-grid').forEach(grid => {
         if (grid.dataset.pathInjected === '1') return;
         grid.dataset.pathInjected = '1';
-        const dishText = 'Pad Thai   ·   Green Curry   ·   Drunken Noodles   ·   Pad Kra Pao   ·   Pepper Shrimp   ·   Basil Rice   ·   Pad Thai   ·   Green Curry   ·   Drunken Noodles   ·   Pad Kra Pao   ·   Pepper Shrimp   ·   Basil Rice';
+        // The "line" is a curving trail of Pad Thai bowls (🍜), one every glyph, following the invisible path
+        const emojiLine = '🍜 '.repeat(50).trim();
+        // 2-column grid needs a zigzag path that snakes between rows (top: left-to-right, middle: right-to-left, bottom: left-to-right)
         const svg =
-          '<svg class="v3-reviews-path" viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true">' +
-            '<path id="v3JourneyPath" class="v3-journey-guide" d="M 0 90 Q 200 10 400 90 T 800 100 T 1200 110 L 1200 320 Q 1000 400 800 320 T 400 330 T 0 340" />' +
-            '<text><textPath href="#v3JourneyPath" startOffset="0">' + dishText + '</textPath></text>' +
+          '<svg class="v3-reviews-path" viewBox="0 0 1200 700" preserveAspectRatio="none" aria-hidden="true">' +
+            '<path id="v3JourneyPath" class="v3-journey-guide" d="' +
+              'M 40 70 Q 300 -20 600 70 T 1160 100 ' +      // top row curve, arching over cards 1-2
+              'L 1160 320 ' +                                // drop down to row 2
+              'Q 900 400 600 320 T 40 340 ' +                // row 2 curve, snaking back left
+              'L 40 560 ' +                                  // drop down to row 3
+              'Q 300 640 600 560 T 1160 580' +               // row 3 curve, going right again
+            '" />' +
+            '<text><textPath href="#v3JourneyPath" startOffset="0">' + emojiLine + '</textPath></text>' +
           '</svg>';
         grid.insertAdjacentHTML('afterbegin', svg);
       });
