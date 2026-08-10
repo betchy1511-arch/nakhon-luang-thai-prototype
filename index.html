@@ -2553,12 +2553,12 @@
                   <a href="#menu" class="btn btn-ghost">View the full menu</a>
                 </div>
               </div>
-              <div class="v1-story-two-visual">
+              <div class="v1-story-two-visual" style="box-shadow: 0 20px 40px rgba(79,45,29,0.20);">
                 <video
                   autoplay muted loop playsinline
                   poster="assets/nl10b-ritual.jpg"
-                  aria-label="Nakhon Luang Thai dishes arranged on a wooden table"
-                  style="width:100%; height:auto; display:block; border-radius: var(--radius); box-shadow: 0 20px 40px rgba(79,45,29,0.20);">
+                  aria-label="Nakhon Luang Thai cooking, wok fire and fresh vegetables"
+                  style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;">
                   <source src="assets/nl11-hero.mp4" type="video/mp4">
                 </video>
               </div>
@@ -3459,7 +3459,11 @@
               'Q 300 640 600 560 T 1160 580' +
             '" />' +
           '</svg>';
-        grid.insertAdjacentHTML('afterbegin', svg);
+        // Insert SVG at END (beforeend) not START — putting it at afterbegin shifted every
+        // .v3-review-snippet:nth-child(N) selector off by one, so Boontarica's rest-tx shift
+        // and every polaroid tilt rule silently stopped matching.
+        // z-index handles paint order regardless of DOM position.
+        grid.insertAdjacentHTML('beforeend', svg);
 
         // Let the per-card fly-in run once, then hold at rest.
         setTimeout(() => grid.classList.add('trail-settled'), 2100);
