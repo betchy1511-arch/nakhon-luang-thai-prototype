@@ -834,17 +834,29 @@
       max-width: 900px; margin: 0 auto 40px;
     }
     .reviews-topic-pill {
+      display: inline-flex; align-items: center;
       padding: 8px 14px;
       background: var(--cream);
       border: 1px solid var(--line-strong);
       border-radius: 999px;
       font-size: 13px; color: var(--brown);
       font-family: var(--eyebrow); font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 150ms ease-out, border-color 150ms ease-out, transform 150ms ease-out;
+    }
+    .reviews-topic-pill:hover {
+      background: var(--gold); border-color: var(--gold-hover);
+      transform: translateY(-1px);
+    }
+    .reviews-topic-pill:hover .count {
+      background: var(--brown); color: var(--cream-light);
     }
     .reviews-topic-pill .count {
       display: inline-flex; margin-left: 6px;
       padding: 2px 8px; background: var(--gold); color: var(--brown);
       border-radius: 999px; font-size: 11px; font-weight: 700;
+      transition: background 150ms ease-out, color 150ms ease-out;
     }
     .reviews-see-more {
       display: inline-flex; align-items: center; gap: 8px;
@@ -1868,12 +1880,12 @@
                 <div class="reviews-gbp-summary-attrib">Summarized by Google from 66 reviews</div>
               </div>
               <div class="reviews-topic-pills">
-                <span class="reviews-topic-pill">Generous portions <span class="count">6</span></span>
-                <span class="reviews-topic-pill">Duck drunken noodles <span class="count">4</span></span>
-                <span class="reviews-topic-pill">Crab rangoons <span class="count">4</span></span>
-                <span class="reviews-topic-pill">Tom kha soup <span class="count">3</span></span>
-                <span class="reviews-topic-pill">Green curry chicken <span class="count">2</span></span>
-                <span class="reviews-topic-pill">Kabocha squash <span class="count">2</span></span>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Generous portions <span class="count">6</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Duck drunken noodles <span class="count">4</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Crab rangoons <span class="count">4</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Tom kha soup <span class="count">3</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Green curry chicken <span class="count">2</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Kabocha squash <span class="count">2</span></a>
               </div>
               <div class="v1-reviews-grid">
                 <div class="v1-review-card">
@@ -2076,12 +2088,12 @@
                 <div class="reviews-gbp-summary-attrib">Summarized by Google from 66 reviews</div>
               </div>
               <div class="reviews-topic-pills">
-                <span class="reviews-topic-pill">Generous portions <span class="count">6</span></span>
-                <span class="reviews-topic-pill">Duck drunken noodles <span class="count">4</span></span>
-                <span class="reviews-topic-pill">Crab rangoons <span class="count">4</span></span>
-                <span class="reviews-topic-pill">Tom kha soup <span class="count">3</span></span>
-                <span class="reviews-topic-pill">Green curry chicken <span class="count">2</span></span>
-                <span class="reviews-topic-pill">Kabocha squash <span class="count">2</span></span>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Generous portions <span class="count">6</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Duck drunken noodles <span class="count">4</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Crab rangoons <span class="count">4</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Tom kha soup <span class="count">3</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Green curry chicken <span class="count">2</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Kabocha squash <span class="count">2</span></a>
               </div>
               <div class="v2-reviews-grid">
                 <div class="v2-review">
@@ -2358,12 +2370,12 @@
                 <div class="reviews-gbp-summary-attrib">Summarized by Google from 66 reviews</div>
               </div>
               <div class="reviews-topic-pills">
-                <span class="reviews-topic-pill">Generous portions <span class="count">6</span></span>
-                <span class="reviews-topic-pill">Duck drunken noodles <span class="count">4</span></span>
-                <span class="reviews-topic-pill">Crab rangoons <span class="count">4</span></span>
-                <span class="reviews-topic-pill">Tom kha soup <span class="count">3</span></span>
-                <span class="reviews-topic-pill">Green curry chicken <span class="count">2</span></span>
-                <span class="reviews-topic-pill">Kabocha squash <span class="count">2</span></span>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Generous portions <span class="count">6</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Duck drunken noodles <span class="count">4</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Crab rangoons <span class="count">4</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Tom kha soup <span class="count">3</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Green curry chicken <span class="count">2</span></a>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-topic-pill" title="Read all 66 Google reviews">Kabocha squash <span class="count">2</span></a>
               </div>
               <div class="v3-reviews-grid">
                 <div class="v3-review-card">
