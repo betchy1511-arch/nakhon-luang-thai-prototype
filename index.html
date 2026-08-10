@@ -805,6 +805,123 @@
     }
     @media (max-width: 1100px) { .v3-reviews-grid { grid-template-columns: 1fr; } }
 
+    /* ============ Reviews section extras: GBP summary + topic pills + map ============ */
+    .reviews-gbp-summary {
+      max-width: 780px; margin: 32px auto 24px;
+      padding: 28px 32px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--gold);
+      border-radius: var(--radius);
+      text-align: left;
+    }
+    .reviews-gbp-summary-label {
+      font-size: 11px; font-family: var(--eyebrow); font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold-hover); margin-bottom: 10px;
+    }
+    .reviews-gbp-summary p {
+      font-family: var(--serif); font-size: 17px; line-height: 1.55;
+      color: var(--ink); margin: 0;
+    }
+    .reviews-gbp-summary-attrib {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 10px; font-size: 12px; color: var(--ink-mute);
+    }
+    .reviews-topic-pills {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      max-width: 900px; margin: 0 auto 40px;
+    }
+    .reviews-topic-pill {
+      padding: 8px 14px;
+      background: var(--cream);
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      font-size: 13px; color: var(--brown);
+      font-family: var(--eyebrow); font-weight: 600;
+    }
+    .reviews-topic-pill .count {
+      display: inline-flex; margin-left: 6px;
+      padding: 2px 8px; background: var(--gold); color: var(--brown);
+      border-radius: 999px; font-size: 11px; font-weight: 700;
+    }
+    .reviews-see-more {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 24px;
+      padding: 12px 24px;
+      background: var(--brown); color: var(--cream-light);
+      border-radius: 999px;
+      font-weight: 600; font-size: 14px;
+      transition: background 150ms ease-out;
+    }
+    .reviews-see-more:hover { background: var(--brown-hover); }
+    .reviews-see-more-wrap { text-align: center; margin-top: 20px; }
+
+    /* Map embed shared across variants */
+    .map-embed-block {
+      display: flex; flex-direction: column;
+      max-width: 1080px; margin: 0 auto;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .map-embed-iframe-wrap {
+      position: relative; width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--cream-deep);
+    }
+    .map-embed-iframe-wrap iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .map-embed-meta {
+      padding: 18px 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 16px; flex-wrap: wrap;
+      background: var(--cream);
+      border-top: 1px solid var(--line);
+    }
+    .map-embed-meta-left { display: flex; flex-direction: column; gap: 4px; }
+    .map-embed-meta-label {
+      font-size: 11px; font-family: var(--eyebrow); font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-hover);
+    }
+    .map-embed-meta-value {
+      font-family: var(--serif); font-size: 17px; color: var(--ink); font-weight: 500;
+    }
+    .map-embed-directions {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px;
+      background: var(--brown); color: var(--cream-light);
+      border-radius: 999px;
+      font-weight: 600; font-size: 14px;
+      transition: background 150ms ease-out;
+    }
+    .map-embed-directions:hover { background: var(--brown-hover); }
+
+    /* Section-with-image helpers for V2 philosophy, V2 experience, V3 reservations */
+    .split-image-section {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center;
+      max-width: 1080px; margin: 0 auto;
+    }
+    .split-image-section .split-image {
+      width: 100%; aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(79,45,29,0.15);
+    }
+    .split-image-section .split-image img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      display: block;
+    }
+    @media (max-width: 900px) {
+      .split-image-section { grid-template-columns: 1fr; gap: 32px; }
+    }
+
     /* ============ V1 SPLIT HERO ============ */
     .v1 { background: var(--cream); color: var(--ink); }
 
@@ -1407,30 +1524,27 @@
       overflow: hidden;
       transition: transform 200ms cubic-bezier(0.19, 1, 0.22, 1), box-shadow 200ms ease-out;
       color: var(--cream-light);
+      background-color: var(--brown);
+      background-size: cover;
+      background-position: center;
     }
-    .v3-category-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,22,20,0.14); }
-    .v3-category-name { font-family: var(--serif); font-size: 20px; font-weight: 500; letter-spacing: -0.02em; z-index: 1; }
-    .v3-category-count { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.75; z-index: 1; }
-    .v3-category-icon-bg {
-      position: absolute; right: -20px; bottom: -20px;
-      width: 90px; height: 90px;
-      opacity: 0.22;
+    .v3-category-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(26,22,20,0.12) 0%, rgba(26,22,20,0.35) 45%, rgba(26,22,20,0.82) 100%);
+      z-index: 0;
     }
+    .v3-category-card > * { position: relative; z-index: 1; }
+    .v3-category-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(79,45,29,0.28); }
+    .v3-category-name { font-family: var(--serif); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
+    .v3-category-count { font-size: 11px; font-family: var(--eyebrow); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
     .v3-category-arrow {
       position: absolute; top: 14px; right: 14px;
-      width: 26px; height: 26px; border-radius: 50%;
-      background: rgba(255,255,255,0.18);
-      display: grid; place-items: center; font-size: 13px;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(234,188,83,0.85); color: var(--brown);
+      display: grid; place-items: center; font-size: 14px; font-weight: 700;
+      z-index: 2;
     }
-
-    .v3-cat-1 { background: linear-gradient(135deg, #B8541F 0%, #7A2E10 100%); }
-    .v3-cat-2 { background: linear-gradient(135deg, #1F3A2E 0%, #0D1F16 100%); }
-    .v3-cat-3 { background: linear-gradient(135deg, #D4A24C 0%, #A47D34 100%); color: var(--ink); }
-    .v3-cat-3 .v3-category-count { opacity: 0.7; }
-    .v3-cat-3 .v3-category-arrow { background: rgba(26,22,20,0.20); }
-    .v3-cat-4 { background: linear-gradient(135deg, #6B2E1A 0%, #401A0D 100%); }
-    .v3-cat-5 { background: linear-gradient(135deg, #2E4A3A 0%, #1A2E24 100%); }
-    .v3-cat-6 { background: linear-gradient(135deg, #7A5F32 0%, #4A3820 100%); }
 
     .v3-popular {
       max-width: 1200px; margin: 0 auto; padding: 0 32px 60px;
@@ -1588,7 +1702,7 @@
             </div>
             <div class="v1-hero-order">
               <span class="v1-order-eyebrow">Order for pickup or delivery</span>
-              <h1 class="v1-hero-title">Real Thai cooking, in your hands in about 20 minutes.</h1>
+              <h1 class="v1-hero-title">Real Thai cooking, in your hands in about 20 minutes</h1>
               <p class="v1-hero-sub">Chef-owned kitchen in Rockrimmon. Skip the phone. Skip the line. Every order is made to order and ready when you walk in.</p>
 
               <div class="v1-category-grid">
@@ -1653,7 +1767,7 @@
               </div>
               <div class="v1-philosophy-copy">
                 <div class="v1-philosophy-label">Our philosophy</div>
-                <h2>Bold flavors. Refined craft.</h2>
+                <h2>Bold flavors · Refined craft</h2>
                 <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
               </div>
             </div>
@@ -1663,7 +1777,7 @@
             <div class="v1-dishes-inner">
               <div class="v1-dishes-head">
                 <div class="v1-dishes-label">Featured dishes</div>
-                <h2>Three plates worth the drive.</h2>
+                <h2>Three plates worth the drive</h2>
               </div>
               <div class="v1-dish-grid">
                 <div class="v1-dish-card">
@@ -1701,7 +1815,7 @@
             <div class="v1-story-two-inner">
               <div class="v1-story-two-copy">
                 <div class="v1-story-two-label">Flavors of the region</div>
-                <h2>Regional Thai cooking, from Bangkok to Isan, the North, the South, and Lao.</h2>
+                <h2>Regional Thai cooking, from Bangkok to Isan, the North, the South, and Lao</h2>
                 <p>Our menu highlights classic Thai dishes shaped by regional traditions from Bangkok, Isan, Northern and Southern Thailand, and Lao cuisine. Guests will find familiar favorites alongside regional influences, from aromatic curries and stir-fried dishes to timeless noodle plates. Each dish is prepared with fresh ingredients and a careful balance of flavor, comforting, authentic, and satisfying.</p>
                 <div class="v1-story-two-cta">
                   <a href="#menu" class="btn btn-ghost">View the full menu</a>
@@ -1717,7 +1831,7 @@
             <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v1-experience-inner">
               <div class="v1-experience-label">Gather. Sip. Savor.</div>
-              <h2>An elevated Thai table, without the fuss.</h2>
+              <h2>An elevated Thai table, without the fuss</h2>
               <p>Enjoy a relaxed, welcoming atmosphere where authentic Thai cuisine meets elevated drinks. Whether you're gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
               <div class="v1-experience-pills">
                 <span class="v1-experience-pill">Curated wine list</span>
@@ -1734,8 +1848,21 @@
             <div class="v1-reviews-inner">
               <div class="v1-reviews-head">
                 <div class="v1-reviews-label">Raves &amp; reviews</div>
-                <h2>What guests are saying.</h2>
-                <div class="v1-reviews-head-meta"><span class="stars">★★★★★</span>4.5 average across 12 reviews</div>
+                <h2>What guests are saying</h2>
+                <div class="v1-reviews-head-meta"><span class="stars">★★★★★</span><strong>4.6</strong> average across 66 Google reviews</div>
+              </div>
+              <div class="reviews-gbp-summary">
+                <div class="reviews-gbp-summary-label">Google's summary</div>
+                <p>Diners like this restaurant's authentic Thai food, highlighting dishes like Pad Thai, Drunken Noodles, and various curries, often noting the fresh ingredients and flavorful sauces. They also mention the generous portions, reasonable prices, and the availability of lunch specials. Guests appreciate the friendly, attentive staff and the warm, inviting atmosphere.</p>
+                <div class="reviews-gbp-summary-attrib">Summarized by Google from 66 reviews</div>
+              </div>
+              <div class="reviews-topic-pills">
+                <span class="reviews-topic-pill">Generous portions <span class="count">6</span></span>
+                <span class="reviews-topic-pill">Duck drunken noodles <span class="count">4</span></span>
+                <span class="reviews-topic-pill">Crab rangoons <span class="count">4</span></span>
+                <span class="reviews-topic-pill">Tom kha soup <span class="count">3</span></span>
+                <span class="reviews-topic-pill">Green curry chicken <span class="count">2</span></span>
+                <span class="reviews-topic-pill">Kabocha squash <span class="count">2</span></span>
               </div>
               <div class="v1-reviews-grid">
                 <div class="v1-review-card">
@@ -1754,14 +1881,19 @@
                   <div class="v1-review-attrib"><strong>Christina B.</strong><span>Yelp</span></div>
                 </div>
               </div>
-              <p class="v1-review-source-note">Reviews from Yelp, verbatim. See more at yelp.com/biz/nakhon-luang-thai-kitchen-colorado-springs.</p>
+              <p class="v1-review-source-note">Individual review quotes shown from Yelp (verbatim). Google topic tags and summary above are pulled from the 66 Google Business Profile reviews.</p>
+              <div class="reviews-see-more-wrap">
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-see-more">
+                  See all 66 Google reviews <span>→</span>
+                </a>
+              </div>
             </div>
           </section>
 
           <section class="v1-reservations" id="reserve">
             <div class="v1-reservations-inner">
               <div class="v1-reservations-label">Reserve your table</div>
-              <h2>Reserve your table tonight.</h2>
+              <h2>Reserve your table tonight</h2>
               <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
               <div class="v1-reservations-cta">
                 <a href="/order" class="btn btn-primary">Order Online</a>
@@ -1784,6 +1916,23 @@
             <div class="v1-visit-cta">
               <a href="/order" class="btn btn-primary">Order Online</a>
               <a href="#reserve" class="btn btn-ghost">Reserve a table</a>
+            </div>
+          </section>
+
+          <section class="v1-map" style="padding: 60px 40px; background: var(--cream-light);">
+            <div class="map-embed-block">
+              <div class="map-embed-iframe-wrap">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3512.249289429744!2d-104.8461671240619!3d38.92315017171853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87134fef83adef99%3A0x8f772b9f750aa6fc!2sNakhon%20Luang%20Thai%20Kitchen!5e1!3m2!1sen!2sus!4v1786332280902!5m2!1sen!2sus" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map to Nakhon Luang Thai Kitchen, 805 Village Center Drive, Colorado Springs"></iframe>
+              </div>
+              <div class="map-embed-meta">
+                <div class="map-embed-meta-left">
+                  <div class="map-embed-meta-label">Find us</div>
+                  <div class="map-embed-meta-value">805 Village Center Drive · Colorado Springs, CO 80919</div>
+                </div>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="map-embed-directions">
+                  Open in Google Maps <span>→</span>
+                </a>
+              </div>
             </div>
           </section>
 
@@ -1832,16 +1981,23 @@
             <div class="v2-hero-overlay" aria-hidden="true"></div>
             <div class="v2-hero-content">
               <div class="v2-hero-eyebrow">Authentic Thai · Colorado Springs</div>
-              <h1 class="v2-hero-title">Food our family <em>grew up on.</em></h1>
+              <h1 class="v2-hero-title">Food our family <em>grew up on</em></h1>
               <p class="v2-hero-sub">Regional cooking from Bangkok, Isan, the North, the South, and Lao. Made fresh, made properly, made to order.</p>
             </div>
             <div class="v2-scroll-cue">Scroll</div>
           </section>
 
-          <section class="v2-story" id="story">
-            <div class="v2-story-label">Our philosophy</div>
-            <h2>Bold flavors. Refined craft.</h2>
-            <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
+          <section class="v2-story" id="story" style="max-width: 1200px; text-align: left; padding: 120px 32px;">
+            <div class="split-image-section">
+              <div class="split-image">
+                <img src="assets/nl4-philosophy.jpg" alt="Thai table spread with coconut curry soup, sesame chicken with broccoli, and cocktails" width="480" height="360" loading="lazy">
+              </div>
+              <div>
+                <div class="v2-story-label" style="text-align: left;">Our philosophy</div>
+                <h2 style="text-align: left;">Bold flavors · Refined craft</h2>
+                <p style="text-align: left; margin-top: 20px;">Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
+              </div>
+            </div>
           </section>
 
           <section class="v2-dishes" id="dishes">
@@ -1877,24 +2033,44 @@
             </div>
           </section>
 
-          <section class="v2-experience" id="experience">
-            <div class="v2-experience-label">Gather. Sip. Savor.</div>
-            <h2>An elevated Thai table, in a relaxed room.</h2>
-            <p>Enjoy a relaxed, welcoming atmosphere where authentic Thai cuisine meets elevated drinks. Whether you're gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
-            <div class="v2-experience-pills">
-              <span class="v2-experience-pill">Curated wine list</span>
-              <span class="v2-experience-pill">Handcrafted cocktails</span>
-              <span class="v2-experience-pill">Rotating craft beers</span>
+          <section class="v2-experience" id="experience" style="max-width: 1200px; text-align: left; padding: 120px 32px;">
+            <div class="split-image-section">
+              <div>
+                <div class="v2-experience-label" style="text-align: left;">Gather. Sip. Savor.</div>
+                <h2 style="text-align: left;">An elevated Thai table, in a relaxed room</h2>
+                <p style="text-align: left; margin-top: 20px;">Enjoy a relaxed, welcoming atmosphere where authentic Thai cuisine meets elevated drinks. Whether you're gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
+                <div class="v2-experience-pills" style="justify-content: flex-start;">
+                  <span class="v2-experience-pill">Curated wine list</span>
+                  <span class="v2-experience-pill">Handcrafted cocktails</span>
+                  <span class="v2-experience-pill">Rotating craft beers</span>
+                </div>
+                <a href="#reserve" class="v2-experience-cta">Make a reservation →</a>
+              </div>
+              <div class="split-image">
+                <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360" loading="lazy">
+              </div>
             </div>
-            <a href="#reserve" class="v2-experience-cta">Make a reservation →</a>
           </section>
 
           <section class="v2-reviews" id="reviews">
             <div class="v2-reviews-inner">
               <div class="v2-reviews-head">
                 <div class="v2-reviews-label">Raves &amp; reviews</div>
-                <h2>What guests are saying.</h2>
-                <div class="v2-reviews-head-meta"><span class="stars">★★★★★</span>4.5 average across 12 reviews</div>
+                <h2>What guests are saying</h2>
+                <div class="v2-reviews-head-meta"><span class="stars">★★★★★</span><strong>4.6</strong> average across 66 Google reviews</div>
+              </div>
+              <div class="reviews-gbp-summary">
+                <div class="reviews-gbp-summary-label">Google's summary</div>
+                <p>Diners like this restaurant's authentic Thai food, highlighting dishes like Pad Thai, Drunken Noodles, and various curries, often noting the fresh ingredients and flavorful sauces. They also mention the generous portions, reasonable prices, and the availability of lunch specials. Guests appreciate the friendly, attentive staff and the warm, inviting atmosphere.</p>
+                <div class="reviews-gbp-summary-attrib">Summarized by Google from 66 reviews</div>
+              </div>
+              <div class="reviews-topic-pills">
+                <span class="reviews-topic-pill">Generous portions <span class="count">6</span></span>
+                <span class="reviews-topic-pill">Duck drunken noodles <span class="count">4</span></span>
+                <span class="reviews-topic-pill">Crab rangoons <span class="count">4</span></span>
+                <span class="reviews-topic-pill">Tom kha soup <span class="count">3</span></span>
+                <span class="reviews-topic-pill">Green curry chicken <span class="count">2</span></span>
+                <span class="reviews-topic-pill">Kabocha squash <span class="count">2</span></span>
               </div>
               <div class="v2-reviews-grid">
                 <div class="v2-review">
@@ -1916,12 +2092,17 @@
                   <div class="v2-review-attrib">Christina B. · Yelp</div>
                 </div>
               </div>
-              <p class="v2-reviews-source-note">Reviews from Yelp, verbatim.</p>
+              <p class="v2-reviews-source-note">Individual review quotes shown from Yelp (verbatim). Google topic tags and summary above are pulled from the 66 Google Business Profile reviews.</p>
+              <div class="reviews-see-more-wrap">
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-see-more">
+                  See all 66 Google reviews <span>→</span>
+                </a>
+              </div>
             </div>
           </section>
 
           <section class="v2-visit" id="visit">
-            <h3>Come find us, or order in.</h3>
+            <h3>Come find us, or order in</h3>
             <div class="v2-visit-grid">
               <div>
                 <div class="v2-visit-cell-label">Open</div>
@@ -1943,10 +2124,27 @@
             <a href="/order" class="v2-visit-cta">Order for pickup or delivery →</a>
           </section>
 
+          <section class="v2-map" style="padding: 80px 32px; background: var(--cream-light);">
+            <div class="map-embed-block">
+              <div class="map-embed-iframe-wrap">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3512.249289429744!2d-104.8461671240619!3d38.92315017171853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87134fef83adef99%3A0x8f772b9f750aa6fc!2sNakhon%20Luang%20Thai%20Kitchen!5e1!3m2!1sen!2sus!4v1786332280902!5m2!1sen!2sus" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map to Nakhon Luang Thai Kitchen"></iframe>
+              </div>
+              <div class="map-embed-meta">
+                <div class="map-embed-meta-left">
+                  <div class="map-embed-meta-label">Find us</div>
+                  <div class="map-embed-meta-value">805 Village Center Drive · Colorado Springs, CO 80919</div>
+                </div>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="map-embed-directions">
+                  Open in Google Maps <span>→</span>
+                </a>
+              </div>
+            </div>
+          </section>
+
           <section class="v2-reservations" id="reserve">
             <div class="v2-reservations-inner">
               <div class="v2-reservations-label">Reserve your table</div>
-              <h2>Reserve your table tonight.</h2>
+              <h2>Reserve your table tonight</h2>
               <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
               <div class="v2-reservations-cta">
                 <a href="/order" class="btn btn-primary">Order Online</a>
@@ -2005,7 +2203,7 @@
           <section class="v3-hero">
             <div class="v3-hero-head">
               <div>
-                <h1 class="v3-hero-title">Pick a category. Order in a minute.</h1>
+                <h1 class="v3-hero-title">Pick a category · Order in a minute</h1>
                 <p class="v3-hero-sub" style="margin-top:12px;">Real regional Thai cooking, made to order, ready when you get here.</p>
               </div>
               <div class="v3-incentives">
@@ -2016,52 +2214,34 @@
             </div>
 
             <div class="v3-category-grid">
-              <a href="/order#curries" class="v3-category-card v3-cat-1">
-                <div class="v3-category-icon-bg">${icons.bowl}</div>
+              <a href="/order#curries" class="v3-category-card" style="background-image: url('assets/nl8-dish-khaosoi.jpg');">
                 <div class="v3-category-arrow">→</div>
-                <div>
-                  <div class="v3-category-count">12 dishes</div>
-                </div>
+                <div class="v3-category-count">12 dishes</div>
                 <div class="v3-category-name">Curries</div>
               </a>
-              <a href="/order#stir-fry" class="v3-category-card v3-cat-2">
-                <div class="v3-category-icon-bg">${icons.wok}</div>
+              <a href="/order#stir-fry" class="v3-category-card" style="background-image: url('assets/nl8-dish-padkrapao.jpg');">
                 <div class="v3-category-arrow">→</div>
-                <div>
-                  <div class="v3-category-count">18 dishes</div>
-                </div>
+                <div class="v3-category-count">18 dishes</div>
                 <div class="v3-category-name">Stir-Fry</div>
               </a>
-              <a href="/order#noodles" class="v3-category-card v3-cat-3">
-                <div class="v3-category-icon-bg">${icons.noodle}</div>
+              <a href="/order#noodles" class="v3-category-card" style="background-image: url('assets/nl8b-dish-drunkennoodles.jpg');">
                 <div class="v3-category-arrow">→</div>
-                <div>
-                  <div class="v3-category-count">9 dishes</div>
-                </div>
+                <div class="v3-category-count">9 dishes</div>
                 <div class="v3-category-name">Noodles</div>
               </a>
-              <a href="/order#rice" class="v3-category-card v3-cat-4">
-                <div class="v3-category-icon-bg">${icons.rice}</div>
+              <a href="/order#rice" class="v3-category-card" style="background-image: url('assets/nl9-evening-board.jpg');">
                 <div class="v3-category-arrow">→</div>
-                <div>
-                  <div class="v3-category-count">7 dishes</div>
-                </div>
+                <div class="v3-category-count">7 dishes</div>
                 <div class="v3-category-name">Rice Plates</div>
               </a>
-              <a href="/order#apps" class="v3-category-card v3-cat-5">
-                <div class="v3-category-icon-bg">${icons.leaf}</div>
+              <a href="/order#apps" class="v3-category-card" style="background-image: url('assets/nl4-philosophy.jpg');">
                 <div class="v3-category-arrow">→</div>
-                <div>
-                  <div class="v3-category-count">14 items</div>
-                </div>
+                <div class="v3-category-count">14 items</div>
                 <div class="v3-category-name">Appetizers</div>
               </a>
-              <a href="/order#drinks" class="v3-category-card v3-cat-6">
-                <div class="v3-category-icon-bg">${icons.cup}</div>
+              <a href="/order#drinks" class="v3-category-card" style="background-image: url('assets/nl10b-ritual.jpg');">
                 <div class="v3-category-arrow">→</div>
-                <div>
-                  <div class="v3-category-count">11 drinks</div>
-                </div>
+                <div class="v3-category-count">11 drinks</div>
                 <div class="v3-category-name">Drinks</div>
               </a>
             </div>
@@ -2130,13 +2310,13 @@
             <div class="v3-content-strip-inner">
               <div class="v3-philosophy-card">
                 <div class="v3-philosophy-label">Our philosophy</div>
-                <h3>Bold flavors. Refined craft.</h3>
+                <h3>Bold flavors · Refined craft</h3>
                 <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition.</p>
                 <p>Our menu highlights classic Thai dishes shaped by regional traditions from Bangkok, Isan, Northern and Southern Thailand, and Lao cuisine, aromatic curries, stir-fried plates, and timeless noodle dishes prepared with fresh ingredients and a careful balance of flavor.</p>
               </div>
               <div class="v3-experience-card">
                 <div class="v3-experience-label">Gather. Sip. Savor.</div>
-                <h3>Authentic Thai cuisine meets elevated drinks.</h3>
+                <h3>Authentic Thai cuisine meets elevated drinks</h3>
                 <p>A relaxed, welcoming room in Rockrimmon. Whether you are gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
                 <div class="v3-experience-pills">
                   <span class="v3-experience-pill">Wine list</span>
@@ -2153,13 +2333,26 @@
               <div class="v3-reviews-head">
                 <div class="v3-reviews-title-block">
                   <div class="v3-reviews-title">Raves &amp; reviews</div>
-                  <div class="v3-reviews-source">Verbatim from Yelp</div>
+                  <div class="v3-reviews-source">Google Business Profile + Yelp</div>
                 </div>
                 <div class="v3-reviews-rating">
                   <span class="stars">★★★★★</span>
-                  <strong>4.5</strong>
-                  <span>across 12 reviews</span>
+                  <strong>4.6</strong>
+                  <span>across 66 Google reviews</span>
                 </div>
+              </div>
+              <div class="reviews-gbp-summary">
+                <div class="reviews-gbp-summary-label">Google's summary</div>
+                <p>Diners like this restaurant's authentic Thai food, highlighting dishes like Pad Thai, Drunken Noodles, and various curries, often noting the fresh ingredients and flavorful sauces. They also mention the generous portions, reasonable prices, and the availability of lunch specials. Guests appreciate the friendly, attentive staff and the warm, inviting atmosphere.</p>
+                <div class="reviews-gbp-summary-attrib">Summarized by Google from 66 reviews</div>
+              </div>
+              <div class="reviews-topic-pills">
+                <span class="reviews-topic-pill">Generous portions <span class="count">6</span></span>
+                <span class="reviews-topic-pill">Duck drunken noodles <span class="count">4</span></span>
+                <span class="reviews-topic-pill">Crab rangoons <span class="count">4</span></span>
+                <span class="reviews-topic-pill">Tom kha soup <span class="count">3</span></span>
+                <span class="reviews-topic-pill">Green curry chicken <span class="count">2</span></span>
+                <span class="reviews-topic-pill">Kabocha squash <span class="count">2</span></span>
               </div>
               <div class="v3-reviews-grid">
                 <div class="v3-review-card">
@@ -2178,17 +2371,27 @@
                   <div class="v3-review-attrib">Christina B.</div>
                 </div>
               </div>
+              <div class="reviews-see-more-wrap">
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="reviews-see-more">
+                  See all 66 Google reviews <span>→</span>
+                </a>
+              </div>
             </div>
           </section>
 
-          <section class="v3-reservations" id="reserve">
-            <div class="v3-reservations-inner">
-              <div class="v3-reservations-label">Reserve your table</div>
-              <h3>Reserve your table tonight.</h3>
-              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
-              <div class="v3-reservations-cta">
-                <a href="/order" class="btn btn-primary">Order Online</a>
-                <a href="#reserve-form" class="btn btn-forest">Make a reservation</a>
+          <section class="v3-reservations" id="reserve" style="text-align: left;">
+            <div class="split-image-section" style="max-width: 1200px;">
+              <div class="split-image">
+                <img src="assets/nl9-evening-board.jpg" alt="Top-down view of three signature Thai dishes on a wooden cutting board: Pad Kra Pao, Drunken Noodles, and Khao Soi" width="480" height="360" loading="lazy">
+              </div>
+              <div>
+                <div class="v3-reservations-label" style="text-align: left;">Reserve your table</div>
+                <h3 style="text-align: left;">Reserve your table tonight</h3>
+                <p style="text-align: left;">Reservations recommended. Walk-ins welcome. Private events available.</p>
+                <div class="v3-reservations-cta" style="justify-content: flex-start;">
+                  <a href="/order" class="btn btn-primary">Order Online</a>
+                  <a href="#reserve-form" class="btn btn-forest">Make a reservation</a>
+                </div>
               </div>
             </div>
           </section>
@@ -2211,6 +2414,23 @@
             <div style="display:flex;gap:10px;">
               <a href="/order" class="btn btn-primary">Order Online</a>
               <a href="#reserve" class="btn btn-forest">Reserve</a>
+            </div>
+          </section>
+
+          <section class="v3-map" style="padding: 40px 32px 60px; background: var(--cream-light);">
+            <div class="map-embed-block">
+              <div class="map-embed-iframe-wrap">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3512.249289429744!2d-104.8461671240619!3d38.92315017171853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87134fef83adef99%3A0x8f772b9f750aa6fc!2sNakhon%20Luang%20Thai%20Kitchen!5e1!3m2!1sen!2sus!4v1786332280902!5m2!1sen!2sus" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map to Nakhon Luang Thai Kitchen"></iframe>
+              </div>
+              <div class="map-embed-meta">
+                <div class="map-embed-meta-left">
+                  <div class="map-embed-meta-label">Find us</div>
+                  <div class="map-embed-meta-value">805 Village Center Drive · Colorado Springs, CO 80919</div>
+                </div>
+                <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener" class="map-embed-directions">
+                  Open in Google Maps <span>→</span>
+                </a>
+              </div>
             </div>
           </section>
 
