@@ -2196,8 +2196,13 @@
       will-change: transform, opacity;
     }
     [data-motion] .v3-reviews-grid.in-view .v3-review-snippet {
-      transform: rotate(var(--rest-tilt, 0deg));
+      transform: translate(var(--rest-tx, 0px), var(--rest-ty, 0px)) rotate(var(--rest-tilt, 0deg));
       opacity: 1;
+    }
+    /* Boontarica's card (nth-child(1)) shifts into the top-left empty space along the path */
+    [data-motion] .v3-reviews-grid .v3-review-snippet:nth-child(1) {
+      --rest-tx: -160px;
+      --rest-ty: -30px;
     }
     [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(1) { transition-delay: 0ms; }
     [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(2) { transition-delay: 130ms; }
@@ -2231,62 +2236,8 @@
       transform: rotate(6deg);
     }
 
-    /* Thai-food emoji accent — flies in on reveal, then FOLLOWS THE CURSOR magnetically */
-    [data-motion] .v3-review-snippet[data-emoji]::after {
-      content: attr(data-emoji);
-      position: absolute;
-      right: -14px; bottom: -22px;
-      font-size: 40px;
-      line-height: 1;
-      opacity: 0;
-      z-index: 3;
-      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.20));
-      pointer-events: none;
-      transform: translate(90px, -70px) rotate(60deg) scale(0.5);
-    }
-    /* Left-column cards (nth-child(2n+1)): emoji anchored at bottom-left */
-    [data-motion] .v3-reviews-grid .v3-review-snippet:nth-child(2n+1)[data-emoji]::after {
-      right: auto; left: -14px;
-      transform: translate(-90px, -70px) rotate(-60deg) scale(0.5);
-    }
-
-    /* Once the section enters view, run the fly-in as a one-shot @keyframes animation.
-       The final resting transform composes the cursor-follow offsets (--emoji-cursor-x/y),
-       so a plain transition on the ::after can react to cursor movement without the
-       initial staggered delays repeating on every mouse move. */
-    @keyframes v3EmojiFlyIn {
-      from { transform: translate(90px, -70px) rotate(60deg) scale(0.5); opacity: 0; }
-      to   { transform: translate(0, 0) rotate(14deg) scale(1);           opacity: 1; }
-    }
-    @keyframes v3EmojiFlyInLeft {
-      from { transform: translate(-90px, -70px) rotate(-60deg) scale(0.5); opacity: 0; }
-      to   { transform: translate(0, 0) rotate(-16deg) scale(1);            opacity: 1; }
-    }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet[data-emoji]::after {
-      animation: v3EmojiFlyIn 950ms cubic-bezier(0.19, 1, 0.22, 1) both;
-      /* After the keyframes finish (both), transform + opacity hold at "to" state.
-         Cursor-follow overrides transform via CSS var without restarting animation. */
-    }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(2n+1)[data-emoji]::after {
-      animation: v3EmojiFlyInLeft 950ms cubic-bezier(0.19, 1, 0.22, 1) both;
-    }
-    /* Cascade the fly-in per card */
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(1)[data-emoji]::after { animation-delay: 280ms; }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(2)[data-emoji]::after { animation-delay: 410ms; }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(3)[data-emoji]::after { animation-delay: 540ms; }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(4)[data-emoji]::after { animation-delay: 670ms; }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(5)[data-emoji]::after { animation-delay: 800ms; }
-    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(6)[data-emoji]::after { animation-delay: 930ms; }
-
-    /* After fly-in completes, hold at rest state (no cursor follow — scroll-driven traveler handles motion) */
-    [data-motion] .v3-reviews-grid.trail-settled .v3-review-snippet[data-emoji]::after {
-      animation: none;
-      opacity: 1;
-      transform: translate(0, 0) rotate(14deg) scale(1);
-    }
-    [data-motion] .v3-reviews-grid.trail-settled .v3-review-snippet:nth-child(2n+1)[data-emoji]::after {
-      transform: translate(0, 0) rotate(-16deg) scale(1);
-    }
+    /* Per-card food-emoji chips removed — the scroll-driven tuk-tuk caravan replaces them,
+       so there's no more chili/egg-pan/curry-plate/shrimp/chopsticks stuck to card corners. */
 
     /* Scroll-driven traveler: a single emoji that flies along the gold path as user scrolls */
     [data-motion] .v3-path-traveler {
@@ -3536,7 +3487,10 @@
           const gridRect = grid.getBoundingClientRect();
           const svgRect = svgEl.getBoundingClientRect();
           const viewportH = window.innerHeight;
-          const total = gridRect.height + viewportH;
+          // Compress the caravan into a shorter scroll window so it doesn't crawl:
+          // full path traversed within ~55% of the section's own height, not the whole
+          // section-plus-viewport journey. Feels ~3x snappier.
+          const total = gridRect.height * 0.55;
           const passed = viewportH - gridRect.top;
           const leadProgress = Math.max(0, Math.min(1, passed / total));
 
