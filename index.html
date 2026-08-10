@@ -1425,7 +1425,12 @@
       padding: 100px 32px;
       background: var(--cream-deep);
       border-top: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
     }
+    .v2-visit .bg-photo-layer { opacity: 0.15; }
+    .v2-visit > * { position: relative; z-index: 1; }
     .v2-visit-inner {
       max-width: 1120px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
@@ -1576,7 +1581,11 @@
     .v3-hero {
       padding: 40px 32px 24px;
       max-width: 1200px; margin: 0 auto;
+      position: relative;
+      isolation: isolate;
     }
+    .v3-hero .bg-photo-layer { opacity: 0.10; }
+    .v3-hero > *:not(.bg-photo-layer) { position: relative; z-index: 1; }
     .v3-hero-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 24px; flex-wrap: wrap; }
     .v3-hero-title {
       font-family: var(--serif); font-weight: 500;
@@ -2249,6 +2258,7 @@
           </section>
 
           <section class="v2-visit" id="visit">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl10b-ritual.jpg');"></div>
             <div class="v2-visit-inner">
               <div class="v2-visit-photo">
                 <img src="assets/nl9-evening-board.jpg" alt="Top-down view of three signature Thai dishes on a wooden cutting board" width="560" height="420">
@@ -2369,6 +2379,7 @@
           </nav>
 
           <section class="v3-hero">
+            <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v3-hero-head">
               <div>
                 <div style="font-size:11px; font-family:var(--eyebrow); font-weight:700; letter-spacing:0.20em; text-transform:uppercase; color:var(--gold-hover); margin-bottom:14px;">Authentic Thai Cuisine &nbsp;·&nbsp; Colorado Springs, CO</div>
