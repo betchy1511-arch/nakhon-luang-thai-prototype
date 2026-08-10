@@ -2136,9 +2136,42 @@
     }
 
     /* ---------- V3 REVIEWS: POLAROID JOURNEY (Crav-inspired) ---------- */
-    /* Give the grid room for tilts and overlays to poke out */
-    [data-motion] .v3-reviews-grid { overflow: visible; padding: 32px 8px; row-gap: 44px; }
-    [data-motion] .v3-review-snippet { position: relative; z-index: 1; overflow: visible; }
+    /* Give the grid room for tilts and overlays to poke out; position: relative anchors the SVG path */
+    [data-motion] .v3-reviews-grid {
+      overflow: visible;
+      padding: 60px 16px 80px;
+      row-gap: 72px;
+      position: relative;
+    }
+    [data-motion] .v3-review-snippet { position: relative; z-index: 2; overflow: visible; }
+
+    /* SVG cuisine-name path — the "line" is repeating dish names curving through the section */
+    [data-motion] .v3-reviews-path {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1400ms cubic-bezier(0.4, 0, 0.6, 1) 200ms;
+    }
+    [data-motion] .v3-reviews-grid.in-view .v3-reviews-path { opacity: 0.8; }
+    [data-motion] .v3-reviews-path path.v3-journey-guide {
+      fill: none;
+      stroke: none;
+    }
+    [data-motion] .v3-reviews-path text {
+      font-family: var(--serif, "Fraunces", Georgia), serif;
+      font-size: 26px;
+      font-weight: 700;
+      font-style: italic;
+      fill: #B98A3A;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 900px) {
+      [data-motion] .v3-reviews-path text { font-size: 18px; }
+    }
 
     /* Resting tilt per card — asymmetric so the row reads as scattered polaroids */
     [data-motion] .v3-reviews-grid .v3-review-snippet:nth-child(1) { --rest-tilt: -5deg; }
@@ -2195,22 +2228,42 @@
       transform: rotate(6deg);
     }
 
-    /* Thai-food emoji accent — plays the role Crav's plane/skyline plays */
+    /* Thai-food emoji accent — flies in from a distance TOWARD the card (Crav's plane pattern) */
     [data-motion] .v3-review-snippet[data-emoji]::after {
       content: attr(data-emoji);
       position: absolute;
       right: -14px; bottom: -22px;
-      font-size: 32px;
+      font-size: 36px;
       line-height: 1;
-      transform: rotate(14deg);
+      /* initial: far away, small, tilted, invisible */
+      transform: translate(90px, -70px) rotate(60deg) scale(0.5);
+      opacity: 0;
+      transition:
+        transform 950ms cubic-bezier(0.19, 1, 0.22, 1),
+        opacity 700ms ease-out;
       z-index: 3;
-      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.18));
+      filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.20));
       pointer-events: none;
     }
-    [data-motion] .v3-reviews-grid .v3-review-snippet:nth-child(3n)[data-emoji]::after {
-      right: auto; left: -14px;
-      transform: rotate(-16deg);
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet[data-emoji]::after {
+      transform: translate(0, 0) rotate(14deg) scale(1);
+      opacity: 1;
     }
+    /* Cards on the left column fly emojis in from the OTHER side (mirror) */
+    [data-motion] .v3-reviews-grid .v3-review-snippet:nth-child(3n+1)[data-emoji]::after {
+      right: auto; left: -14px;
+      transform: translate(-90px, -70px) rotate(-60deg) scale(0.5);
+    }
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(3n+1)[data-emoji]::after {
+      transform: translate(0, 0) rotate(-16deg) scale(1);
+    }
+    /* Stagger emoji arrival AFTER the card lands (card delay + ~280ms) */
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(1)[data-emoji]::after { transition-delay: 280ms; }
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(2)[data-emoji]::after { transition-delay: 410ms; }
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(3)[data-emoji]::after { transition-delay: 540ms; }
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(4)[data-emoji]::after { transition-delay: 670ms; }
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(5)[data-emoji]::after { transition-delay: 800ms; }
+    [data-motion] .v3-reviews-grid.in-view .v3-review-snippet:nth-child(6)[data-emoji]::after { transition-delay: 930ms; }
 
     /* Hover: straighten with lift + bring to front (only for pointer-fine) */
     @media (hover: hover) and (pointer: fine) {
@@ -3391,6 +3444,20 @@
       parallaxHandler();
     }
 
+    function injectV3JourneyPath() {
+      document.querySelectorAll('.v3-reviews-grid').forEach(grid => {
+        if (grid.dataset.pathInjected === '1') return;
+        grid.dataset.pathInjected = '1';
+        const dishText = 'Pad Thai   ·   Green Curry   ·   Drunken Noodles   ·   Pad Kra Pao   ·   Pepper Shrimp   ·   Basil Rice   ·   Pad Thai   ·   Green Curry   ·   Drunken Noodles   ·   Pad Kra Pao   ·   Pepper Shrimp   ·   Basil Rice';
+        const svg =
+          '<svg class="v3-reviews-path" viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true">' +
+            '<path id="v3JourneyPath" class="v3-journey-guide" d="M 0 90 Q 200 10 400 90 T 800 100 T 1200 110 L 1200 320 Q 1000 400 800 320 T 400 330 T 0 340" />' +
+            '<text><textPath href="#v3JourneyPath" startOffset="0">' + dishText + '</textPath></text>' +
+          '</svg>';
+        grid.insertAdjacentHTML('afterbegin', svg);
+      });
+    }
+
     function setupReveals() {
       const lvl = currentMotionLevel();
       if (lvl < 1) return;
@@ -3401,6 +3468,8 @@
       STAGGER_SELECTORS.forEach(sel =>
         document.querySelectorAll(sel).forEach(el => el.classList.add('reveal-stagger'))
       );
+      // Inject the V3 cuisine-name journey path (Crav-style, the words ARE the line)
+      injectV3JourneyPath();
       // Level 2+ signature: word-mask, tilt, magnetic, counters
       if (lvl >= 2) {
         wrapWordsForReveal();
