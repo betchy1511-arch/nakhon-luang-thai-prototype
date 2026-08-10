@@ -1118,24 +1118,26 @@
     .v2-hero-title {
       font-family: var(--serif);
       font-weight: 400;
-      font-size: clamp(48px, 8vw, 108px);
-      line-height: 0.98;
+      font-size: clamp(44px, 7.2vw, 96px);
+      line-height: 1.05;
       letter-spacing: -0.03em;
       color: var(--cream-light);
-      max-width: 12ch;
+      max-width: 18ch;
       margin: 0 auto;
     }
     .v2-hero-title em {
       font-style: italic;
       color: var(--gold);
       font-weight: 400;
+      display: block;   /* forces italic phrase onto its own line */
+      margin-top: 6px;
     }
     .v2-hero-sub {
-      margin-top: 24px;
+      margin-top: 56px;
       font-size: 15px;
-      color: rgba(245,238,220,0.66);
+      color: rgba(245,238,220,0.76);
       letter-spacing: 0.02em;
-      max-width: 44ch;
+      max-width: 48ch;
       margin-left: auto; margin-right: auto;
       line-height: 1.6;
     }
