@@ -586,6 +586,7 @@
       color: var(--cream-light);
       border-radius: var(--radius);
       display: flex; flex-direction: column; gap: 14px;
+      justify-content: space-between;
     }
     .v3-experience-label {
       font-size: 11px; font-weight: 600;
@@ -611,9 +612,10 @@
       background: rgba(212,162,76,0.06);
     }
     .v3-experience-card .btn {
-      align-self: flex-start;
+      align-self: stretch;
       background: var(--gold); color: var(--ink);
       margin-top: 4px;
+      text-align: center; justify-content: center;
     }
     .v3-experience-card .btn:hover { background: #B98A3A; }
 
@@ -674,9 +676,9 @@
     }
     .v1-reviews-head-meta .stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
     .v1-reviews-grid {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
     }
-    @media (max-width: 1100px) { .v1-reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
+    @media (max-width: 1100px) { .v1-reviews-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; } }
     .v1-review-card {
       padding: 28px 24px 22px;
       background: var(--cream);
@@ -801,9 +803,9 @@
     .v3-reviews-rating .stars { color: var(--gold); letter-spacing: 2px; }
     .v3-reviews-rating strong { color: var(--brown); font-weight: 700; }
     .v3-reviews-grid {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
     }
-    @media (max-width: 1100px) { .v3-reviews-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+    @media (max-width: 900px) { .v3-reviews-grid { grid-template-columns: 1fr; gap: 14px; } }
     .v3-review-card {
       padding: 20px 22px 18px;
       background: var(--cream);
@@ -822,7 +824,6 @@
       font-size: 12px; color: var(--brown);
       font-weight: 600;
     }
-    @media (max-width: 1100px) { .v3-reviews-grid { grid-template-columns: 1fr; } }
 
     /* ============ Reviews section extras: GBP summary + topic pills + map ============ */
     .reviews-gbp-summary {
@@ -959,9 +960,8 @@
     .v2-review-note {
       display: flex; flex-direction: column; gap: 8px;
     }
-    .v2-review-note-num {
-      font-family: var(--serif); font-size: 13px; color: var(--gold);
-      font-weight: 600; letter-spacing: 0.15em;
+    .v2-review-note-stars {
+      color: var(--gold); font-size: 13px; letter-spacing: 3px;
     }
     .v2-review-note p {
       font-family: var(--sans); font-size: 14.5px; line-height: 1.55;
@@ -1613,9 +1613,11 @@
       margin-bottom: 4px;
     }
     .v2-visit-grid {
-      display: flex; flex-direction: column;
-      gap: 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-top: 4px;
     }
+    @media (max-width: 900px) { .v2-visit-grid { grid-template-columns: 1fr; gap: 20px; } }
     .v2-visit-cell-label {
       font-size: 11px; font-family: var(--eyebrow); font-weight: 700;
       letter-spacing: 0.22em; text-transform: uppercase;
@@ -1626,8 +1628,8 @@
       font-weight: 500;
     }
     .v2-visit-cta {
-      align-self: flex-start;
-      display: inline-flex; align-items: center; gap: 12px;
+      align-self: stretch;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
       padding: 18px 32px; background: var(--brown); color: var(--cream-light);
       border-radius: 999px; font-weight: 700; font-size: 16px;
       transition: background 150ms ease-out, transform 150ms ease-out;
@@ -2356,22 +2358,22 @@
 
                 <div class="v2-review-notes">
                   <div class="v2-review-note">
-                    <div class="v2-review-note-num">No. 01</div>
+                    <div class="v2-review-note-stars">★★★★★</div>
                     <p>"I came from NYC and discovered this Thai restaurant for the first time. It completely exceeded my expectations. Almost identical to what I'm used to back home."</p>
                     <cite>Boontarica J.</cite>
                   </div>
                   <div class="v2-review-note">
-                    <div class="v2-review-note-num">No. 02</div>
+                    <div class="v2-review-note-stars">★★★★★</div>
                     <p>"I love their Lao style papaya salad, Nom Tuk pork, also Pad Ga Prao with ground pork and fried egg. Tastes just like in Thailand."</p>
                     <cite>Suwanna M.</cite>
                   </div>
                   <div class="v2-review-note">
-                    <div class="v2-review-note-num">No. 03</div>
+                    <div class="v2-review-note-stars">★★★★★</div>
                     <p>"Found this while traveling around Colorado Springs. The Avocado Green Curry was excellent, plenty of vegetables along with the chicken."</p>
                     <cite>Chadwick</cite>
                   </div>
                   <div class="v2-review-note">
-                    <div class="v2-review-note-num">No. 04</div>
+                    <div class="v2-review-note-stars">★★★★★</div>
                     <p>"Fresh, great flavor. Their spicy Thai Margarita was sooo good. Had the garlic pepper stir-fry with shrimp. Love this place."</p>
                     <cite>Tim &amp; Lynda R.</cite>
                   </div>
