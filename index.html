@@ -1531,19 +1531,29 @@
     .v3-category-card::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(26,22,20,0.12) 0%, rgba(26,22,20,0.35) 45%, rgba(26,22,20,0.82) 100%);
+      background: linear-gradient(180deg, rgba(26,22,20,0.55) 0%, rgba(26,22,20,0.15) 35%, rgba(26,22,20,0.35) 55%, rgba(26,22,20,0.90) 100%);
       z-index: 0;
     }
     .v3-category-card > * { position: relative; z-index: 1; }
     .v3-category-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(79,45,29,0.28); }
-    .v3-category-name { font-family: var(--serif); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-shadow: 0 1px 6px rgba(0,0,0,0.5); }
-    .v3-category-count { font-size: 11px; font-family: var(--eyebrow); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+    .v3-category-name { font-family: var(--serif); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; text-shadow: 0 2px 8px rgba(0,0,0,0.7); color: var(--cream-light); }
+    .v3-category-count {
+      align-self: flex-start;
+      display: inline-block;
+      padding: 6px 12px;
+      background: var(--gold); color: var(--brown);
+      border-radius: 999px;
+      font-size: 11px; font-family: var(--eyebrow); font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
     .v3-category-arrow {
       position: absolute; top: 14px; right: 14px;
-      width: 28px; height: 28px; border-radius: 50%;
-      background: rgba(234,188,83,0.85); color: var(--brown);
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--cream-light); color: var(--brown);
       display: grid; place-items: center; font-size: 14px; font-weight: 700;
       z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
 
     .v3-popular {
@@ -1990,7 +2000,7 @@
           <section class="v2-story" id="story" style="max-width: 1200px; text-align: left; padding: 120px 32px;">
             <div class="split-image-section">
               <div class="split-image">
-                <img src="assets/nl4-philosophy.jpg" alt="Thai table spread with coconut curry soup, sesame chicken with broccoli, and cocktails" width="480" height="360" loading="lazy">
+                <img src="assets/nl4-philosophy.jpg" alt="Thai table spread with coconut curry soup, sesame chicken with broccoli, and cocktails" width="480" height="360">
               </div>
               <div>
                 <div class="v2-story-label" style="text-align: left;">Our philosophy</div>
@@ -2047,7 +2057,7 @@
                 <a href="#reserve" class="v2-experience-cta">Make a reservation →</a>
               </div>
               <div class="split-image">
-                <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360" loading="lazy">
+                <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360">
               </div>
             </div>
           </section>
@@ -2382,7 +2392,7 @@
           <section class="v3-reservations" id="reserve" style="text-align: left;">
             <div class="split-image-section" style="max-width: 1200px;">
               <div class="split-image">
-                <img src="assets/nl9-evening-board.jpg" alt="Top-down view of three signature Thai dishes on a wooden cutting board: Pad Kra Pao, Drunken Noodles, and Khao Soi" width="480" height="360" loading="lazy">
+                <img src="assets/nl9-evening-board.jpg" alt="Top-down view of three signature Thai dishes on a wooden cutting board: Pad Kra Pao, Drunken Noodles, and Khao Soi" width="480" height="360">
               </div>
               <div>
                 <div class="v3-reservations-label" style="text-align: left;">Reserve your table</div>
