@@ -989,10 +989,11 @@
 
     /* ============ V3 compact rating badge + snippet grid (order-first differentiation) ============ */
     .v3-reviews-badge {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 24px; flex-wrap: wrap;
+      display: inline-flex; align-items: center; justify-content: flex-start;
+      gap: 28px; flex-wrap: wrap;
       background: #fff; border: 1px solid var(--line); border-radius: 14px;
-      padding: 20px 28px; margin-bottom: 24px;
+      padding: 20px 28px; margin: 0 auto 24px;
+      width: fit-content; max-width: 100%;
       box-shadow: var(--shadow-sm);
     }
     .v3-reviews-badge-rating {
