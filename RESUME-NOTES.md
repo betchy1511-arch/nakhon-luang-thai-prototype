@@ -1,5 +1,23 @@
 # RESUME — Nakhon Luang Thai Homepage Prototype
 
+## LATEST — menu navigation pass, 2026-08-10 (read this first)
+
+Beth reviewed `?v=3&m=1` and flagged three things, all now fixed, pushed and verified live at commit `3c2e5c8`. She is checking the result on 2026-08-11.
+
+1. **Hero subhead contradicted the order-online pitch.** "made to order, ready when you get here" now reads "Real regional Thai cooking, ordered online and cooked fresh for pickup". Pickup is correct: the storefront is **pickup only, no delivery**.
+2. **Category tiles went nowhere.** All 9 tiles pointed at the generic `/order/`. They now deep-link to the ordering storefront's own category anchors.
+3. **Only 6 of 15 categories were shown.** Beth listed the missing ones (sides, fried rice, soup, hot AND cold drinks, kid's menu, dessert, entree). The row now renders **all 15**, in the storefront's order, using the storefront's own names. She explicitly asked for **Entree**, not "Stir-Fry".
+
+Also corrected while verifying: **3 of 4 popular-dish prices were invented** (Khao Soi $16 to $17, Pad Kra Pao $14 to $22.95, duck Drunken Noodles $18 to $24.95).
+
+**Key technical fact:** `/order/` is only an `.olo-embed` iframe wrapper around `https://ezoo.app/nakhon-luang`. Its `embed.js` builds the iframe src from `data-src` and **never reads `location.hash`**, so `/order/#cat-X` cannot deep-link. Links therefore go direct to `ezoo.app#cat-XXX`. The durable fix, if links should stay on the client domain, is to make that plugin forward the hash.
+
+**The full category map, counts, dish-to-category mapping and the counting traps are in memory `nakhon-luang-thai/project_nlt_homepage_prototype_aug2026.md`.** Read it before touching menu links again.
+
+**Still open:** the `Ready in ~20 min` pill is unverified copy with no source; V1 deliberately still shows a 3-chip teaser rather than all 15.
+
+---
+
 **Status when paused:** v1 shipped to GitHub Pages. Beth pushed back that it stripped too much live-site content. Rebuild scoped but NOT started.
 
 **Live URL (v1, current):** https://betchy1511-arch.github.io/nakhon-luang-thai-prototype/
