@@ -1154,19 +1154,28 @@
     }
 
     .v1-visit {
-      padding: 80px 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 40px;
-      align-items: center;
+      padding: 90px 40px;
       background: var(--cream-light);
       border-top: 1px solid var(--line);
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
     }
-    .v1-visit .bg-photo-layer { opacity: 0.10; }
-    .v1-visit > * { position: relative; z-index: 1; }
+    .v1-visit-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+      align-items: center;
+    }
+    .v1-visit-photo {
+      width: 100%; aspect-ratio: 4 / 3;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(79,45,29,0.15);
+    }
+    .v1-visit-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+    }
+    .v1-visit-content { display: flex; flex-direction: column; gap: 28px; }
+    .v1-visit-content .v1-visit-block { display: flex; flex-direction: column; gap: 4px; }
     .v1-visit-block > .v1-visit-label {
       font-size: 11px; font-weight: 600;
       letter-spacing: 0.16em; text-transform: uppercase;
@@ -1193,8 +1202,8 @@
       .v1-hero { grid-template-columns: 1fr; }
       .v1-hero-photo { min-height: 360px; }
       .v1-hero-order { padding: 36px 24px; }
-      .v1-visit { grid-template-columns: 1fr; text-align: center; }
-      .v1-visit-cta { justify-content: center; }
+      .v1-visit-inner { grid-template-columns: 1fr; gap: 32px; }
+      .v1-visit-cta { justify-content: flex-start; flex-wrap: wrap; gap: 10px; }
     }
 
     /* ============ V2 EDITORIAL + DOCK (cream brand palette) ============ */
@@ -1388,7 +1397,7 @@
       isolation: isolate;
       overflow: hidden;
     }
-    .v2-visit .bg-photo-layer { opacity: 0.10; }
+    .v2-visit .bg-photo-layer { opacity: 0.22; }
     .v2-visit > * { position: relative; z-index: 1; }
     .v2-visit-cell {
       display: flex; flex-direction: column;
@@ -1665,7 +1674,7 @@
       position: relative;
       isolation: isolate;
     }
-    .v3-visit .bg-photo-layer { opacity: 0.10; }
+    .v3-visit .bg-photo-layer { opacity: 0.20; }
     .v3-visit > * { position: relative; z-index: 1; }
     .v3-visit-block { display: flex; align-items: center; gap: 14px; }
     .v3-visit-icon {
@@ -1739,7 +1748,7 @@
               <a href="#menu">Menu</a>
               <a href="#story">Story</a>
               <a href="#visit">Visit</a>
-              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="v1-nav-reserve">Reserve</a>
+              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="v1-nav-reserve">Reserve a Table</a>
               <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v1-nav-order">Order Online →</a>
             </div>
           </nav>
@@ -1893,7 +1902,7 @@
                 <span class="v1-experience-pill">Rotating craft beers</span>
               </div>
               <div class="v1-experience-cta">
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn">Make a reservation</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn">Reserve a Table</a>
               </div>
             </div>
           </section>
@@ -1950,26 +1959,32 @@
               <h2>Reserve your table tonight</h2>
               <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
               <div class="v1-reservations-cta">
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Make a reservation</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
               </div>
             </div>
           </section>
 
           <section class="v1-visit" id="visit">
-            <div class="bg-photo-layer" style="background-image: url('assets/nl10b-ritual.jpg');"></div>
-            <div class="v1-visit-block">
-              <div class="v1-visit-label">Hours</div>
-              <div>11:00am – 3:30pm</div>
-              <div>4:30pm – 8:30pm · daily</div>
-            </div>
-            <div class="v1-visit-block">
-              <div class="v1-visit-label">Where</div>
-              <div>805 Village Center Drive</div>
-              <div>Colorado Springs, CO</div>
-            </div>
-            <div class="v1-visit-cta">
-              <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
-              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-ghost">Reserve a table</a>
+            <div class="v1-visit-inner">
+              <div class="v1-visit-photo">
+                <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360">
+              </div>
+              <div class="v1-visit-content">
+                <div class="v1-visit-block">
+                  <div class="v1-visit-label">Hours</div>
+                  <div>11:00am – 3:30pm</div>
+                  <div>4:30pm – 8:30pm · daily</div>
+                </div>
+                <div class="v1-visit-block">
+                  <div class="v1-visit-label">Where</div>
+                  <div>805 Village Center Drive</div>
+                  <div>Colorado Springs, CO</div>
+                </div>
+                <div class="v1-visit-cta">
+                  <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
+                  <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-ghost">Reserve a Table</a>
+                </div>
+              </div>
             </div>
           </section>
 
@@ -2028,7 +2043,7 @@
               <a href="#story">Story</a>
               <a href="#dishes">Dishes</a>
               <a href="#visit">Visit</a>
-              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener">Reserve</a>
+              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener">Reserve a Table</a>
             </div>
           </nav>
 
@@ -2102,7 +2117,7 @@
                   <span class="v2-experience-pill">Handcrafted cocktails</span>
                   <span class="v2-experience-pill">Rotating craft beers</span>
                 </div>
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="v2-experience-cta">Make a reservation →</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="v2-experience-cta">Reserve a Table →</a>
               </div>
               <div class="split-image">
                 <img src="assets/nl10b-ritual.jpg" alt="Top-down view of six Thai dishes and drinks arranged on a wooden table" width="480" height="360">
@@ -2186,7 +2201,7 @@
                 <div class="v2-visit-cell-sub">Fri &amp; Sat 6–8pm</div>
               </div>
             </div>
-            <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v2-visit-cta">Order for pickup or delivery →</a>
+            <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v2-visit-cta">Order Online →</a>
           </section>
 
           <section class="v2-map" style="padding: 80px 32px; background: var(--cream-light);">
@@ -2216,7 +2231,7 @@
               <h2>Reserve your table tonight</h2>
               <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
               <div class="v2-reservations-cta">
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Make a reservation</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
               </div>
             </div>
           </section>
@@ -2392,7 +2407,7 @@
                   <span class="v3-experience-pill">Cocktails</span>
                   <span class="v3-experience-pill">Craft beers</span>
                 </div>
-                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn">Make a reservation</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn">Reserve a Table</a>
               </div>
             </div>
           </section>
@@ -2458,7 +2473,7 @@
                 <h3 style="text-align: left;">Reserve your table tonight</h3>
                 <p style="text-align: left;">Reservations recommended. Walk-ins welcome. Private events available.</p>
                 <div class="v3-reservations-cta" style="justify-content: flex-start;">
-                  <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Make a reservation</a>
+                  <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-primary">Reserve a Table</a>
                 </div>
               </div>
             </div>
@@ -2482,7 +2497,7 @@
             </div>
             <div style="display:flex;gap:10px;">
               <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
-              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-forest">Reserve</a>
+              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-forest">Reserve a Table</a>
             </div>
           </section>
 
