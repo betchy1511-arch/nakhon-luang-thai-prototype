@@ -1952,21 +1952,8 @@
     /* V2 hero: trim overly-long duration when motion sample is on */
     [data-motion] .v2-hero-content { animation-duration: 700ms; animation-delay: 120ms; }
 
-    /* Storefront image reveal: scale-in with slight blur */
-    [data-motion] .v1-reservations .split-image {
-      overflow: hidden; border-radius: var(--radius);
-    }
-    [data-motion] .v1-reservations .split-image img {
-      transform: scale(1.06);
-      filter: blur(6px);
-      transition:
-        transform 900ms cubic-bezier(0.19, 1, 0.22, 1),
-        filter 700ms ease-out;
-    }
-    [data-motion] .v1-reservations.in-view .split-image img {
-      transform: scale(1);
-      filter: blur(0);
-    }
+    /* Storefront blur-in was here — removed because Reservations is out of the motion scope
+       (motion is intentionally restricted to Hero + Reviews only). */
 
     /* Hover-motion GATE (Rule 8 fix — apply always, not just motion=on) */
     @media (hover: none), (pointer: coarse) {
@@ -2080,14 +2067,7 @@
       100% { left: 130%; }
     }
 
-    /* Ken burns on storefront image (V1 reservations) — starts AFTER the blur-in lands */
-    :where([data-motion="2"], [data-motion="3"]) .v1-reservations.in-view .split-image img {
-      animation: kenBurns 16s cubic-bezier(0.4, 0, 0.6, 1) 1100ms infinite alternate;
-    }
-    @keyframes kenBurns {
-      from { transform: scale(1) translateX(0); }
-      to   { transform: scale(1.09) translateX(-2.5%); }
-    }
+    /* Ken burns on storefront was here — removed for the same scope reason as the blur-in. */
 
     /* Counter target — reserve space so digits don't reflow */
     :where([data-motion="2"], [data-motion="3"]) [data-count-to] { font-variant-numeric: tabular-nums; }
@@ -2149,16 +2129,8 @@
       will-change: transform;
     }
 
-    /* Section-anchor gold accent that pulses gently on view */
-    [data-motion="3"] .in-view .v1-story-two-label,
-    [data-motion="3"] .in-view .v3-philosophy-label,
-    [data-motion="3"] .in-view .v1-reservations-label {
-      animation: labelPulse 2400ms cubic-bezier(0.4, 0, 0.6, 1) 500ms 2;
-    }
-    @keyframes labelPulse {
-      0%, 100% { color: var(--gold-hover, #B98A3A); }
-      50%      { color: #EABC53; text-shadow: 0 0 6px rgba(234,188,83,0.4); }
-    }
+    /* Section-anchor label pulse was here — removed because Story / Philosophy /
+       Reservations labels are outside the Hero + Reviews scope. */
 
     /* Motion-3 override: kill signature animations for reduced motion */
     @media (prefers-reduced-motion: reduce) {
@@ -2167,10 +2139,7 @@
       [data-motion="3"] .v1-hero-cta,
       [data-motion="3"] .v3-nav-order,
       [data-motion="3"] .v2-dock-cta,
-      [data-motion="3"] .parallax-hero,
-      [data-motion="3"] .in-view .v1-story-two-label,
-      [data-motion="3"] .in-view .v3-philosophy-label,
-      [data-motion="3"] .in-view .v1-reservations-label {
+      [data-motion="3"] .parallax-hero {
         animation: none !important;
         transform: none !important;
       }
@@ -3097,31 +3066,31 @@
     }
 
     // ---- Motion sample wiring ----
+    // Scoped to only two sections per Beth: HERO and REVIEWS.
+    // Everything else (Story / Dishes / Experience / Visit / Reservations) stays static.
     const REVEAL_SELECTORS = [
-      // V1
+      // Hero (V1 + V3; V2 hero has its own baked-in fadeUp animation)
       '.v1-hero-headline', '.v1-hero-sub', '.v1-hero-cta',
-      '.v1-story-two-copy', '.v1-story-two-visual',
-      '.v1-experience-inner', '.v1-reservations',
-      '.v1-visit-inner', '.v1-reviews-head', '.v1-review-featured',
-      // V2
-      '.v2-story-inner', '.v2-visit-inner',
-      '.v2-reviews-head', '.v2-reviews-preamble', '.v2-review-hero',
-      // V3
       '.v3-hero-title', '.v3-hero-sub', '.v3-hero-ctas',
-      '.v3-content-strip-inner', '.v3-reviews-badge', '.v3-visit-inner',
-      '.v3-reservations',
+      // Reviews (all 3 variants)
+      '.v1-reviews-head', '.v1-review-featured',
+      '.v2-reviews-head', '.v2-reviews-preamble', '.v2-review-hero',
+      '.v3-reviews-badge',
     ];
     const STAGGER_SELECTORS = [
-      '.v1-dishes-grid', '.v1-reviews-grid',
-      '.v2-dish-grid', '.v2-review-notes',
-      '.v3-category-grid', '.v3-popular-grid', '.v3-reviews-grid',
+      // Only review grids get stagger — dish grids are out of scope
+      '.v1-reviews-grid',
+      '.v2-review-notes',
+      '.v3-reviews-grid',
       '.reviews-topic-pills',
     ];
 
     // ---- Signature motion helpers ----
     const HEADLINE_SELECTORS = ['.v1-hero-headline', '.v3-hero-title', '.v2-hero-title'];
-    const TILT_SELECTORS     = ['.v1-dish-card', '.v3-dish-card', '.v3-category-card', '.v1-category'];
-    const MAGNETIC_SELECTORS = ['.v1-hero-cta', '.v3-nav-order', '.v2-dock-cta', '.v2-visit-cta'];
+    // Tilt is off-scope now (dish/category cards live outside Hero + Reviews)
+    const TILT_SELECTORS     = [];
+    // Magnetic only on primary Order CTAs (persistent chrome, not a section)
+    const MAGNETIC_SELECTORS = ['.v1-hero-cta', '.v3-nav-order', '.v2-dock-cta'];
 
     function wrapWordsForReveal() {
       document.querySelectorAll(HEADLINE_SELECTORS.join(',')).forEach(el => {
