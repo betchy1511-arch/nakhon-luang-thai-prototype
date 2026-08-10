@@ -676,9 +676,10 @@
     }
     .v1-reviews-head-meta .stars { color: var(--gold); letter-spacing: 2px; margin-right: 6px; }
     .v1-reviews-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
     }
     @media (max-width: 1100px) { .v1-reviews-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; } }
+    @media (max-width: 700px)  { .v1-reviews-grid { grid-template-columns: 1fr; } }
     .v1-review-card {
       padding: 28px 24px 22px;
       background: var(--cream);
@@ -2144,6 +2145,11 @@
                   <p class="v1-review-quote">"Some awesome food, fresh, great flavor. Their spicy Thai Margarita was sooo good. Had the garlic pepper stir-fry with shrimp. Love this place."</p>
                   <div class="v1-review-attrib"><strong>Tim &amp; Lynda R.</strong><span>Google</span></div>
                 </div>
+                <div class="v1-review-card">
+                  <div class="v1-review-stars">★★★★★</div>
+                  <p class="v1-review-quote">"Amazing Thai food with a personal touch. The food is absolutely great, fresh, flavorful, and clearly made with care."</p>
+                  <div class="v1-review-attrib"><strong>Frankenfood</strong><span>Google</span></div>
+                </div>
               </div>
 
               <div class="reviews-gbp-summary">
@@ -2163,7 +2169,7 @@
           <section class="v1-reservations" id="reserve">
             <div class="split-image-section" style="max-width: 1080px;">
               <div class="split-image">
-                <img src="assets/nl4-philosophy.jpg" alt="Thai table spread with coconut curry soup, sesame chicken with broccoli, and cocktails" width="480" height="360">
+                <img src="assets/nl-storefront.webp" alt="Nakhon Luang Thai Kitchen storefront at 805 Village Center Drive, Rockrimmon, Colorado Springs" width="678" height="509">
               </div>
               <div style="text-align: center;">
                 <div class="v1-reservations-label">Reserve your table</div>
@@ -2689,8 +2695,8 @@
                   <p class="v3-review-snippet-quote">"Garlic pepper shrimp, spicy Thai Margarita. Love this place."</p>
                 </div>
                 <div class="v3-review-snippet">
-                  <div class="v3-review-snippet-top"><span>Google's own summary</span><span>66 reviews</span></div>
-                  <p class="v3-review-snippet-quote">Authentic Thai food, generous portions, reasonable prices, lunch specials, friendly staff, warm atmosphere.</p>
+                  <div class="v3-review-snippet-top"><span class="stars">★★★★★</span><span>Linea W.</span></div>
+                  <p class="v3-review-snippet-quote">"It was a good experience eating here. The place is clean and the staff were friendly and attentive."</p>
                 </div>
               </div>
             </div>
