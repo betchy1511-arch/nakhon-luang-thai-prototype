@@ -2243,7 +2243,8 @@
     /* Per-card food-emoji chips removed — the scroll-driven tuk-tuk caravan replaces them,
        so there's no more chili/egg-pan/curry-plate/shrimp/chopsticks stuck to card corners. */
 
-    /* Scroll-driven traveler: a single emoji that flies along the gold path as user scrolls */
+    /* Scroll-driven caravan: emojis appear + travel WHILE scrolling, fade away when idle
+       so they don't sit on the page as static-looking decorative chips */
     [data-motion] .v3-path-traveler {
       position: absolute;
       top: 0; left: 0;
@@ -2252,12 +2253,12 @@
       z-index: 4;
       pointer-events: none;
       filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
-      will-change: transform;
+      will-change: transform, opacity;
       margin: -22px 0 0 -22px;
       opacity: 0;
       transition: opacity 500ms ease-out;
     }
-    [data-motion] .v3-reviews-grid.in-view .v3-path-traveler { opacity: 1; }
+    [data-motion] .v3-reviews-grid.scrolling .v3-path-traveler { opacity: 1; }
 
     /* Hover: straighten with lift + bring to front (only for pointer-fine) */
     @media (hover: hover) and (pointer: fine) {
@@ -3540,7 +3541,11 @@
           });
         }
 
+        let scrollIdleTimer = 0;
         function onScrollOrResize() {
+          grid.classList.add('scrolling');
+          clearTimeout(scrollIdleTimer);
+          scrollIdleTimer = setTimeout(() => grid.classList.remove('scrolling'), 600);
           if (rafScheduled) return;
           rafScheduled = true;
           requestAnimationFrame(updateTravelers);
