@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nakhon Luang Thai Kitchen — Homepage Prototype</title>
+  <title>Nakhon Luang Thai Kitchen · Homepage Prototype</title>
   <meta name="description" content="Homepage redesign prototype for Nakhon Luang Thai Kitchen, Colorado Springs. Three divergent variants behind a picker. Client: Magister Digital pilot.">
   <meta name="robots" content="noindex,nofollow">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -207,6 +207,361 @@
       position: relative;
     }
     .dish-tile svg { width: 62%; height: 62%; opacity: 0.92; }
+
+    /* ============ V1 additions: Philosophy, Dishes, Story-2col, Experience, Reservations ============ */
+    .v1-philosophy {
+      padding: 90px 40px 60px;
+      background: var(--cream-light);
+      border-top: 1px solid var(--line);
+    }
+    .v1-philosophy-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center;
+    }
+    .v1-philosophy-icon {
+      width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,200,120,0.45), rgba(184,84,31,0.9) 45%, rgba(90,30,10,1) 100%);
+      display: grid; place-items: center; color: rgba(255,240,220,0.9);
+      box-shadow: 0 12px 30px rgba(60,20,8,0.18);
+    }
+    .v1-philosophy-icon svg { width: 60%; height: 60%; }
+    .v1-philosophy-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 14px;
+    }
+    .v1-philosophy-copy h2 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.1; letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .v1-philosophy-copy p {
+      margin-top: 18px; font-size: 16px; line-height: 1.65;
+      color: var(--ink-soft); max-width: 66ch;
+    }
+
+    .v1-dishes {
+      padding: 40px 40px 90px;
+      background: var(--cream-light);
+    }
+    .v1-dishes-inner { max-width: 1080px; margin: 0 auto; }
+    .v1-dishes-head { text-align: center; margin-bottom: 36px; }
+    .v1-dishes-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 14px;
+    }
+    .v1-dishes-head h2 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(26px, 2.8vw, 34px);
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .v1-dish-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .v1-dish-card {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 200ms cubic-bezier(0.19, 1, 0.22, 1), box-shadow 200ms ease-out, border-color 200ms ease-out;
+    }
+    .v1-dish-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--line-strong); }
+    .v1-dish-visual {
+      aspect-ratio: 4 / 3; display: grid; place-items: center;
+    }
+    .v1-dish-body { padding: 18px 20px 22px; }
+    .v1-dish-name {
+      font-family: var(--serif); font-weight: 500;
+      font-size: 20px; letter-spacing: -0.01em; margin-bottom: 8px;
+    }
+    .v1-dish-desc {
+      font-size: 13px; color: var(--ink-soft); line-height: 1.55;
+    }
+
+    .v1-story-two {
+      padding: 100px 40px;
+      background: var(--cream-deep);
+      border-top: 1px solid var(--line);
+    }
+    .v1-story-two-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center;
+    }
+    .v1-story-two-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 14px;
+    }
+    .v1-story-two-copy h2 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(28px, 3vw, 38px);
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .v1-story-two-copy p {
+      margin-top: 18px; font-size: 16px; line-height: 1.65;
+      color: var(--ink-soft); max-width: 60ch;
+    }
+    .v1-story-two-cta { margin-top: 24px; }
+    .v1-story-two-visual {
+      width: 220px; height: 220px; border-radius: 50%;
+      background:
+        radial-gradient(circle at 40% 30%, rgba(255,220,150,0.45), rgba(184,84,31,0.85) 45%, rgba(60,20,8,1) 100%);
+      display: grid; place-items: center; color: rgba(255,240,220,0.92);
+      box-shadow: 0 20px 40px rgba(26,22,20,0.15);
+    }
+    .v1-story-two-visual svg { width: 60%; height: 60%; }
+
+    .v1-experience {
+      padding: 90px 40px;
+      background: var(--forest);
+      color: var(--cream-light);
+    }
+    .v1-experience-inner {
+      max-width: 900px; margin: 0 auto; text-align: center;
+    }
+    .v1-experience-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .v1-experience h2 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.1; letter-spacing: -0.02em;
+      color: var(--cream-light);
+    }
+    .v1-experience p {
+      margin-top: 20px; font-size: 16px; line-height: 1.7;
+      color: rgba(245,238,220,0.85); max-width: 70ch;
+      margin-left: auto; margin-right: auto;
+    }
+    .v1-experience-pills {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      margin-top: 28px;
+    }
+    .v1-experience-pill {
+      padding: 10px 18px;
+      border: 1px solid rgba(212,162,76,0.35);
+      border-radius: 999px;
+      font-size: 13px; color: var(--cream-light);
+      background: rgba(212,162,76,0.06);
+    }
+    .v1-experience-cta { margin-top: 32px; }
+    .v1-experience-cta .btn {
+      background: var(--gold); color: var(--ink);
+    }
+    .v1-experience-cta .btn:hover { background: #B98A3A; }
+
+    .v1-reservations {
+      padding: 90px 40px;
+      background: var(--cream);
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+    .v1-reservations-inner { max-width: 700px; margin: 0 auto; }
+    .v1-reservations-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 14px;
+    }
+    .v1-reservations h2 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .v1-reservations p {
+      margin-top: 16px; font-size: 16px; color: var(--ink-soft);
+    }
+    .v1-reservations-cta {
+      margin-top: 28px;
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .v1-philosophy-inner { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+      .v1-philosophy-icon { margin: 0 auto; width: 96px; height: 96px; }
+      .v1-philosophy-copy p { margin-left: auto; margin-right: auto; }
+      .v1-dish-grid { grid-template-columns: 1fr; gap: 20px; }
+      .v1-story-two-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .v1-story-two-copy p { margin-left: auto; margin-right: auto; }
+      .v1-story-two-visual { margin: 0 auto; width: 180px; height: 180px; }
+    }
+
+    /* ============ V2 additions: Experience, Reservations ============ */
+    .v2-experience {
+      padding: 120px 32px;
+      max-width: 900px; margin: 0 auto;
+      text-align: center;
+    }
+    .v2-experience-label {
+      font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 22px;
+    }
+    .v2-experience h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.6vw, 44px); line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--cream-light);
+    }
+    .v2-experience p {
+      margin-top: 22px; font-size: 17px; line-height: 1.7;
+      color: rgba(245,238,220,0.72);
+    }
+    .v2-experience-pills {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+      margin-top: 28px;
+    }
+    .v2-experience-pill {
+      padding: 10px 18px;
+      border: 1px solid rgba(212,162,76,0.30);
+      border-radius: 999px;
+      font-size: 13px; color: var(--cream-light);
+      background: rgba(212,162,76,0.06);
+    }
+    .v2-experience-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-top: 32px;
+      padding: 14px 28px; background: transparent; color: var(--gold);
+      border: 1px solid rgba(212,162,76,0.5); border-radius: 999px;
+      font-weight: 600; font-size: 15px;
+      transition: background 150ms ease-out;
+    }
+    .v2-experience-cta:hover { background: rgba(212,162,76,0.08); }
+
+    .v2-reservations {
+      padding: 100px 32px 120px;
+      background: #0A0605;
+      border-top: 1px solid rgba(245,238,220,0.08);
+      text-align: center;
+    }
+    .v2-reservations-inner { max-width: 700px; margin: 0 auto; }
+    .v2-reservations-label {
+      font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 22px;
+    }
+    .v2-reservations h2 {
+      font-family: var(--serif); font-weight: 400;
+      font-size: clamp(28px, 3.4vw, 40px); letter-spacing: -0.02em;
+      color: var(--cream-light);
+    }
+    .v2-reservations p {
+      margin-top: 18px; font-size: 15px; color: rgba(245,238,220,0.7);
+      line-height: 1.65;
+    }
+    .v2-reservations-cta {
+      margin-top: 28px;
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+    .v2-reservations .btn-primary { background: var(--amber); color: #fff; }
+    .v2-reservations .btn-primary:hover { background: var(--amber-hover); }
+    .v2-reservations .btn-ghost {
+      color: var(--cream-light);
+      border-color: rgba(245,238,220,0.35);
+      background: transparent;
+    }
+    .v2-reservations .btn-ghost:hover {
+      background: var(--cream-light);
+      color: var(--ink);
+      border-color: var(--cream-light);
+    }
+
+    /* ============ V3 additions: content strip + reservations ============ */
+    .v3-content-strip {
+      background: var(--cream-light);
+      border-top: 1px solid var(--line);
+      padding: 60px 32px;
+    }
+    .v3-content-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px;
+    }
+    .v3-philosophy-card {
+      padding: 32px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .v3-philosophy-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 14px;
+    }
+    .v3-philosophy-card h3 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: 24px; letter-spacing: -0.02em; line-height: 1.2;
+    }
+    .v3-philosophy-card p {
+      margin-top: 14px; font-size: 15px; color: var(--ink-soft); line-height: 1.6;
+    }
+    .v3-philosophy-card p + p { margin-top: 12px; }
+    .v3-experience-card {
+      padding: 32px;
+      background: var(--forest);
+      color: var(--cream-light);
+      border-radius: var(--radius);
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .v3-experience-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .v3-experience-card h3 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: 22px; letter-spacing: -0.02em; line-height: 1.25;
+      color: var(--cream-light);
+    }
+    .v3-experience-card p {
+      font-size: 14px; color: rgba(245,238,220,0.82); line-height: 1.6;
+    }
+    .v3-experience-pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .v3-experience-pill {
+      padding: 8px 14px;
+      border: 1px solid rgba(212,162,76,0.35);
+      border-radius: 999px;
+      font-size: 12px; color: var(--cream-light);
+      background: rgba(212,162,76,0.06);
+    }
+    .v3-experience-card .btn {
+      align-self: flex-start;
+      background: var(--gold); color: var(--ink);
+      margin-top: 4px;
+    }
+    .v3-experience-card .btn:hover { background: #B98A3A; }
+
+    .v3-reservations {
+      background: var(--cream-deep);
+      padding: 60px 32px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+    .v3-reservations-inner { max-width: 720px; margin: 0 auto; }
+    .v3-reservations-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 12px;
+    }
+    .v3-reservations h3 {
+      font-family: var(--serif); font-weight: 500;
+      font-size: clamp(24px, 2.6vw, 34px);
+      line-height: 1.15; letter-spacing: -0.02em;
+    }
+    .v3-reservations p {
+      margin-top: 12px; font-size: 15px; color: var(--ink-soft);
+    }
+    .v3-reservations-cta {
+      margin-top: 22px;
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+    }
+
+    @media (max-width: 1100px) {
+      .v3-content-strip-inner { grid-template-columns: 1fr; }
+    }
 
     /* ============ V1 SPLIT HERO ============ */
     .v1 { background: var(--cream); color: var(--ink); }
@@ -955,7 +1310,7 @@
       pin: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-8 8-14a8 8 0 10-16 0c0 6 8 14 8 14z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="2"/></svg>`,
     };
 
-    // ============ Variant 1 — SPLIT HERO ============
+    // ============ Variant 1 · SPLIT HERO ============
     function variantSplitHero() {
       return `
         <div class="v1">
@@ -978,7 +1333,7 @@
               <div class="v1-hero-photo-art" style="color:#4A2914">${icons.bowl}</div>
               <div class="v1-hero-caption">
                 Featured
-                <em>Khao Soi Gai — Northern Thai coconut curry</em>
+                <em>Khao Soi Gai · Northern Thai coconut curry</em>
               </div>
             </div>
             <div class="v1-hero-order">
@@ -1041,11 +1396,88 @@
             </div>
           </section>
 
-          <section class="v1-story" id="story">
-            <div class="v1-story-inner">
-              <div class="v1-story-label">Our kitchen</div>
-              <h2>Regional Thai cooking — Bangkok, Isan, the North, the South, and Lao.</h2>
-              <p>Family-run since day one. Every curry paste is pounded fresh. Jasmine rice is measured, never scooped. If you've had Thai food that tasted like the same takeout menu everywhere, this isn't that.</p>
+          <section class="v1-philosophy" id="philosophy">
+            <div class="v1-philosophy-inner">
+              <div class="v1-philosophy-icon">${icons.wok}</div>
+              <div class="v1-philosophy-copy">
+                <div class="v1-philosophy-label">Our philosophy</div>
+                <h2>Bold flavors. Refined craft.</h2>
+                <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="v1-dishes" id="menu">
+            <div class="v1-dishes-inner">
+              <div class="v1-dishes-head">
+                <div class="v1-dishes-label">Featured dishes</div>
+                <h2>Three plates worth the drive.</h2>
+              </div>
+              <div class="v1-dish-grid">
+                <div class="v1-dish-card">
+                  <div class="v1-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,200,120,0.5), rgba(184,84,31,0.9) 50%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
+                  <div class="v1-dish-body">
+                    <div class="v1-dish-name">Khao Soi</div>
+                    <div class="v1-dish-desc">Northern Thai coconut curry soup with egg noodles, braised chicken, crispy noodles, shallots &amp; lime.</div>
+                  </div>
+                </div>
+                <div class="v1-dish-card">
+                  <div class="v1-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.4), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
+                  <div class="v1-dish-body">
+                    <div class="v1-dish-name">Pad Kra Pao</div>
+                    <div class="v1-dish-desc">Stir-fried Thai holy basil with bell peppers, onions &amp; chili, topped with a fried egg.</div>
+                  </div>
+                </div>
+                <div class="v1-dish-card">
+                  <div class="v1-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
+                  <div class="v1-dish-body">
+                    <div class="v1-dish-name">Drunken Noodles</div>
+                    <div class="v1-dish-desc">Wide rice noodles stir-fried with crispy duck, Thai basil, bell peppers, onions &amp; chili.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="v1-story-two" id="story">
+            <div class="v1-story-two-inner">
+              <div class="v1-story-two-copy">
+                <div class="v1-story-two-label">Flavors of the region</div>
+                <h2>Regional Thai cooking, from Bangkok to Isan, the North, the South, and Lao.</h2>
+                <p>Our menu highlights classic Thai dishes shaped by regional traditions from Bangkok, Isan, Northern and Southern Thailand, and Lao cuisine. Guests will find familiar favorites alongside regional influences, from aromatic curries and stir-fried dishes to timeless noodle plates. Each dish is prepared with fresh ingredients and a careful balance of flavor, comforting, authentic, and satisfying.</p>
+                <div class="v1-story-two-cta">
+                  <a href="#menu" class="btn btn-ghost">View the full menu</a>
+                </div>
+              </div>
+              <div class="v1-story-two-visual">${icons.noodle}</div>
+            </div>
+          </section>
+
+          <section class="v1-experience" id="experience">
+            <div class="v1-experience-inner">
+              <div class="v1-experience-label">Gather. Sip. Savor.</div>
+              <h2>An elevated Thai table, without the fuss.</h2>
+              <p>Enjoy a relaxed, welcoming atmosphere where authentic Thai cuisine meets elevated drinks. Whether you're gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
+              <div class="v1-experience-pills">
+                <span class="v1-experience-pill">Curated wine list</span>
+                <span class="v1-experience-pill">Handcrafted cocktails</span>
+                <span class="v1-experience-pill">Rotating craft beers</span>
+              </div>
+              <div class="v1-experience-cta">
+                <a href="#reserve" class="btn">Make a reservation</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="v1-reservations" id="reserve">
+            <div class="v1-reservations-inner">
+              <div class="v1-reservations-label">Reserve your table</div>
+              <h2>Reserve your table tonight.</h2>
+              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
+              <div class="v1-reservations-cta">
+                <a href="/order" class="btn btn-primary">Order Online</a>
+                <a href="#reserve-form" class="btn btn-ghost">Make a reservation</a>
+              </div>
             </div>
           </section>
 
@@ -1088,7 +1520,7 @@
       `;
     }
 
-    // ============ Variant 2 — EDITORIAL + DOCK ============
+    // ============ Variant 2 · EDITORIAL + DOCK ============
     function variantEditorial() {
       return `
         <div class="v2">
@@ -1114,8 +1546,8 @@
 
           <section class="v2-story" id="story">
             <div class="v2-story-label">Our philosophy</div>
-            <h2>Curry pastes pounded in the morning. Rice measured by the cup. Fish sauce nobody in Colorado has heard of.</h2>
-            <p>A tiny chef-owned kitchen in Rockrimmon. We opened because the Thai food we grew up eating didn't exist in Colorado Springs. Now it does.</p>
+            <h2>Bold flavors. Refined craft.</h2>
+            <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
           </section>
 
           <section class="v2-dishes" id="dishes">
@@ -1126,27 +1558,39 @@
             <div class="v2-dish-grid">
               <div class="v2-dish">
                 <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,210,140,0.55), rgba(184,84,31,0.9) 45%, rgba(80,30,10,1) 100%); color: #F5EEDC;">${icons.bowl}</div>
-                <div class="v2-dish-title">Khao Soi Gai</div>
+                <div class="v2-dish-title">Khao Soi</div>
                 <div class="v2-dish-region">Northern Thailand</div>
-                <div class="v2-dish-desc">Egg noodles in a coconut curry broth, chicken, pickled mustard greens, and a nest of crispy noodles on top.</div>
+                <div class="v2-dish-desc">Northern Thai coconut curry soup with egg noodles, braised chicken, crispy noodles, shallots &amp; lime.</div>
               </div>
               <div class="v2-dish">
                 <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(180,240,160,0.35), rgba(31,58,46,0.95) 55%, rgba(10,20,15,1) 100%); color: #D4A24C;">${icons.wok}</div>
                 <div class="v2-dish-title">Pad Kra Pao</div>
                 <div class="v2-dish-region">Central Thailand</div>
-                <div class="v2-dish-desc">Holy basil stir-fry with pork, birds-eye chili, and a runny fried egg. The dish Thai people eat when nothing else will do.</div>
+                <div class="v2-dish-desc">Stir-fried Thai holy basil with bell peppers, onions &amp; chili, topped with a fried egg.</div>
               </div>
               <div class="v2-dish">
                 <div class="v2-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,220,150,0.5), rgba(212,162,76,0.9) 50%, rgba(90,60,20,1) 100%); color: #1A1614;">${icons.noodle}</div>
                 <div class="v2-dish-title">Drunken Noodles</div>
                 <div class="v2-dish-region">Bangkok street</div>
-                <div class="v2-dish-desc">Wide rice noodles, crispy duck, Thai basil, and enough chili to earn the name. A late-night dish, all day.</div>
+                <div class="v2-dish-desc">Wide rice noodles stir-fried with crispy duck, Thai basil, bell peppers, onions &amp; chili.</div>
               </div>
             </div>
           </section>
 
+          <section class="v2-experience" id="experience">
+            <div class="v2-experience-label">Gather. Sip. Savor.</div>
+            <h2>An elevated Thai table, in a relaxed room.</h2>
+            <p>Enjoy a relaxed, welcoming atmosphere where authentic Thai cuisine meets elevated drinks. Whether you're gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
+            <div class="v2-experience-pills">
+              <span class="v2-experience-pill">Curated wine list</span>
+              <span class="v2-experience-pill">Handcrafted cocktails</span>
+              <span class="v2-experience-pill">Rotating craft beers</span>
+            </div>
+            <a href="#reserve" class="v2-experience-cta">Make a reservation →</a>
+          </section>
+
           <section class="v2-visit" id="visit">
-            <h3>Come find us — or order in.</h3>
+            <h3>Come find us, or order in.</h3>
             <div class="v2-visit-grid">
               <div>
                 <div class="v2-visit-cell-label">Open</div>
@@ -1165,6 +1609,18 @@
               </div>
             </div>
             <a href="/order" class="v2-visit-cta">Order for pickup or delivery →</a>
+          </section>
+
+          <section class="v2-reservations" id="reserve">
+            <div class="v2-reservations-inner">
+              <div class="v2-reservations-label">Reserve your table</div>
+              <h2>Reserve your table tonight.</h2>
+              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
+              <div class="v2-reservations-cta">
+                <a href="/order" class="btn btn-primary">Order Online</a>
+                <a href="#reserve-form" class="btn btn-ghost">Make a reservation</a>
+              </div>
+            </div>
           </section>
 
           <footer class="v2-footer">
@@ -1194,7 +1650,7 @@
       `;
     }
 
-    // ============ Variant 3 — KITCHEN (order-dominant) ============
+    // ============ Variant 3 · KITCHEN (order-dominant) ============
     function variantKitchen() {
       return `
         <div class="v3">
@@ -1335,13 +1791,37 @@
             </div>
           </section>
 
-          <section class="v3-story-strip" id="story">
-            <div class="v3-story-strip-inner">
-              <div>
-                <div class="v3-story-strip-label">Our kitchen</div>
-                <h3>Chef-owned. Curry pastes pounded fresh. Regional dishes from Bangkok, Isan, Northern and Southern Thailand, and Lao.</h3>
+          <section class="v3-content-strip" id="story">
+            <div class="v3-content-strip-inner">
+              <div class="v3-philosophy-card">
+                <div class="v3-philosophy-label">Our philosophy</div>
+                <h3>Bold flavors. Refined craft.</h3>
+                <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition.</p>
+                <p>Our menu highlights classic Thai dishes shaped by regional traditions from Bangkok, Isan, Northern and Southern Thailand, and Lao cuisine, aromatic curries, stir-fried plates, and timeless noodle dishes prepared with fresh ingredients and a careful balance of flavor.</p>
               </div>
-              <a href="#story" class="v3-story-strip-link">Read our story →</a>
+              <div class="v3-experience-card">
+                <div class="v3-experience-label">Gather. Sip. Savor.</div>
+                <h3>Authentic Thai cuisine meets elevated drinks.</h3>
+                <p>A relaxed, welcoming room in Rockrimmon. Whether you are gathering with friends or enjoying a casual night out, our curated wine list, handcrafted cocktails, rotating craft beers, and genuine hospitality make every visit feel special.</p>
+                <div class="v3-experience-pills">
+                  <span class="v3-experience-pill">Wine list</span>
+                  <span class="v3-experience-pill">Cocktails</span>
+                  <span class="v3-experience-pill">Craft beers</span>
+                </div>
+                <a href="#reserve" class="btn">Make a reservation</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="v3-reservations" id="reserve">
+            <div class="v3-reservations-inner">
+              <div class="v3-reservations-label">Reserve your table</div>
+              <h3>Reserve your table tonight.</h3>
+              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
+              <div class="v3-reservations-cta">
+                <a href="/order" class="btn btn-primary">Order Online</a>
+                <a href="#reserve-form" class="btn btn-forest">Make a reservation</a>
+              </div>
             </div>
           </section>
 
