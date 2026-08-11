@@ -989,19 +989,18 @@
 
     /* ============ V3 compact rating badge + snippet grid (order-first differentiation) ============ */
     /* Badge is inline-flex, so its old `margin: 0 auto` never centred it and left a
-       dead column to its right. The topline row pairs it with the section headline so
-       the width is filled rather than collapsed. */
+       dead column to its right. The topline row pairs it with the section headline,
+       following the same title-left / meta-right shape as .v3-popular-head and
+       .v3-reviews-head so both edges are anchored and the gutter falls between them. */
     .v3-reviews-topline {
       display: flex; align-items: center; justify-content: space-between;
       gap: 40px; flex-wrap: wrap;
       margin: 0 0 24px;
     }
-    .v3-reviews-hook { flex: 1 1 320px; min-width: 0; text-align: right; }
-    /* Once the row wraps, the headline sits above the badge and reads left like
-       every other stacked heading on the page. */
+    .v3-reviews-hook { flex: 1 1 320px; min-width: 0; }
     @media (max-width: 900px) {
-      .v3-reviews-topline { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
-      .v3-reviews-hook { text-align: left; flex: 0 0 auto; }
+      .v3-reviews-topline { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .v3-reviews-hook { flex: 0 0 auto; }
     }
     .v3-reviews-hook-title {
       font-family: var(--serif); font-size: clamp(24px, 2.4vw, 34px);
@@ -3222,6 +3221,10 @@
             <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v3-reviews-inner">
               <div class="v3-reviews-topline">
+                <div class="v3-reviews-hook">
+                  <h2 class="v3-reviews-hook-title">The same dishes keep coming up</h2>
+                  <p class="v3-reviews-hook-sub">Tap any one to read the reviews</p>
+                </div>
                 <div class="v3-reviews-badge">
                   <div class="v3-reviews-badge-rating">
                     <div class="v3-reviews-badge-num">4.6</div>
@@ -3233,10 +3236,6 @@
                   <div class="v3-reviews-badge-cta">
                     <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener">Read every review →</a>
                   </div>
-                </div>
-                <div class="v3-reviews-hook">
-                  <h2 class="v3-reviews-hook-title">The same dishes keep coming up</h2>
-                  <p class="v3-reviews-hook-sub">Tap any one to read the reviews</p>
                 </div>
               </div>
 
