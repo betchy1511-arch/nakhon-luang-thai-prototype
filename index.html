@@ -1790,8 +1790,9 @@
     .v3-category-card > * { position: relative; z-index: 1; }
     .v3-category-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(79,45,29,0.28); }
     .v3-category-name { font-family: var(--serif); font-size: 18px; line-height: 1.15; font-weight: 600; letter-spacing: -0.02em; text-shadow: 0 2px 8px rgba(0,0,0,0.7); color: var(--cream-light); }
-    /* Only 6 categories have a real photo. The rest get a warm wash plus a large
-       watermark icon so the row still reads as one set rather than half-finished. */
+    /* 14 of the 15 categories now carry a real photo of the restaurant's own food.
+       Hot Beverage is the only one the client has no photograph of, so it keeps the
+       warm wash plus a large watermark icon until they supply one. */
     .v3-category-card.is-icon { background-image: linear-gradient(145deg, #6B3A22 0%, #4F2D1D 60%, #3A2015 100%); }
     .v3-cat-icon {
       position: absolute; top: 50%; left: 50%;
@@ -3032,8 +3033,7 @@
                 <div class="v3-category-count">8 dishes</div>
                 <div class="v3-category-name">House Specials</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-GCSWTFR23RFHY" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.wok}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-GCSWTFR23RFHY" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-streetfood.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">7 dishes</div>
                 <div class="v3-category-name">Street Food</div>
@@ -3043,14 +3043,12 @@
                 <div class="v3-category-count">14 items</div>
                 <div class="v3-category-name">Appetizers</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-PNK773475JYFJ" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.leaf}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-PNK773475JYFJ" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-salad.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">6 dishes</div>
                 <div class="v3-category-name">Salad</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-MQS2Q0X44QHXP" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.bowl}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-MQS2Q0X44QHXP" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-soup.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">5 dishes</div>
                 <div class="v3-category-name">Soup</div>
@@ -3070,32 +3068,27 @@
                 <div class="v3-category-count">10 dishes</div>
                 <div class="v3-category-name">Entree</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-KS1B4AZPW5QDG" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.rice}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-KS1B4AZPW5QDG" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-friedrice.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">3 dishes</div>
                 <div class="v3-category-name">Fried Rice</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-W25Z03J513ZPJ" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.cup}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-W25Z03J513ZPJ" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-dessert.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">4 items</div>
                 <div class="v3-category-name">Dessert</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-2XJ0VRS462KPP" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.noodle}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-2XJ0VRS462KPP" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-kids.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">3 items</div>
                 <div class="v3-category-name">Kid's Menu</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-7MVYPR339500W" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.rice}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-7MVYPR339500W" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-sides.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">19 items</div>
                 <div class="v3-category-name">Sides</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-1N5NA9AR2FBBP" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.cup}</div>
+              <a href="https://ezoo.app/nakhon-luang#cat-1N5NA9AR2FBBP" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-coldbeverage.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">17 drinks</div>
                 <div class="v3-category-name">Cold Beverage</div>
