@@ -1790,9 +1790,10 @@
     .v3-category-card > * { position: relative; z-index: 1; }
     .v3-category-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(79,45,29,0.28); }
     .v3-category-name { font-family: var(--serif); font-size: 18px; line-height: 1.15; font-weight: 600; letter-spacing: -0.02em; text-shadow: 0 2px 8px rgba(0,0,0,0.7); color: var(--cream-light); }
-    /* 14 of the 15 categories now carry a real photo of the restaurant's own food.
-       Hot Beverage is the only one the client has no photograph of, so it keeps the
-       warm wash plus a large watermark icon until they supply one. */
+    /* All 15 category tiles carry a photo. 14 are the restaurant's own food, pulled
+       from their Clover storefront; Hot Beverage is stock jasmine tea standing in
+       until the client supplies one. No tile uses .is-icon any more, but the rule and
+       the icons object are kept so a tile can fall back to the watermark treatment. */
     .v3-category-card.is-icon { background-image: linear-gradient(145deg, #6B3A22 0%, #4F2D1D 60%, #3A2015 100%); }
     .v3-cat-icon {
       position: absolute; top: 50%; left: 50%;
@@ -3093,8 +3094,11 @@
                 <div class="v3-category-count">17 drinks</div>
                 <div class="v3-category-name">Cold Beverage</div>
               </a>
-              <a href="https://ezoo.app/nakhon-luang#cat-KWNM0YTEX68YW" target="_blank" rel="noopener" class="v3-category-card is-icon">
-                <div class="v3-cat-icon">${icons.cup}</div>
+              <!-- PLACEHOLDER PHOTO: the only tile not showing Nakhon Luang's own food.
+                   Stock jasmine tea (Pexels licence, Julia Filirovska, free commercial
+                   use, no attribution required). Swap for the client's own photo before
+                   this goes to WP Engine. -->
+              <a href="https://ezoo.app/nakhon-luang#cat-KWNM0YTEX68YW" target="_blank" rel="noopener" class="v3-category-card" style="background-image: url('assets/cat-hotbeverage.jpg');">
                 <div class="v3-category-arrow">→</div>
                 <div class="v3-category-count">3 drinks</div>
                 <div class="v3-category-name">Hot Beverage</div>
