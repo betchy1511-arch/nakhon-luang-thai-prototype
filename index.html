@@ -988,11 +988,37 @@
     }
 
     /* ============ V3 compact rating badge + snippet grid (order-first differentiation) ============ */
+    /* Badge is inline-flex, so its old `margin: 0 auto` never centred it and left a
+       dead column to its right. The topline row pairs it with the section headline so
+       the width is filled rather than collapsed. */
+    .v3-reviews-topline {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+      margin: 0 0 24px;
+    }
+    .v3-reviews-hook { flex: 1 1 320px; min-width: 0; text-align: right; }
+    /* Once the row wraps, the headline sits above the badge and reads left like
+       every other stacked heading on the page. */
+    @media (max-width: 900px) {
+      .v3-reviews-topline { flex-direction: column-reverse; align-items: flex-start; gap: 20px; }
+      .v3-reviews-hook { text-align: left; flex: 0 0 auto; }
+    }
+    .v3-reviews-hook-title {
+      font-family: var(--serif); font-size: clamp(24px, 2.4vw, 34px);
+      font-weight: 500; letter-spacing: -0.02em; line-height: 1.1;
+      color: var(--brown); margin: 0;
+    }
+    .v3-reviews-hook-sub {
+      margin: 8px 0 0;
+      font-family: var(--eyebrow); font-weight: 600;
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+    }
     .v3-reviews-badge {
       display: inline-flex; align-items: center; justify-content: flex-start;
       gap: 28px; flex-wrap: wrap;
       background: #fff; border: 1px solid var(--line); border-radius: 14px;
-      padding: 20px 28px; margin: 0 auto 24px;
+      padding: 20px 28px; margin: 0;
       width: fit-content; max-width: 100%;
       box-shadow: var(--shadow-sm);
     }
@@ -3152,7 +3178,9 @@
                 </div>
               </div>
               <div class="v3-dish-card">
-                <div class="v3-dish-visual" style="background: radial-gradient(circle at 35% 30%, rgba(255,180,120,0.4), rgba(140,50,30,0.9) 50%, rgba(60,20,10,1) 100%); color: #F5EEDC;">${icons.rice}</div>
+                <div class="v3-dish-visual">
+                  <img src="assets/nl-dish-massaman.jpg" alt="Massaman curry with slow-braised beef, potato and onion in a dark bowl" loading="lazy" width="400" height="300">
+                </div>
                 <div class="v3-dish-body">
                   <div class="v3-dish-name">Massaman Beef</div>
                   <div class="v3-dish-desc">Southern Thai curry, slow-braised beef, potato, peanut</div>
@@ -3193,16 +3221,22 @@
           <section class="v3-reviews" id="reviews">
             <div class="bg-photo-layer" style="background-image: url('assets/nl9-evening-board.jpg');"></div>
             <div class="v3-reviews-inner">
-              <div class="v3-reviews-badge">
-                <div class="v3-reviews-badge-rating">
-                  <div class="v3-reviews-badge-num">4.6</div>
-                  <div class="v3-reviews-badge-stack">
-                    <span class="stars">★★★★★</span>
-                    <span class="v3-reviews-badge-count"><span class="g-mark g-mark--sm" aria-hidden="true"></span>66 Google reviews</span>
+              <div class="v3-reviews-topline">
+                <div class="v3-reviews-badge">
+                  <div class="v3-reviews-badge-rating">
+                    <div class="v3-reviews-badge-num">4.6</div>
+                    <div class="v3-reviews-badge-stack">
+                      <span class="stars">★★★★★</span>
+                      <span class="v3-reviews-badge-count"><span class="g-mark g-mark--sm" aria-hidden="true"></span>66 Google reviews</span>
+                    </div>
+                  </div>
+                  <div class="v3-reviews-badge-cta">
+                    <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener">Read every review →</a>
                   </div>
                 </div>
-                <div class="v3-reviews-badge-cta">
-                  <a href="https://maps.app.goo.gl/vawQuZMGxt4GW5QV9" target="_blank" rel="noopener">Read every review →</a>
+                <div class="v3-reviews-hook">
+                  <h2 class="v3-reviews-hook-title">The same dishes keep coming up</h2>
+                  <p class="v3-reviews-hook-sub">Tap any one to read the reviews</p>
                 </div>
               </div>
 
