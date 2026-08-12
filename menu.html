@@ -589,6 +589,34 @@
     }
     .v2-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-out); }
     .v2-card:hover .v2-card-img img { transform: scale(1.04); }
+    .v2-card-img-fallback {
+      background-size: cover;
+      background-position: center;
+      background-color: var(--brown-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: filter 500ms var(--ease-out);
+    }
+    .v2-card-img-fallback::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(234,188,83,0.10), transparent 60%),
+        linear-gradient(135deg, rgba(61,31,6,0.62) 0%, rgba(79,45,29,0.42) 60%, rgba(26,22,20,0.55) 100%);
+      pointer-events: none;
+    }
+    .v2-card:hover .v2-card-img-fallback { filter: brightness(1.08); }
+    .v2-card-fallback-mark {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 64px;
+      color: rgba(253, 248, 238, 0.94);
+      letter-spacing: -0.02em;
+      z-index: 1;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.35);
+      line-height: 1;
+    }
     .v2-card-nopic {
       aspect-ratio: 4/3;
       display: flex;
@@ -1248,12 +1276,12 @@
               ${items.map(it => `
                 <a href="${catAnchor(c.id)}" target="_blank" rel="noopener" class="v2-card" aria-label="Order ${esc(cleanName(it.name))}">
                   ${it.photo_live ? `
-                    <div class="v2-card-img">
+                    <div class="v2-card-img" data-photo="real">
                       <img src="${esc(it.imageUrl)}" alt="${esc(cleanName(it.name))}" loading="lazy">
                     </div>
                   ` : `
-                    <div class="v2-card-nopic">
-                      <div class="v2-card-nopic-mark">${esc(cleanName(it.name).charAt(0))}</div>
+                    <div class="v2-card-img v2-card-img-fallback" data-photo="category" style="background-image:url('${CAT_PHOTO[c.id]}');" role="img" aria-label="${esc(c.name)} category photo — no plated shot of ${esc(cleanName(it.name))} on file">
+                      <div class="v2-card-fallback-mark">${esc(cleanName(it.name).charAt(0))}</div>
                     </div>
                   `}
                   <div class="v2-card-body">
@@ -1494,7 +1522,7 @@
         const visibleGrid = document.querySelector('.v2-catgrid:not([hidden])');
         if (!visibleGrid) return;
         visibleGrid.querySelectorAll('.v2-card').forEach(card => {
-          const hasPhoto = !!card.querySelector('.v2-card-img');
+          const hasPhoto = !!card.querySelector('.v2-card-img[data-photo="real"]');
           const priceText = card.querySelector('.v2-card-price')?.textContent || '';
           const priceNum = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 999;
           let show = true;
