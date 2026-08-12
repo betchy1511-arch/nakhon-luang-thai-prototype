@@ -147,12 +147,21 @@
     }
     .v1-hero-inner { position: relative; max-width: 780px; }
     .v1-hero-eyebrow {
+      display: inline-block;
       font-family: var(--eyebrow);
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 700;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold-hover);
+      color: var(--cream-light);
+      background: rgba(61,31,6,0.78);
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1.5px solid var(--gold);
       margin-bottom: 22px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
     .v1-hero-title {
       font-family: var(--serif);
@@ -218,16 +227,23 @@
     .v1-chiprail-scroll::-webkit-scrollbar { display: none; }
     .v1-chip {
       flex: 0 0 auto;
-      padding: 7px 15px;
+      padding: 8px 16px;
       border-radius: 999px;
-      background: transparent;
-      color: var(--ink-mute);
+      background: var(--cream-light);
+      color: var(--brown-deep);
       font-size: 13px;
-      border: 1px solid rgba(79,45,29,0.14);
+      font-weight: 600;
+      border: 2px solid var(--brown);
       transition: all 150ms ease-out;
       white-space: nowrap;
+      text-decoration: none;
     }
-    .v1-chip:hover, .v1-chip.is-active { color: var(--brown-deep); background: var(--cream-deep); border-color: var(--brown); }
+    .v1-chip:hover, .v1-chip.is-active {
+      color: var(--cream-light);
+      background: var(--brown-deep);
+      border-color: var(--brown-deep);
+      box-shadow: 0 4px 12px rgba(61,31,6,0.24);
+    }
 
     /* Category section */
     .v1-cat {
@@ -551,9 +567,15 @@
     .v2-catintro .count {
       font-family: var(--eyebrow);
       font-size: 12px;
-      letter-spacing: 0.20em;
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--ink-mute);
+      color: var(--cream-light);
+      background: var(--brown-deep);
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--gold);
+      white-space: nowrap;
     }
 
     .v2-grid {
@@ -1521,20 +1543,8 @@
 
       const sections = cats.map(c => {
         const items = MENU_DATA.items_by_category[c.id];
-        // Sprinkle one inline photo mid-category if any real photos exist
-        const firstPhoto = items.find(i => i.photo_live);
-        const insertAt = Math.min(Math.floor(items.length / 2), 4);
 
         const rows = items.map((it, idx) => {
-          const inline = (firstPhoto && it === firstPhoto && items.length >= 4) ? `
-            <div class="v3-inline-photo">
-              <img src="${esc(it.imageUrl)}" alt="${esc(cleanName(it.name))}" loading="lazy">
-              <div class="v3-inline-photo-body">
-                <strong>${esc(cleanName(it.name))} · ${price(it.price_cents)}</strong>
-                ${it.description ? esc(it.description) : "One of the plates the kitchen photographs and posts."}
-              </div>
-            </div>
-          ` : '';
           const imgCell = it.photo_live ? `
             <div class="v3-item-img" data-photo="real">
               <img src="${esc(it.imageUrl)}" alt="${esc(cleanName(it.name))}" loading="lazy">
@@ -1542,7 +1552,7 @@
           ` : `
             <div class="v3-item-img" data-photo="category" style="background-image:url('${CAT_PHOTO[c.id]}');background-position:${FALLBACK_POSITIONS[idx % FALLBACK_POSITIONS.length]};" role="img" aria-label="${esc(c.name)} category photo — no plated shot of ${esc(cleanName(it.name))} on file"></div>
           `;
-          const row = `
+          return `
             <div class="v3-item">
               ${imgCell}
               <div class="v3-item-name-block">
@@ -1552,7 +1562,6 @@
               <div class="v3-item-price">${price(it.price_cents)}</div>
             </div>
           `;
-          return row + inline;
         }).join('');
 
         return `
