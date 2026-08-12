@@ -851,13 +851,25 @@
     }
     .v3-item {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: baseline;
+      grid-template-columns: 78px 1fr auto;
+      gap: 18px;
+      align-items: center;
       padding: 14px 0;
       border-bottom: 1px dotted rgba(79,45,29,0.16);
     }
-    .v3-item-name-block { min-width: 0; }
+    .v3-item-img {
+      width: 78px;
+      height: 78px;
+      border-radius: 6px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--brown-deep);
+      overflow: hidden;
+      align-self: center;
+      box-shadow: 0 1px 4px rgba(61,31,6,0.10);
+    }
+    .v3-item-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .v3-item-name-block { min-width: 0; align-self: center; }
     .v3-item-name {
       font-family: var(--serif);
       font-weight: 500;
@@ -906,6 +918,93 @@
       font-size: 14.5px;
       line-height: 1.6;
     }
+    /* Shared Location + Hours block — every variant */
+    .mn-location {
+      padding: 80px 40px 96px;
+      background: var(--cream-light);
+      border-top: 1px solid rgba(79,45,29,0.10);
+    }
+    .mn-location-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: stretch;
+    }
+    .mn-location-map {
+      aspect-ratio: 4/3;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(61,31,6,0.14);
+      background: var(--cream-deep);
+    }
+    .mn-location-map iframe { border: 0; width: 100%; height: 100%; display: block; }
+    .mn-location-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px 0;
+    }
+    .mn-location-eyebrow {
+      font-size: 11.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .mn-location-name {
+      font-family: var(--serif);
+      font-size: 34px;
+      font-weight: 500;
+      color: var(--brown-deep);
+      margin: 0 0 22px;
+      line-height: 1.14;
+    }
+    .mn-location-address {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.65;
+      margin-bottom: 26px;
+    }
+    .mn-location-hours { margin-bottom: 26px; }
+    .mn-location-hours-label {
+      font-size: 11.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .mn-location-hours > div { font-size: 15px; color: var(--ink-soft); line-height: 1.6; }
+    .mn-location-phone { margin-bottom: 34px; }
+    .mn-location-phone a {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--brown-deep);
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 3px;
+    }
+    .mn-location-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brown-deep);
+      color: var(--cream-light);
+      padding: 15px 34px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background 200ms, transform 200ms;
+      align-self: flex-start;
+      box-shadow: 0 4px 14px rgba(61,31,6,0.20);
+    }
+    .mn-location-cta:hover { background: var(--brown); transform: translateY(-1px); }
+
     .v3-inline-photo-body strong {
       font-family: var(--serif);
       font-style: normal;
@@ -951,6 +1050,12 @@
       .v3-toc-cta { margin-top: 10px; }
       .v3-cat-items { grid-template-columns: 1fr; column-gap: 0; }
       .v3-inline-photo { grid-template-columns: 1fr; }
+      .v3-item { grid-template-columns: 60px 1fr auto; gap: 12px; }
+      .v3-item-img { width: 60px; height: 60px; }
+      .mn-location { padding: 48px 20px; }
+      .mn-location-inner { grid-template-columns: 1fr; gap: 28px; }
+      .mn-location-name { font-size: 26px; }
+      .mn-location-phone a { font-size: 20px; }
     }
 
     /* ==========================================================
@@ -1143,6 +1248,44 @@
     }
 
     // ==========================================================
+    //  Shared Location + Hours + Map + Phone block (called at the
+    //  bottom of every variant so the visitor never has to hunt
+    //  for the address, the hours, the phone, or the ordering CTA)
+    // ==========================================================
+    function locationBlockHTML() {
+      return `
+        <section class="mn-location" aria-label="Visit Nakhon Luang Thai Kitchen">
+          <div class="mn-location-inner">
+            <div class="mn-location-map">
+              <iframe
+                src="https://maps.google.com/maps?q=805+Village+Center+Drive,+Colorado+Springs,+CO+80919&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                title="Nakhon Luang Thai Kitchen on Google Maps"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="mn-location-info">
+              <div class="mn-location-eyebrow">Visit Us · Rockrimmon, Colorado Springs</div>
+              <h2 class="mn-location-name">Nakhon Luang Thai Kitchen</h2>
+              <div class="mn-location-address">
+                805 Village Center Drive<br>
+                Colorado Springs, CO 80919
+              </div>
+              <div class="mn-location-hours">
+                <div class="mn-location-hours-label">Hours (daily, split service)</div>
+                <div>Lunch &nbsp;·&nbsp; 11:00am – 3:30pm</div>
+                <div>Dinner &nbsp;·&nbsp; 4:30pm – 8:30pm</div>
+              </div>
+              <div class="mn-location-phone">
+                <a href="tel:+17195315175">(719) 531-5175</a>
+              </div>
+              <a href="${ORDER_URL}" target="_blank" rel="noopener" class="mn-location-cta">Order Online <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </section>
+      `;
+    }
+
+    // ==========================================================
     //  Variant 1 · EDITORIAL
     // ==========================================================
     function variantEditorial() {
@@ -1232,11 +1375,7 @@
             <div class="v1-chiprail-scroll">${chips}</div>
           </div>
           ${sections}
-          <section class="v1-foot">
-            <h3>Ready to order</h3>
-            <p>Pickup only, cooked to order in about the time it takes to drive here</p>
-            <a href="${ORDER_URL}" target="_blank" rel="noopener" class="btn-primary" style="background:var(--brown);color:var(--cream-light);padding:15px 32px;border-radius:999px;font-weight:600;display:inline-block;">Order Online</a>
-          </section>
+          ${locationBlockHTML()}
         </div>
       `;
     }
@@ -1275,7 +1414,6 @@
                     <div class="v2-card-desc">${it.description ? esc(it.description) : '&nbsp;'}</div>
                     <div class="v2-card-footer">
                       <span class="v2-card-price">${price(it.price_cents)}</span>
-                      <span class="v2-card-add">Order <span>→</span></span>
                     </div>
                   </div>
                 </a>
@@ -1310,6 +1448,7 @@
             <button class="v2-filter" data-filter="chefs">Chef's picks</button>
           </div>
           ${grids}
+          ${locationBlockHTML()}
         </div>
       `;
     }
@@ -1340,8 +1479,16 @@
               </div>
             </div>
           ` : '';
+          const imgCell = it.photo_live ? `
+            <div class="v3-item-img" data-photo="real">
+              <img src="${esc(it.imageUrl)}" alt="${esc(cleanName(it.name))}" loading="lazy">
+            </div>
+          ` : `
+            <div class="v3-item-img" data-photo="category" style="background-image:url('${CAT_PHOTO[c.id]}');background-position:${FALLBACK_POSITIONS[idx % FALLBACK_POSITIONS.length]};" role="img" aria-label="${esc(c.name)} category photo — no plated shot of ${esc(cleanName(it.name))} on file"></div>
+          `;
           const row = `
             <div class="v3-item">
+              ${imgCell}
               <div class="v3-item-name-block">
                 <div class="v3-item-name">${esc(cleanName(it.name))}</div>
                 ${it.description ? `<div class="v3-item-desc">${esc(it.description)}</div>` : ''}
@@ -1388,6 +1535,7 @@
             </aside>
             <div class="v3-main">${sections}</div>
           </div>
+          ${locationBlockHTML()}
         </div>
       `;
     }
