@@ -591,32 +591,10 @@
     .v2-card:hover .v2-card-img img { transform: scale(1.04); }
     .v2-card-img-fallback {
       background-size: cover;
-      background-position: center;
       background-color: var(--brown-deep);
-      display: flex;
-      align-items: center;
-      justify-content: center;
       transition: filter 500ms var(--ease-out);
     }
-    .v2-card-img-fallback::before {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(circle at 30% 25%, rgba(234,188,83,0.10), transparent 60%),
-        linear-gradient(135deg, rgba(61,31,6,0.62) 0%, rgba(79,45,29,0.42) 60%, rgba(26,22,20,0.55) 100%);
-      pointer-events: none;
-    }
-    .v2-card:hover .v2-card-img-fallback { filter: brightness(1.08); }
-    .v2-card-fallback-mark {
-      font-family: var(--serif);
-      font-weight: 500;
-      font-size: 64px;
-      color: rgba(253, 248, 238, 0.94);
-      letter-spacing: -0.02em;
-      z-index: 1;
-      text-shadow: 0 2px 14px rgba(0,0,0,0.35);
-      line-height: 1;
-    }
+    .v2-card:hover .v2-card-img-fallback { filter: brightness(1.06); }
     .v2-card-nopic {
       aspect-ratio: 4/3;
       display: flex;
@@ -1093,6 +1071,16 @@
     })[c]);
     const cleanName = n => (n||'').replace(/\s+/g,' ').trim();
 
+    // Per-item crop points for category-fallback cards — cycled so N items
+    // sharing one category source read as N different close-ups instead of a
+    // print-error repeat. Uses left/right/top/bottom bias plus a couple of
+    // center variants for coverage of tighter category tiles.
+    const FALLBACK_POSITIONS = [
+      '30% 30%', '68% 28%', '50% 55%', '25% 72%',
+      '75% 68%', '45% 42%', '82% 45%', '18% 45%',
+      '58% 22%', '38% 78%'
+    ];
+
     // Category → hero photo (already in prototype/assets/)
     const CAT_PHOTO = {
       "TX4KM3BG39FQP": "assets/nl10b-ritual.jpg",         // Chef's Specials
@@ -1273,16 +1261,14 @@
               <span class="count">${items.length} dish${items.length===1?'':'es'} · from ${price(Math.min(...items.filter(x=>x.price_cents!=null).map(x=>x.price_cents)))}</span>
             </div>
             <div class="v2-grid">
-              ${items.map(it => `
+              ${items.map((it, idx) => `
                 <a href="${catAnchor(c.id)}" target="_blank" rel="noopener" class="v2-card" aria-label="Order ${esc(cleanName(it.name))}">
                   ${it.photo_live ? `
                     <div class="v2-card-img" data-photo="real">
                       <img src="${esc(it.imageUrl)}" alt="${esc(cleanName(it.name))}" loading="lazy">
                     </div>
                   ` : `
-                    <div class="v2-card-img v2-card-img-fallback" data-photo="category" style="background-image:url('${CAT_PHOTO[c.id]}');" role="img" aria-label="${esc(c.name)} category photo — no plated shot of ${esc(cleanName(it.name))} on file">
-                      <div class="v2-card-fallback-mark">${esc(cleanName(it.name).charAt(0))}</div>
-                    </div>
+                    <div class="v2-card-img v2-card-img-fallback" data-photo="category" style="background-image:url('${CAT_PHOTO[c.id]}');background-position:${FALLBACK_POSITIONS[idx % FALLBACK_POSITIONS.length]};" role="img" aria-label="${esc(c.name)} category photo — no plated shot of ${esc(cleanName(it.name))} on file"></div>
                   `}
                   <div class="v2-card-body">
                     <div class="v2-card-name">${esc(cleanName(it.name))}</div>
