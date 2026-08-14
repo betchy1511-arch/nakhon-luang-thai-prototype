@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nakhon Luang Thai Kitchen · Homepage Prototype</title>
-  <meta name="description" content="Homepage redesign prototype for Nakhon Luang Thai Kitchen, Colorado Springs. Three divergent variants behind a picker. Client: Magister Digital pilot.">
+  <meta name="description" content="Homepage redesign prototype for Nakhon Luang Thai Kitchen, Colorado Springs. Four variants behind a picker. Client: Magister Digital pilot.">
   <meta name="robots" content="noindex,nofollow">
   <!-- Iterating fast — force browsers to always revalidate the HTML, no stale caches -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -2408,6 +2408,299 @@
         animation: none !important;
       }
     }
+
+    /* ============ V4 · CURRENT LOOK — Brian's brief 2026-08-15 ============ */
+    /* Keep the live-site aesthetic (owner is particular). Add TWO persistent CTAs: */
+    /*   1) Floating Order Online button, desktop right side                          */
+    /*   2) Sticky Order Online bar at bottom on mobile (reuses .mobile-order-bar)   */
+    /* No divergent redesign. Speed over rebuild.                                    */
+    .v4 { background: var(--cream); color: var(--ink); font-family: var(--sans); min-height: 100vh; }
+
+    .v4-nav {
+      position: sticky; top: 0; z-index: 40;
+      background: var(--cream);
+      padding: 14px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 0 rgba(79,45,29,0.04);
+    }
+    .v4-brand img { height: 48px; width: auto; display: block; }
+    .v4-nav-links { display: flex; align-items: center; gap: 30px; }
+    .v4-nav-links a {
+      font-family: var(--eyebrow);
+      font-size: 13px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--brown);
+      transition: color 150ms ease-out;
+    }
+    .v4-nav-links a:hover { color: var(--gold-hover); }
+    .v4-nav-order {
+      padding: 12px 22px;
+      background: var(--brown);
+      color: var(--cream-light) !important;
+      border-radius: 999px;
+      letter-spacing: 0.08em;
+    }
+    .v4-nav-order:hover { background: var(--brown-hover); color: var(--gold) !important; }
+
+    /* Hero */
+    .v4-hero {
+      position: relative;
+      min-height: 78vh;
+      display: grid; place-items: center;
+      padding: 100px 24px;
+      color: var(--cream-light);
+      overflow: hidden;
+      text-align: center;
+    }
+    .v4-hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .v4-hero-bg video, .v4-hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+    .v4-hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(30,20,10,0.35) 0%, rgba(30,20,10,0.62) 100%);
+    }
+    .v4-hero-inner { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+    .v4-eyebrow {
+      display: inline-block;
+      font-family: var(--eyebrow);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .v4-eyebrow-dark { color: var(--brown); }
+    .v4-eyebrow-light { color: var(--gold); }
+    .v4-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(38px, 5.4vw, 62px);
+      font-weight: 500; line-height: 1.08;
+      margin: 20px 0 16px;
+      color: var(--cream-light);
+    }
+    .v4-hero-wordmark-wrap {
+      margin: 24px auto 20px;
+      max-width: 640px;
+      line-height: 0;
+    }
+    .v4-hero-wordmark {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 6px 24px rgba(0,0,0,0.35));
+    }
+    .v4-hero-sub {
+      font-size: 18px; line-height: 1.6;
+      color: var(--cream-light); opacity: 0.94;
+      margin: 0 auto 28px;
+      max-width: 560px;
+    }
+    .v4-hero-ctas { display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+    /* Philosophy */
+    .v4-philosophy {
+      padding: 110px 40px;
+      max-width: 1240px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 70px; align-items: center;
+    }
+    .v4-philosophy-copy h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 3.4vw, 44px);
+      font-weight: 500; color: var(--brown);
+      line-height: 1.14; margin: 14px 0 22px;
+    }
+    .v4-philosophy-copy p { color: var(--ink-mute); font-size: 16px; line-height: 1.8; margin-bottom: 24px; }
+    .v4-link {
+      display: inline-block;
+      font-family: var(--eyebrow);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--brown);
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--gold);
+      transition: color 150ms ease-out, border-color 150ms ease-out;
+    }
+    .v4-link:hover { color: var(--gold-hover); border-color: var(--brown); }
+    .v4-philosophy-photo img {
+      width: 100%; height: auto;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* Featured dishes */
+    .v4-dishes { padding: 110px 40px; background: var(--cream-light); }
+    .v4-section-head { max-width: 1200px; margin: 0 auto 44px; text-align: center; }
+    .v4-section-head h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 3.4vw, 44px);
+      font-weight: 500; color: var(--brown);
+      margin: 14px 0 16px;
+    }
+    .v4-section-head .v4-link { margin-top: 6px; }
+    .v4-dishes-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .v4-dish {
+      background: var(--cream);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+      display: block;
+    }
+    .v4-dish:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .v4-dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .v4-dish-body { padding: 22px 24px 24px; }
+    .v4-dish h3 {
+      font-family: var(--serif);
+      font-size: 22px; font-weight: 500;
+      color: var(--brown); margin-bottom: 6px;
+    }
+    .v4-dish p { color: var(--ink-mute); font-size: 14px; line-height: 1.5; }
+
+    /* Experience / Reservations */
+    .v4-experience {
+      position: relative;
+      min-height: 460px;
+      display: grid; place-items: center;
+      padding: 120px 40px;
+      color: var(--cream-light);
+      overflow: hidden;
+      text-align: center;
+    }
+    .v4-experience::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(61,31,6,0.72), rgba(61,31,6,0.85)),
+        url('assets/nl9-evening-board.jpg') center/cover;
+      z-index: 0;
+    }
+    .v4-experience-inner { position: relative; z-index: 1; max-width: 620px; }
+    .v4-experience h2 {
+      font-family: var(--serif);
+      font-size: clamp(32px, 3.6vw, 46px);
+      font-weight: 500; color: var(--cream-light);
+      margin: 18px 0 18px;
+    }
+    .v4-experience p { font-size: 16px; line-height: 1.8; margin-bottom: 26px; opacity: 0.92; }
+
+    /* Visit */
+    .v4-visit { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; }
+    .v4-visit-info {
+      padding: 96px 60px;
+      background: var(--cream);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .v4-visit-info h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 3.2vw, 40px);
+      font-weight: 500; color: var(--brown);
+      margin: 14px 0 30px;
+    }
+    .v4-visit-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+    .v4-visit-label {
+      font-family: var(--eyebrow);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-hover);
+      margin-bottom: 10px;
+    }
+    .v4-visit-block p { color: var(--ink-soft); font-size: 15px; line-height: 1.7; }
+    .v4-visit-block a {
+      color: var(--brown);
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 3px;
+    }
+    .v4-visit-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+    .v4-visit-map iframe { width: 100%; height: 100%; min-height: 480px; border: 0; display: block; }
+
+    /* Footer */
+    .v4-footer {
+      padding: 60px 40px 46px;
+      background: var(--brown-deep);
+      color: var(--cream-deep);
+      text-align: center;
+      font-size: 14px;
+    }
+    .v4-footer-brand {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .v4-footer a {
+      color: var(--cream-light);
+      text-decoration: underline;
+      text-decoration-color: rgba(234,188,83,0.5);
+      text-underline-offset: 3px;
+    }
+    .v4-footer a:hover { color: var(--gold); }
+
+    /* Brian ask 1 of 2 · Floating desktop Order CTA (right side, mid-viewport) */
+    .v4-floating-order {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 90;
+      display: none;                    /* enabled at >=900px below */
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 18px 14px;
+      min-width: 92px;
+      background: var(--brown);
+      color: var(--cream-light);
+      border-radius: 18px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.28),
+        0 0 0 3px var(--gold),
+        0 0 0 6px rgba(234,188,83,0.20);
+      font-family: var(--eyebrow);
+      font-size: 12.5px; font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 220ms cubic-bezier(0.23,1,0.32,1), background 220ms ease-out, box-shadow 220ms ease-out;
+    }
+    .v4-floating-order:hover {
+      transform: translateY(-50%) translateX(-4px);
+      background: var(--brown-hover);
+      box-shadow:
+        0 14px 40px rgba(0,0,0,0.34),
+        0 0 0 3px var(--gold-hover),
+        0 0 0 8px rgba(234,188,83,0.28);
+      color: var(--gold);
+    }
+    .v4-floating-order-icon { font-size: 26px; line-height: 1; color: var(--gold); }
+    .v4-floating-order-text { display: block; }
+    @media (min-width: 900px) {
+      .v4-floating-order { display: inline-flex; }
+    }
+
+    /* V4 responsive */
+    @media (max-width: 900px) {
+      .v4-nav { padding: 12px 20px; }
+      .v4-nav-links { gap: 12px; }
+      .v4-nav-links a:not(.v4-nav-order) { display: none; }
+      .v4-nav-order { padding: 10px 18px; font-size: 12px; }
+      .v4-brand img { height: 40px; }
+      .v4-hero { padding: 80px 20px; min-height: 62vh; }
+      .v4-philosophy { padding: 70px 24px; grid-template-columns: 1fr; gap: 44px; }
+      .v4-dishes { padding: 70px 20px; }
+      .v4-dishes-grid { grid-template-columns: 1fr; }
+      .v4-experience { padding: 80px 24px; }
+      .v4-visit { grid-template-columns: 1fr; }
+      .v4-visit-info { padding: 60px 24px; }
+      .v4-visit-row { grid-template-columns: 1fr; gap: 26px; }
+      .v4-visit-map iframe { min-height: 340px; }
+      .v4-footer { padding: 44px 24px 36px; }
+    }
   </style>
 </head>
 <body>
@@ -2418,6 +2711,7 @@
     <button class="proto-picker-item" data-active aria-current="true">Split Hero</button>
     <button class="proto-picker-item">Editorial</button>
     <button class="proto-picker-item">Kitchen</button>
+    <button class="proto-picker-item">Current</button>
     <span class="proto-picker-divider" aria-hidden="true"></span>
     <div class="proto-picker-motion-group" role="radiogroup" aria-label="Motion level">
       <span class="proto-picker-motion-label">Motion</span>
@@ -3353,8 +3647,146 @@
       `;
     }
 
+    // ============ Variant 4 · CURRENT LOOK (Brian brief 2026-08-15) ============
+    // Keep the live-site aesthetic exactly — owner is aesthetics-particular.
+    // Only additions: floating Order button (desktop right), sticky Order bar (mobile bottom).
+    function variantCurrent() {
+      return `
+        <div class="v4">
+          <nav class="v4-nav">
+            <a href="/" class="v4-brand" aria-label="Nakhon Luang Thai Kitchen home">
+              <img src="assets/nltk-logo-site.png" alt="Nakhon Luang Thai Kitchen" width="180" height="52">
+            </a>
+            <div class="v4-nav-links">
+              <a href="/">Home</a>
+              <a href="/about">About</a>
+              <a href="/menu">Menu</a>
+              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener">Reservations</a>
+              <a href="/contact">Contact</a>
+              <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v4-nav-order">Order Online</a>
+            </div>
+          </nav>
+
+          <section class="v4-hero">
+            <div class="v4-hero-bg" aria-hidden="true">
+              <video autoplay muted loop playsinline poster="assets/nl10b-ritual.jpg">
+                <source src="assets/nl11-hero.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="v4-hero-inner">
+              <span class="v4-eyebrow">Authentic Thai Cuisine &nbsp;·&nbsp; Colorado Springs, CO</span>
+              <h1 class="v4-hero-wordmark-wrap">
+                <img src="assets/nltk-hero-wordmark-cream.png" alt="Nakhon Luang" class="v4-hero-wordmark" width="1320" height="219">
+              </h1>
+              <p class="v4-hero-sub">Regional Thai cuisine with bold, balanced flavors. Now open in Rockrimmon.</p>
+              <div class="v4-hero-ctas">
+                <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-ghost">Reserve a Table</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="v4-philosophy">
+            <div class="v4-philosophy-copy">
+              <span class="v4-eyebrow v4-eyebrow-dark">Our philosophy</span>
+              <h2>Bold flavors, refined craft</h2>
+              <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
+              <a href="/about" class="v4-link">Learn our story</a>
+            </div>
+            <div class="v4-philosophy-photo">
+              <img src="assets/nl4-philosophy.jpg" alt="Thai dishes plated for family-style dining at Nakhon Luang Thai Kitchen" width="600" height="700">
+            </div>
+          </section>
+
+          <section class="v4-dishes">
+            <div class="v4-section-head">
+              <span class="v4-eyebrow v4-eyebrow-dark">Menu Highlights</span>
+              <h2>Signature dishes worth the drive</h2>
+              <a href="/menu" class="v4-link">See the full menu</a>
+            </div>
+            <div class="v4-dishes-grid">
+              <a href="https://ezoo.app/nakhon-luang#cat-DWYTP5MFQERMW" target="_blank" rel="noopener" class="v4-dish">
+                <img src="assets/nl8-dish-khaosoi.jpg" alt="Khao Soi Gai, Northern Thai coconut curry with chicken, lime, and cilantro" width="400" height="300">
+                <div class="v4-dish-body">
+                  <h3>Khao Soi Gai</h3>
+                  <p>Northern Thai coconut curry, made to order</p>
+                </div>
+              </a>
+              <a href="https://ezoo.app/nakhon-luang#cat-16F5APM2VJFGG" target="_blank" rel="noopener" class="v4-dish">
+                <img src="assets/nl8b-dish-drunkennoodles.jpg" alt="Roasted Duck Drunken Noodles, wide rice noodles with basil and crispy duck" width="400" height="300">
+                <div class="v4-dish-body">
+                  <h3>Roasted Duck Drunken Noodles</h3>
+                  <p>House Specials, crispy duck and Thai basil</p>
+                </div>
+              </a>
+              <a href="https://ezoo.app/nakhon-luang#cat-16F5APM2VJFGG" target="_blank" rel="noopener" class="v4-dish">
+                <img src="assets/nl-dish-kabocha-red-curry.jpg" alt="Kabocha Red Curry, red curry with roasted kabocha squash" width="400" height="300">
+                <div class="v4-dish-body">
+                  <h3>Kabocha Red Curry</h3>
+                  <p>Roasted squash in aromatic red curry</p>
+                </div>
+              </a>
+            </div>
+          </section>
+
+          <section class="v4-experience">
+            <div class="v4-experience-inner">
+              <span class="v4-eyebrow v4-eyebrow-light">Gather &nbsp;·&nbsp; Sip &nbsp;·&nbsp; Savor</span>
+              <h2>Reserve your table tonight</h2>
+              <p>Whether it's a family dinner or a quiet evening for two, our dining room is ready. Reservations recommended for parties of four or more.</p>
+              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-ghost">Reserve a Table</a>
+            </div>
+          </section>
+
+          <section class="v4-visit">
+            <div class="v4-visit-info">
+              <span class="v4-eyebrow v4-eyebrow-dark">Visit Us</span>
+              <h2>Come find us, or order in</h2>
+              <div class="v4-visit-row">
+                <div class="v4-visit-block">
+                  <div class="v4-visit-label">Hours</div>
+                  <p>Lunch &nbsp;·&nbsp; 11am to 3:30pm daily<br>Dinner &nbsp;·&nbsp; 4:30pm to 8:30pm daily</p>
+                </div>
+                <div class="v4-visit-block">
+                  <div class="v4-visit-label">Where</div>
+                  <p>805 Village Center Dr<br>Colorado Springs, CO 80919<br><a href="tel:+17195315175">(719) 531-5175</a></p>
+                </div>
+              </div>
+              <div class="v4-visit-ctas">
+                <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-ghost">Reserve a Table</a>
+              </div>
+            </div>
+            <div class="v4-visit-map">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3512.249289429744!2d-104.8461671240619!3d38.92315017171853!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87134fef83adef99%3A0x8f772b9f750aa6fc!2sNakhon%20Luang%20Thai%20Kitchen!5e1!3m2!1sen!2sus!4v1786332280902!5m2!1sen!2sus" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Map to Nakhon Luang Thai Kitchen, 805 Village Center Drive, Colorado Springs"></iframe>
+            </div>
+          </section>
+
+          <footer class="v4-footer">
+            <div class="v4-footer-brand">Nakhon Luang Thai Kitchen</div>
+            <p>805 Village Center Dr &nbsp;·&nbsp; Colorado Springs, CO 80919 &nbsp;·&nbsp; <a href="tel:+17195315175">(719) 531-5175</a> &nbsp;·&nbsp; <a href="https://instagram.com/eatnltk">@eatnltk</a></p>
+          </footer>
+
+          <!-- Brian ask 1 of 2: floating desktop Order CTA -->
+          <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v4-floating-order" aria-label="Order Online (opens in new tab)">
+            <span class="v4-floating-order-icon" aria-hidden="true">↗</span>
+            <span class="v4-floating-order-text">Order<br>Online</span>
+          </a>
+
+          <!-- Brian ask 2 of 2: sticky mobile bottom bar (reuses shared .mobile-order-bar) -->
+          <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="mobile-order-bar" aria-label="Order Online">
+            <span class="mobile-order-bar-strap">
+              <span>Order Online</span>
+              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+            </span>
+            <span class="mobile-order-bar-icon">→</span>
+          </a>
+        </div>
+      `;
+    }
+
     // ============ Wiring (verbatim from PICKER.md reference) ============
-    const variants = [variantSplitHero, variantEditorial, variantKitchen];
+    const variants = [variantSplitHero, variantEditorial, variantKitchen, variantCurrent];
     const stage = document.getElementById('stage');
     const picker = document.querySelector('.proto-picker');
     const highlight = picker.querySelector('.proto-picker-highlight');
