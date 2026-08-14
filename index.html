@@ -2501,7 +2501,36 @@
       padding: 110px 40px;
       max-width: 1240px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 70px; align-items: center;
+      gap: 70px; align-items: start;
+    }
+    .v4-philosophy-copy { display: flex; flex-direction: column; }
+    .v4-philosophy-marks {
+      list-style: none;
+      margin: 8px 0 28px;
+      padding: 0;
+      border-top: 1px solid var(--line);
+    }
+    .v4-philosophy-marks li {
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 20px;
+      align-items: baseline;
+    }
+    .v4-mark-label {
+      font-family: var(--eyebrow);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-hover);
+    }
+    .v4-mark-value {
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--brown);
+      line-height: 1.4;
     }
     .v4-philosophy-copy h2 {
       font-family: var(--serif);
@@ -2521,10 +2550,19 @@
       transition: color 150ms ease-out, border-color 150ms ease-out;
     }
     .v4-link:hover { color: var(--gold-hover); border-color: var(--brown); }
-    .v4-philosophy-photo img {
-      width: 100%; height: auto;
+    .v4-philosophy-photo {
       border-radius: var(--radius);
+      overflow: hidden;
       box-shadow: var(--shadow);
+      height: 640px;
+    }
+    .v4-philosophy-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 0;
+      box-shadow: none;
     }
 
     /* Featured dishes */
@@ -2541,6 +2579,13 @@
       max-width: 1200px; margin: 0 auto;
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
     }
+    .v4-dishes-cta {
+      max-width: 1200px;
+      margin: 44px auto 0;
+      display: flex;
+      justify-content: center;
+    }
+    .v4-dishes-cta .btn { padding: 16px 40px; font-size: 16px; }
     .v4-dish {
       background: var(--cream);
       border-radius: var(--radius);
@@ -3691,6 +3736,24 @@
               <span class="v4-eyebrow v4-eyebrow-dark">Our philosophy</span>
               <h2>Bold flavors, refined craft</h2>
               <p>Nakhon Luang Thai Kitchen offers a modern, welcoming approach to traditional Thai cuisine. Rooted in the backgrounds of our founders and inspired by Bangkok and regional Thai influences, our kitchen is guided by care, balance, and respect for tradition. The result is a dining experience that feels thoughtful, cultural, and inviting, a place to enjoy Thai food made with purpose.</p>
+              <ul class="v4-philosophy-marks">
+                <li>
+                  <span class="v4-mark-label">Kitchen</span>
+                  <span class="v4-mark-value">Chef-owned, rooted in Bangkok</span>
+                </li>
+                <li>
+                  <span class="v4-mark-label">Made to order</span>
+                  <span class="v4-mark-value">Every plate leaves the pass in about 20 minutes</span>
+                </li>
+                <li>
+                  <span class="v4-mark-label">Where</span>
+                  <span class="v4-mark-value">Rockrimmon, 805 Village Center Dr</span>
+                </li>
+                <li>
+                  <span class="v4-mark-label">Hours</span>
+                  <span class="v4-mark-value">Lunch 11am to 3:30pm, dinner 4:30pm to 8:30pm, daily</span>
+                </li>
+              </ul>
               <a href="/about" class="v4-link">Learn our story</a>
             </div>
             <div class="v4-philosophy-photo">
@@ -3726,6 +3789,9 @@
                   <p>Roasted squash in aromatic red curry</p>
                 </div>
               </a>
+            </div>
+            <div class="v4-dishes-cta">
+              <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="btn btn-primary">Order Online</a>
             </div>
           </section>
 
