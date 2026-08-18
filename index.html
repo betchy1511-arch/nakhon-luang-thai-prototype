@@ -139,6 +139,10 @@
     .proto-picker-replay { padding: 0 10px; font-size: 14px; }
     .proto-picker[data-position="top"] { bottom: auto; top: 24px; }
 
+    /* Client-safe share mode (?clean=1) hides the prototype picker chrome so
+       the URL renders as a finished site for client review. Defaults to V4. */
+    body.clean-mode .proto-picker { display: none !important; }
+
     /* ============ Shared: mobile sticky order bar (all variants) ============ */
     .mobile-order-bar {
       display: none;
@@ -2671,6 +2675,7 @@
       margin-top: 36px;
     }
     .v4-dish {
+      position: relative;
       background: var(--cream);
       border-radius: var(--radius);
       overflow: hidden;
@@ -2679,7 +2684,33 @@
       display: block;
     }
     .v4-dish:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
-    .v4-dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .v4-dish img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
+    /* Rollover overlay on dish photos (Brian ask: clickable + rollover to ordering).
+       Covers only the 4:3 photo area, not the text body. Suppressed on touch. */
+    .v4-dish::before {
+      content: 'Order this \2192';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(79, 45, 29, 0.78);
+      color: var(--cream-light);
+      font-family: var(--eyebrow);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 220ms ease-out;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .v4-dish:hover::before { opacity: 1; }
+    @media (hover: none), (pointer: coarse) {
+      .v4-dish::before { display: none; }
+    }
     .v4-dish-body { padding: 22px 24px 24px; }
     .v4-dish h3 {
       font-family: var(--serif);
@@ -3185,7 +3216,7 @@
           <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="mobile-order-bar" aria-label="Order Online">
             <span class="mobile-order-bar-strap">
               <span>Order Online</span>
-              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+              <span class="mobile-order-bar-sub">Skip the line, ready in 20 min</span>
             </span>
             <span class="mobile-order-bar-icon">→</span>
           </a>
@@ -3430,7 +3461,7 @@
           <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="mobile-order-bar" aria-label="Order Online">
             <span class="mobile-order-bar-strap">
               <span>Order Online</span>
-              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+              <span class="mobile-order-bar-sub">Skip the line, ready in 20 min</span>
             </span>
             <span class="mobile-order-bar-icon">→</span>
           </a>
@@ -3770,7 +3801,7 @@
           <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="mobile-order-bar" aria-label="Order Online">
             <span class="mobile-order-bar-strap">
               <span>Order Online</span>
-              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+              <span class="mobile-order-bar-sub">Skip the line, ready in 20 min</span>
             </span>
             <span class="mobile-order-bar-icon">→</span>
           </a>
@@ -3989,7 +4020,7 @@
           <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="mobile-order-bar" aria-label="Order Online">
             <span class="mobile-order-bar-strap">
               <span>Order Online</span>
-              <span class="mobile-order-bar-sub">Skip the line · Ready in 20 min</span>
+              <span class="mobile-order-bar-sub">Skip the line, ready in 20 min</span>
             </span>
             <span class="mobile-order-bar-icon">→</span>
           </a>
@@ -4412,10 +4443,18 @@
     });
 
     // Initial state from URL — accepts m=1|2|3 (legacy m=on treated as level 1)
-    const rawM = new URLSearchParams(location.search).get('m');
+    const params = new URLSearchParams(location.search);
+    const rawM = params.get('m');
     const initialLevel = rawM === 'on' ? 1 : Math.max(0, Math.min(3, parseInt(rawM, 10) || 0));
     if (initialLevel > 0) setMotion(initialLevel);
-    setActive((parseInt(new URLSearchParams(location.search).get('v'), 10) || 1) - 1);
+    // Client-safe share mode: ?clean=1 hides the picker and defaults to V4 (Current)
+    const cleanMode = params.get('clean') === '1';
+    if (cleanMode) document.body.classList.add('clean-mode');
+    const rawV = parseInt(params.get('v'), 10);
+    const initialV = Number.isFinite(rawV) && rawV >= 1 && rawV <= variants.length
+      ? rawV
+      : (cleanMode ? 4 : 1);
+    setActive(initialV - 1);
     requestAnimationFrame(() => requestAnimationFrame(() => picker.setAttribute('data-ready', '')));
   </script>
 </body>
