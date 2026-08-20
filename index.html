@@ -2720,31 +2720,77 @@
     .v4-dish p { color: var(--ink-mute); font-size: 14px; line-height: 1.5; }
 
     /* Experience / Reservations */
+    /* Reservation band. Matches live site look (gold panel, Pattaya script, two pill CTAs)
+       while retaining the plates background image showing through the gold wash. */
     .v4-experience {
       position: relative;
       min-height: 460px;
       display: grid; place-items: center;
       padding: 120px 40px;
-      color: var(--cream-light);
+      color: var(--brown);
       overflow: hidden;
       text-align: center;
+      background: var(--gold);
     }
     .v4-experience::before {
       content: '';
       position: absolute; inset: 0;
       background:
-        linear-gradient(rgba(61,31,6,0.72), rgba(61,31,6,0.85)),
+        linear-gradient(rgba(234,188,83,0.86), rgba(234,188,83,0.86)),
         url('assets/nl9-evening-board.jpg') center/cover;
+      background-blend-mode: normal;
       z-index: 0;
     }
-    .v4-experience-inner { position: relative; z-index: 1; max-width: 620px; }
+    .v4-experience-inner { position: relative; z-index: 1; max-width: 640px; }
     .v4-experience h2 {
-      font-family: var(--serif);
-      font-size: clamp(32px, 3.6vw, 46px);
-      font-weight: 500; color: var(--cream-light);
-      margin: 18px 0 18px;
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(46px, 6vw, 84px);
+      line-height: 1.02;
+      color: var(--brown);
+      margin: 0 0 22px;
     }
-    .v4-experience p { font-size: 16px; line-height: 1.8; margin-bottom: 26px; opacity: 0.92; }
+    .v4-experience p {
+      font-family: var(--sans);
+      font-size: 17px;
+      line-height: 1.7;
+      color: #3a2000;
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+    .v4-experience-ctas {
+      display: flex; flex-wrap: wrap; gap: 14px;
+      justify-content: center; align-items: center;
+    }
+    .v4-reserve-btn {
+      display: inline-block;
+      font-family: 'Open Sans', var(--sans);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 50px;
+      border: 1px solid var(--brown);
+      text-decoration: none;
+      transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .v4-reserve-btn.primary {
+      background: var(--brown);
+      color: var(--cream);
+    }
+    .v4-reserve-btn.primary:hover {
+      background: var(--brown-deep);
+      border-color: var(--brown-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(45,21,0,0.25);
+    }
+    .v4-reserve-btn.ghost-dark {
+      background: transparent;
+      color: var(--brown);
+    }
+    .v4-reserve-btn.ghost-dark:hover {
+      background: rgba(45,21,0,0.15);
+      transform: translateY(-2px);
+    }
 
     /* Visit */
     .v4-visit { display: grid; grid-template-columns: 1fr 1fr; min-height: 480px; }
@@ -3974,10 +4020,12 @@
 
           <section class="v4-experience">
             <div class="v4-experience-inner">
-              <span class="v4-eyebrow v4-eyebrow-light">Gather &nbsp;·&nbsp; Sip &nbsp;·&nbsp; Savor</span>
-              <h2>Reserve your table tonight</h2>
-              <p>Whether it's a family dinner or a quiet evening for two, our dining room is ready. Reservations recommended for parties of four or more.</p>
-              <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="btn btn-ghost">Reserve a Table</a>
+              <h2>Reserve Your<br>Table Tonight</h2>
+              <p>Reservations recommended. Walk-ins welcome. Private events available.</p>
+              <div class="v4-experience-ctas">
+                <a href="https://nakhonluangthaicos.com/order/" target="_blank" rel="noopener" class="v4-reserve-btn primary">Order Online</a>
+                <a href="https://nakhonluangthaicos.com/reservations/" target="_blank" rel="noopener" class="v4-reserve-btn ghost-dark">Make a Reservation</a>
+              </div>
             </div>
           </section>
 
